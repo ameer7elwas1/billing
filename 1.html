@@ -1,0 +1,1785 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IRAQCELL</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js">
+function updateAgentSummary() {
+    let summaryHTML = `<div class="section"><h3 class="section-title">📋 ملخص الوكلاء</h3><div class="results-grid">`;
+    Object.entries(agentReports).forEach(([agentName, report]) => {
+        let totalBasic = report.basic?.total.amount || 0;
+        let totalAdvanced = report.advanced?.total.profit || 0;
+        let totalAll = totalBasic + totalAdvanced;
+        summaryHTML += `
+            <div class="result-card">
+                <h3>👤 ${agentName}</h3>
+                <div class="amount">💰 مجاني: ${formatNumber(totalBasic)} د.ع</div>
+                <div class="amount">💼 مخفض: ${formatNumber(totalAdvanced)} د.ع</div>
+                <div class="amount">📊 الكلي: ${formatNumber(totalAll)} د.ع</div>
+            </div>`;
+    });
+    summaryHTML += `</div></div>`;
+
+    let existing = document.getElementById('agentSummary');
+    if (existing) existing.remove();
+
+    const summaryContainer = document.createElement('div');
+    summaryContainer.id = 'agentSummary';
+    summaryContainer.innerHTML = summaryHTML;
+    document.getElementById('dashboard').appendChild(summaryContainer);
+}
+
+</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js">
+function updateAgentSummary() {
+    let summaryHTML = `<div class="section"><h3 class="section-title">📋 ملخص الوكلاء</h3><div class="results-grid">`;
+    Object.entries(agentReports).forEach(([agentName, report]) => {
+        let totalBasic = report.basic?.total.amount || 0;
+        let totalAdvanced = report.advanced?.total.profit || 0;
+        let totalAll = totalBasic + totalAdvanced;
+        summaryHTML += `
+            <div class="result-card">
+                <h3>👤 ${agentName}</h3>
+                <div class="amount">💰 مجاني: ${formatNumber(totalBasic)} د.ع</div>
+                <div class="amount">💼 مخفض: ${formatNumber(totalAdvanced)} د.ع</div>
+                <div class="amount">📊 الكلي: ${formatNumber(totalAll)} د.ع</div>
+            </div>`;
+    });
+    summaryHTML += `</div></div>`;
+
+    let existing = document.getElementById('agentSummary');
+    if (existing) existing.remove();
+
+    const summaryContainer = document.createElement('div');
+    summaryContainer.id = 'agentSummary';
+    summaryContainer.innerHTML = summaryHTML;
+    document.getElementById('dashboard').appendChild(summaryContainer);
+}
+
+</script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: gradientShift 8s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%); }
+            25% { background: linear-gradient(135deg, #f093fb 0%, #f5576c 50%, #4facfe 100%); }
+            50% { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 50%, #43e97b 100%); }
+            75% { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 50%, #667eea 100%); }
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            overflow: hidden;
+            width: 95%;
+            max-width: 1400px;
+            min-height: 85vh;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Login Screen */
+        .login-screen {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 80vh;
+            background: white;
+        }
+
+        .login-form {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            padding: 50px 40px;
+            border-radius: 25px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-form::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #4facfe);
+            background-size: 300% 100%;
+            animation: gradientMove 3s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .login-logo {
+            font-size: 3.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            font-weight: bold;
+            text-shadow: 0 0 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .login-title {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 35px;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: right;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid rgba(102, 126, 234, 0.2);
+            border-radius: 15px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            text-align: right;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+        }
+
+        .login-btn:active {
+            transform: translateY(-1px);
+        }
+
+        /* Main Dashboard */
+        .dashboard {
+            display: none;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            color: white;
+            padding: 30px 25px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: patternMove 20s linear infinite;
+        }
+
+        @keyframes patternMove {
+            0% { transform: translateX(0) translateY(0); }
+            100% { transform: translateX(60px) translateY(60px); }
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 2;
+        }
+
+        .user-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            position: relative;
+            z-index: 2;
+            font-size: 1.1rem;
+        }
+
+        .logout-btn {
+            background: rgba(255,255,255,0.15);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+        }
+
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .tabs {
+            display: flex;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-bottom: 1px solid #dee2e6;
+            position: relative;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 20px 15px;
+            text-align: center;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: #6c757d;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tab-icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .tab-text {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .tab:hover {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+        }
+
+        .tab:hover .tab-icon {
+            transform: scale(1.1);
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-bottom: none;
+            box-shadow: 0 -3px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .tab.active::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-bottom: 15px solid white;
+        }
+
+        .tab.active .tab-icon {
+            transform: scale(1.2);
+        }
+
+        .tab-content {
+            padding: 20px;
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .section {
+            background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(248,249,250,0.9) 100%);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.12);
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid;
+            border-image: linear-gradient(90deg, #667eea, #764ba2) 1;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .file-upload {
+            border: 3px dashed rgba(102, 126, 234, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .file-upload::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+            opacity: 0;
+        }
+
+        .file-upload:hover::before {
+            animation: shimmer 1.5s ease-in-out;
+            opacity: 1;
+        }
+
+        @keyframes shimmer {
+            0% { transform: rotate(45deg) translateX(-100%); }
+            100% { transform: rotate(45deg) translateX(100%); }
+        }
+
+        .file-upload:hover {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            border-color: #667eea;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+
+        .file-upload.dragover {
+            border-color: #764ba2;
+            background: linear-gradient(135deg, rgba(118, 75, 162, 0.15) 0%, rgba(240, 147, 251, 0.15) 100%);
+            transform: scale(1.02);
+        }
+
+        .file-upload p {
+            margin: 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #667eea;
+            position: relative;
+            z-index: 2;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            margin: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.5s ease;
+        }
+
+        .btn:active::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: linear-gradient(135deg, #218838 0%, #1ab085 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.3);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);
+            color: #212529;
+        }
+
+        .btn-warning:hover {
+            background: linear-gradient(135deg, #e0a800 0%, #e8590c 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 193, 7, 0.3);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #dc3545 0%, #e83e8c 100%);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: linear-gradient(135deg, #c82333 0%, #d91a7a 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(220, 53, 69, 0.3);
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .result-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(248,249,250,0.9) 100%);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border-left: 5px solid #667eea;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .result-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .result-card.bronze {
+            border-left-color: #cd7f32;
+        }
+
+        .result-card.bronze::before {
+            background: linear-gradient(90deg, #cd7f32, #e6a756);
+        }
+
+        .result-card.silver {
+            border-left-color: #c0c0c0;
+        }
+
+        .result-card.silver::before {
+            background: linear-gradient(90deg, #c0c0c0, #d4d4d4);
+        }
+
+        .result-card.gold {
+            border-left-color: #ffd700;
+        }
+
+        .result-card.gold::before {
+            background: linear-gradient(90deg, #ffd700, #ffed4e);
+        }
+
+        .result-card.platinum {
+            border-left-color: #e5e4e2;
+        }
+
+        .result-card.platinum::before {
+            background: linear-gradient(90deg, #e5e4e2, #f0f0ee);
+        }
+
+        .result-card h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .result-card .count {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(102, 126, 234, 0.2);
+        }
+
+        .result-card .amount {
+            color: #28a745;
+            font-weight: 700;
+            font-size: 1.1rem;
+            background: linear-gradient(135deg, #28a745, #20c997);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .agent-info {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 50%, #17a2b8 100%);
+            color: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(40, 167, 69, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .agent-info::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M30 30l10-10v20z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: patternMove 15s linear infinite;
+            opacity: 0.3;
+        }
+
+        .agent-info h3 {
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .agent-info p {
+            position: relative;
+            z-index: 2;
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            border-radius: 20px;
+            margin: 20px 0;
+        }
+
+        .spinner {
+            border: 4px solid rgba(102, 126, 234, 0.2);
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading p {
+            color: #667eea;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .error-message {
+            background: linear-gradient(135deg, #f8d7da 0%, #f1c0c7 100%);
+            color: #721c24;
+            padding: 15px;
+            border-radius: 15px;
+            margin: 15px 0;
+            border: 1px solid #f5c6cb;
+            border-left: 5px solid #dc3545;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.2);
+        }
+
+        .success-message {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            color: #155724;
+            padding: 15px;
+            border-radius: 15px;
+            margin: 15px 0;
+            border: 1px solid #c3e6cb;
+            border-left: 5px solid #28a745;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.2);
+            animation: fadeInUp 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 100%;
+                margin: 0;
+                border-radius: 0;
+            }
+
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tabs {
+                flex-direction: column;
+            }
+
+            .tab {
+                flex-direction: row;
+                justify-content: center;
+                gap: 15px;
+            }
+
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .user-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .login-form {
+                margin: 20px;
+                padding: 30px 20px;
+            }
+        }
+
+        /* Scroll animations */
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .section:nth-child(odd) {
+            animation: slideInLeft 0.6s ease-out;
+        }
+
+        .section:nth-child(even) {
+            animation: slideInRight 0.6s ease-out;
+        }
+
+        /* Print Styles */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            
+            .dashboard, 
+            .dashboard * {
+                visibility: visible;
+            }
+            
+            .login-screen {
+                display: none !important;
+            }
+            
+            .dashboard {
+                display: block !important;
+            }
+            
+            .header {
+                background: #667eea !important;
+                -webkit-print-color-adjust: exact;
+                color-adjust: exact;
+            }
+            
+            .tabs {
+                display: none;
+            }
+            
+            .tab-content {
+                display: block !important;
+            }
+            
+            .tab-content:not(.active) {
+                display: none !important;
+            }
+            
+            .btn {
+                display: none;
+            }
+            
+            .file-upload {
+                display: none;
+            }
+            
+            .results-grid {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+            
+            .result-card {
+                break-inside: avoid;
+                page-break-inside: avoid;
+                border: 1px solid #ccc !important;
+            }
+            
+            .agent-info {
+                background: #28a745 !important;
+                -webkit-print-color-adjust: exact;
+                color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Login Screen -->
+        <div id="loginScreen" class="login-screen">
+            <div class="login-form">
+                <div class="login-logo">📊</div>
+                <h2 class="login-title">IRAQCELL</h2>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="username">اسم المستخدم:</label>
+                        <input type="text" id="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">كلمة المرور:</label>
+                        <input type="password" id="password" required>
+                    </div>
+                    <button type="submit" class="login-btn">تسجيل الدخول</button>
+                </form>
+                <div id="loginError" class="error-message hidden">
+                    اسم المستخدم أو كلمة المرور غير صحيحة
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Dashboard -->
+        <div id="dashboard" class="dashboard">
+            <!-- Header -->
+            <div class="header">
+                <h1>IRAQCELL</h1>
+                <div class="user-info">
+                    <span>مرحباً، <span id="currentUser"></span></span>
+                    <span id="currentDate"></span>
+                    <button class="logout-btn" onclick="logout()">تسجيل الخروج</button>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('basic')">
+                    <span class="tab-icon">🎁</span>
+                    <span class="tab-text">حساب العرض المجاني</span>
+                </button>
+                <button class="tab" onclick="switchTab('advanced')">
+                    <span class="tab-icon">📊</span>
+                    <span class="tab-text">حساب العرض المخفض لثلاث أشهر</span>
+                </button>
+            </div>
+
+            <!-- Basic Analysis Tab -->
+            <div id="basicTab" class="tab-content active">
+                <div class="section">
+                    <h3 class="section-title">
+                        🎁 رفع Excel الوكيل لحساب العرض المجاني
+                    </h3>
+                    <div class="file-upload" id="basicFileUpload">
+                        <p>📄 اسحب ملف Excel أو CSV هنا أو انقر للاختيار</p>
+                        <p style="font-size: 12px; color: #666; margin-top: 5px;">يدعم: .xlsx, .xls, .csv</p>
+                        <input type="file" id="basicFileInput" accept=".xlsx,.xls,.csv" style="display: none;">
+                    </div>
+                    <div id="basicFileName" class="success-message hidden"></div>
+                </div>
+
+                <div class="section">
+                    <h3 class="section-title">
+                        ⚙️ تحليل بيانات العرض المجاني
+                    </h3>
+                    <p style="color: #666; margin-bottom: 15px; font-size: 1rem;">
+                    
+                    </p>
+                    <button class="btn btn-primary" onclick="analyzeBasicData()">
+                        🔍 تحليل البيانات
+                    </button>
+                    <button class="btn btn-warning" onclick="resetBasicResults()">
+                        🗑️ مسح النتائج
+                    </button>
+                </div>
+
+                <div id="basicResults" class="section hidden">
+                    <h3 class="section-title">
+                        📊 نتائج العرض المجاني
+                    </h3>
+                    <div id="basicAgentInfo" class="agent-info"></div>
+                    <div class="results-grid" id="basicResultsGrid"></div>
+                    
+                    <div style="text-align: center; margin-top: 20px;">
+                        <button class="btn btn-success" onclick="saveBasicReport()">
+                            💾 حفظ التقرير
+                        </button>
+                        <button class="btn btn-primary" onclick="printBasicReport()">
+                            🖨️ طباعة التقرير
+                        </button>
+                        <button class="btn btn-warning" onclick="exportBasicData()">
+                            📤 تصدير البيانات
+                        </button>
+                    </div>
+                </div>
+
+                <div id="basicLoading" class="loading">
+                    <div class="spinner"></div>
+                    <p>جاري تحليل بيانات العرض المجاني...</p>
+                </div>
+            </div>
+
+            <!-- Advanced Analysis Tab -->
+            <div id="advancedTab" class="tab-content">
+                <div class="section">
+                    <h3 class="section-title">
+                        📊 رفع Excel الوكيل لحساب العرض المخفض لثلاث أشهر
+                    </h3>
+                    <div class="file-upload" id="advancedFileUpload">
+                        <p>📄 اسحب ملف Excel أو CSV هنا أو انقر للاختيار</p>
+                        <p style="font-size: 12px; color: #666; margin-top: 5px;">يدعم: .xlsx, .xls, .csv</p>
+                        <input type="file" id="advancedFileInput" accept=".xlsx,.xls,.csv" style="display: none;">
+                    </div>
+                    <div id="advancedFileName" class="success-message hidden"></div>
+                </div>
+
+                <div class="section">
+                    <h3 class="section-title">
+                        ⚙️ تحليل العرض المخفض لثلاث أشهر
+                    </h3>
+                    <p style="color: #666; margin-bottom: 15px; font-size: 1rem;">
+                        📈 يتم حساب التفعيل عند وجود 3 اشتراكات لنفس المستخدم خلال 5 أيام<br>
+                        💰 مقارنة أسعار العرض المخفض مع الأسعار الرسمية لحساب الراجع للوكيل
+                    </p>
+                    <button class="btn btn-primary" onclick="analyzeAdvancedData()">
+                        🔍 تحليل التفعيلات
+                    </button>
+                    <button class="btn btn-warning" onclick="resetAdvancedResults()">
+                        🗑️ مسح النتائج
+                    </button>
+                </div>
+
+                <div id="advancedResults" class="section hidden">
+                    <h3 class="section-title">
+                        📊 تفاصيل الاشتراكات والمبالغ 
+                    </h3>
+                    <div id="advancedAgentInfo" class="agent-info"></div>
+                    <div class="results-grid" id="advancedResultsGrid"></div>
+                    
+                    <div style="text-align: center; margin-top: 20px;">
+                        <button class="btn btn-success" onclick="saveAdvancedReport()">
+                            💾 حفظ التقرير
+                        </button>
+                        <button class="btn btn-primary" onclick="printAdvancedReport()">
+                            🖨️ طباعة التقرير
+                        </button>
+                        <button class="btn btn-warning" onclick="exportAdvancedData()">
+                            📤 تصدير للوكيل
+                        </button>
+                    </div>
+                </div>
+
+                <div id="advancedLoading" class="loading">
+                    <div class="spinner"></div>
+                    <p>جاري تحليل العرض المخفض لثلاث أشهر...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Login credentials (في مشروع حقيقي، يجب استخدام قاعدة بيانات آمنة)
+        const validCredentials = {
+            'admin': 'admin123',
+            'ameer': 'ameer',
+            'user': 'user789'
+        };
+
+        // Global variables
+let agentReports = {};
+        let currentUser = '';
+        let basicData = null;
+        let advancedData = null;
+
+        // Arabic month names
+        const arabicMonths = [
+            'كانون الثاني', 'شباط', 'آذار', 'نيسان', 'أيار', 'حزيران',
+            'تموز', 'آب', 'أيلول', 'تشرين الأول', 'تشرين الثاني', 'كانون الأول'
+        ];
+
+        // Subscription prices
+        const subscriptionPrices = {
+            basic: {
+                'Iraqcell_Bronze_Profile_NEW': 30000,
+                'Iraqcell_Silver_Profile_NEW': 40000,
+                'Iraqcell_Gold_Profile_NEW': 50000,
+                'Iraqcell_Platinum_Profile_NEW': 65000
+            },
+            advanced: {
+                promo: {
+                    'Iraqcell_Bronze_Profile_NEW': 75000,
+                    'Iraqcell_Silver_Profile_NEW': 105000,
+                    'Iraqcell_Gold_Profile_NEW': 120000,
+                    'Iraqcell_Platinum_Profile_NEW': 165000
+                },
+                official: {
+                    'Iraqcell_Bronze_Profile_NEW': 90000,
+                    'Iraqcell_Silver_Profile_NEW': 120000,
+                    'Iraqcell_Gold_Profile_NEW': 150000,
+                    'Iraqcell_Platinum_Profile_NEW': 195000
+                }
+            }
+        };
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCurrentDate();
+            setupFileUploads();
+            setupLoginForm();
+        });
+
+        // Login functionality
+        function setupLoginForm() {
+            document.getElementById('loginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                
+                if (validCredentials[username] && validCredentials[username] === password) {
+                    currentUser = username;
+                    document.getElementById('currentUser').textContent = username;
+                    document.getElementById('loginScreen').style.display = 'none';
+                    document.getElementById('dashboard').style.display = 'block';
+                    document.getElementById('loginError').classList.add('hidden');
+                } else {
+                    document.getElementById('loginError').classList.remove('hidden');
+                }
+            });
+        }
+
+        function logout() {
+            currentUser = '';
+            document.getElementById('loginScreen').style.display = 'flex';
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            resetBasicResults();
+            resetAdvancedResults();
+        }
+
+        // Date functions
+        function updateCurrentDate() {
+            const now = new Date();
+            const arabicDate = formatArabicDate(now);
+            document.getElementById('currentDate').textContent = arabicDate;
+        }
+
+        function formatArabicDate(date) {
+            const day = date.getDate();
+            const month = arabicMonths[date.getMonth()];
+            const year = date.getFullYear();
+            return `${day} ${month} ${year}`;
+        }
+
+        // Tab switching
+        function switchTab(tabName) {
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            // Add active class to selected tab
+            event.target.classList.add('active');
+            document.getElementById(tabName + 'Tab').classList.add('active');
+        }
+
+        // File upload setup
+        function setupFileUploads() {
+            setupFileUpload('basic');
+            setupFileUpload('advanced');
+        }
+
+        function setupFileUpload(type) {
+            const uploadDiv = document.getElementById(type + 'FileUpload');
+            const fileInput = document.getElementById(type + 'FileInput');
+            
+            uploadDiv.addEventListener('click', () => fileInput.click());
+            
+            uploadDiv.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadDiv.classList.add('dragover');
+            });
+            
+            uploadDiv.addEventListener('dragleave', () => {
+                uploadDiv.classList.remove('dragover');
+            });
+            
+            uploadDiv.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadDiv.classList.remove('dragover');
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    handleFileSelect(files[0], type);
+                }
+            });
+            
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    handleFileSelect(e.target.files[0], type);
+                }
+            });
+        }
+
+        // File handling
+        function handleFileSelect(file, type) {
+            const fileName = document.getElementById(type + 'FileName');
+            fileName.textContent = `تم اختيار الملف: ${file.name}`;
+            fileName.classList.remove('hidden');
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    if (file.name.toLowerCase().endsWith('.csv')) {
+                        // Handle CSV files
+                        Papa.parse(e.target.result, {
+                            header: false,
+                            skipEmptyLines: true,
+                            complete: function(results) {
+                                const processedData = convertArrayToObjects(results.data);
+                                if (type === 'basic') {
+                                    basicData = processedData;
+                                } else {
+                                    advancedData = processedData;
+                                }
+                                showSuccessMessage(`تم تحميل ملف CSV بنجاح - ${results.data.length} صف`);
+                            }
+                        });
+                    } else if (file.name.toLowerCase().match(/\.(xlsx|xls)$/)) {
+                        // Handle Excel files
+                        const data = new Uint8Array(e.target.result);
+                        const workbook = XLSX.read(data, { type: 'array' });
+                        
+                        // Get the first worksheet
+                        const firstSheetName = workbook.SheetNames[0];
+                        const worksheet = workbook.Sheets[firstSheetName];
+                        
+                        // Convert to array of arrays
+                        const jsonData = XLSX.utils.sheet_to_json(worksheet, { 
+                            header: 1,
+                            defval: "",
+                            raw: false
+                        });
+                        
+                        // Convert to objects
+                        const processedData = convertArrayToObjects(jsonData);
+                        
+                        if (type === 'basic') {
+                            basicData = processedData;
+                        } else {
+                            advancedData = processedData;
+                        }
+                        
+                        showSuccessMessage(`تم تحميل ملف Excel بنجاح - ${jsonData.length} صف`);
+                    } else {
+                        alert('نوع الملف غير مدعوم. يرجى اختيار ملف Excel (.xlsx, .xls) أو CSV');
+                    }
+                } catch (error) {
+                    alert('خطأ في قراءة الملف: ' + error.message);
+                    console.error('File reading error:', error);
+                }
+            };
+            
+            // Read file as ArrayBuffer for Excel, as text for CSV
+            if (file.name.toLowerCase().match(/\.(xlsx|xls)$/)) {
+                reader.readAsArrayBuffer(file);
+            } else {
+                reader.readAsText(file);
+            }
+        }
+
+        // Convert array of arrays to array of objects with column names
+        function convertArrayToObjects(arrayData) {
+            if (!arrayData || arrayData.length === 0) return [];
+            
+            const headers = arrayData[0];
+            const result = [];
+            
+            for (let i = 1; i < arrayData.length; i++) {
+                const obj = {};
+                for (let j = 0; j < headers.length; j++) {
+                    // Create both named and indexed access
+                    obj[`Column${String.fromCharCode(65 + j)}`] = arrayData[i][j] || '';
+                    obj[j] = arrayData[i][j] || '';
+                }
+                result.push(obj);
+            }
+            
+            return result;
+        }
+
+        // Show success message
+        function showSuccessMessage(message) {
+            // Create temporary success message
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'success-message';
+            messageDiv.textContent = message;
+            messageDiv.style.position = 'fixed';
+            messageDiv.style.top = '20px';
+            messageDiv.style.right = '20px';
+            messageDiv.style.zIndex = '9999';
+            messageDiv.style.maxWidth = '300px';
+            
+            document.body.appendChild(messageDiv);
+            
+            setTimeout(() => {
+                if (messageDiv.parentNode) {
+                    messageDiv.parentNode.removeChild(messageDiv);
+                }
+            }, 3000);
+        }
+
+        // Basic Analysis Functions
+        function analyzeBasicData() {
+            if (!basicData) {
+                alert('يرجى اختيار ملف البيانات أولاً');
+                return;
+            }
+
+            showLoading('basic');
+            
+            setTimeout(() => {
+                try {
+                    const results = processBasicData(basicData);
+                    
+                    if (results.total.count === 0) {
+                        alert('لم يتم العثور على بيانات صالحة للتحليل. تأكد من صحة تنسيق الملف.');
+                        hideLoading('basic');
+                        return;
+                    }
+                    
+                    displayBasicResults(results);
+                    hideLoading('basic');
+                    showSuccessMessage(`تم تحليل ${results.total.count} اشتراك مجاني بنجاح`);
+                } catch (error) {
+                    alert('خطأ في تحليل بيانات العرض المجاني: ' + error.message);
+                    hideLoading('basic');
+                }
+            }, 1000);
+        }
+
+        function processBasicData(data) {
+            const results = {
+                bronze: { count: 0, amount: 0 },
+                silver: { count: 0, amount: 0 },
+                gold: { count: 0, amount: 0 },
+                platinum: { count: 0, amount: 0 },
+                total: { count: 0, amount: 0 },
+                agentName: ''
+            };
+
+            if (data.length === 0) return results;
+
+            // Get agent name from first row (column E)
+            results.agentName = data[0]['ColumnE'] || data[0][4] || 'غير محدد';
+
+            data.forEach(row => {
+                // Get data from specific columns
+                const createdAt = row['ColumnA'] || row[0]; // Column A
+                const username = row['ColumnB'] || row[1];   // Column B  
+                const subscription = row['ColumnH'] || row[7]; // Column H
+                const count = row['ColumnO'] || row[14];     // Column O
+
+                // Skip row if missing required data or count is not 1
+                if (!createdAt || !username || !subscription || count != 1) return;
+
+                const subType = String(subscription).trim();
+                const price = subscriptionPrices.basic[subType];
+
+                if (price) {
+                    if (subType.includes('Bronze')) {
+                        results.bronze.count++;
+                        results.bronze.amount += price;
+                    } else if (subType.includes('Silver')) {
+                        results.silver.count++;
+                        results.silver.amount += price;
+                    } else if (subType.includes('Gold')) {
+                        results.gold.count++;
+                        results.gold.amount += price;
+                    } else if (subType.includes('Platinum')) {
+                        results.platinum.count++;
+                        results.platinum.amount += price;
+                    }
+                }
+            });
+
+            results.total.count = results.bronze.count + results.silver.count + results.gold.count + results.platinum.count;
+            results.total.amount = results.bronze.amount + results.silver.amount + results.gold.amount + results.platinum.amount;
+
+            return results;
+        }
+
+        function displayBasicResults(results) {
+            // Show agent info
+            const agentInfo = document.getElementById('basicAgentInfo');
+            agentInfo.innerHTML = `
+                <h3> العرض المجاني</h3>
+                <p><strong>اسم الوكيل:</strong> ${results.agentName}</p>
+                <p><strong>تاريخ التحليل:</strong> ${formatArabicDate(new Date())}</p>
+                <p><strong>نوع التحليل:</strong> حساب العرض المجاني</p>
+            `;
+
+            // Show results grid
+            const resultsGrid = document.getElementById('basicResultsGrid');
+            resultsGrid.innerHTML = `
+                <div class="result-card bronze">
+                    <h3>🥉 Bronze</h3>
+                    <div class="count">${results.bronze.count}</div>
+                    <div class="amount">${formatNumber(results.bronze.amount)} د.ع</div>
+                </div>
+                <div class="result-card silver">
+                    <h3>🥈 Silver</h3>
+                    <div class="count">${results.silver.count}</div>
+                    <div class="amount">${formatNumber(results.silver.amount)} د.ع</div>
+                </div>
+                <div class="result-card gold">
+                    <h3>🥇 Gold</h3>
+                    <div class="count">${results.gold.count}</div>
+                    <div class="amount">${formatNumber(results.gold.amount)} د.ع</div>
+                </div>
+                <div class="result-card platinum">
+                    <h3>💎 Platinum</h3>
+                    <div class="count">${results.platinum.count}</div>
+                    <div class="amount">${formatNumber(results.platinum.amount)} د.ع</div>
+                </div>
+                <div class="result-card">
+                    <h3>📊 المجموع</h3>
+                    <div class="count">${results.total.count}</div>
+                    <div class="amount">${formatNumber(results.total.amount)} د.ع</div>
+                </div>
+            `;
+
+            document.getElementById('basicResults').classList.remove('hidden');
+        }
+
+        // Advanced Analysis Functions
+        function analyzeAdvancedData() {
+            if (!advancedData) {
+                alert('يرجى اختيار ملف البيانات أولاً');
+                return;
+            }
+
+            showLoading('advanced');
+            
+            setTimeout(() => {
+                try {
+                    const results = processAdvancedData(advancedData);
+                    
+                    if (results.total.count === 0) {
+                        alert('لم يتم العثور على تفعيلات صالحة للعرض المخفض. تأكد من وجود 3 اشتراكات خلال 5 أيام لنفس المستخدم.');
+                        hideLoading('advanced');
+                        return;
+                    }
+                    
+                    displayAdvancedResults(results);
+                    hideLoading('advanced');
+                    showSuccessMessage(`تم تحليل ${results.total.count} تفعيل للعرض المخفض بنجاح`);
+                } catch (error) {
+                    alert('خطأ في تحليل بيانات العرض المخفض: ' + error.message);
+                    hideLoading('advanced');
+                }
+            }, 1500);
+        }
+
+        function processAdvancedData(data) {
+            const results = {
+                bronze: { count: 0, promoAmount: 0, officialAmount: 0 },
+                silver: { count: 0, promoAmount: 0, officialAmount: 0 },
+                gold: { count: 0, promoAmount: 0, officialAmount: 0 },
+                platinum: { count: 0, promoAmount: 0, officialAmount: 0 },
+                total: { count: 0, promoAmount: 0, officialAmount: 0, profit: 0 },
+                agentName: ''
+            };
+
+            if (data.length === 0) return results;
+
+            // Get agent name from first row (column E)
+            results.agentName = data[0]['ColumnE'] || data[0][4] || 'غير محدد';
+
+            // Group subscriptions by user and subscription type
+            const userSubscriptions = {};
+
+            data.forEach(row => {
+                const createdAt = row['ColumnA'] || row[0]; // Column A
+                const username = row['ColumnB'] || row[1];   // Column B
+                const subscription = row['ColumnH'] || row[7]; // Column H
+
+                if (!createdAt || !username || !subscription) return;
+
+                // Clean and validate the date
+                let dateObj;
+                try {
+                    // Try to parse the date - handle various formats
+                    if (createdAt instanceof Date) {
+                        dateObj = createdAt;
+                    } else {
+                        // Handle Excel date serial numbers
+                        if (typeof createdAt === 'number' && createdAt > 40000) {
+                            // Excel date serial number (days since 1900-01-01)
+                            dateObj = new Date((createdAt - 25569) * 86400 * 1000);
+                        } else {
+                            dateObj = new Date(createdAt);
+                        }
+                    }
+                    
+                    if (isNaN(dateObj.getTime())) {
+                        return; // Skip invalid dates
+                    }
+                } catch (e) {
+                    return; // Skip invalid dates
+                }
+
+                const key = `${String(username).trim()}|${String(subscription).trim()}`;
+                if (!userSubscriptions[key]) {
+                    userSubscriptions[key] = [];
+                }
+                userSubscriptions[key].push(dateObj);
+            });
+
+            // Calculate activations (3 subscriptions within 5 days)
+            Object.keys(userSubscriptions).forEach(key => {
+                const [username, subscription] = key.split('|');
+                const dates = userSubscriptions[key].sort((a, b) => a - b);
+                
+                let activations = 0;
+                const used = new Array(dates.length).fill(false);
+
+                for (let i = 0; i < dates.length - 2; i++) {
+                    if (used[i]) continue;
+                    
+                    for (let j = i + 1; j < dates.length - 1; j++) {
+                        if (used[j]) continue;
+                        
+                        for (let k = j + 1; k < dates.length; k++) {
+                            if (used[k]) continue;
+                            
+                            const daysDiff = (dates[k] - dates[i]) / (1000 * 60 * 60 * 24);
+                            if (daysDiff <= 5) {
+                                used[i] = used[j] = used[k] = true;
+                                activations++;
+                                break;
+                            }
+                        }
+                        if (used[j]) break;
+                    }
+                }
+
+                if (activations > 0) {
+                    const subType = subscription.trim();
+                    const promoPrice = subscriptionPrices.advanced.promo[subType] || 0;
+                    const officialPrice = subscriptionPrices.advanced.official[subType] || 0;
+
+                    if (subType.includes('Bronze')) {
+                        results.bronze.count += activations;
+                        results.bronze.promoAmount += activations * promoPrice;
+                        results.bronze.officialAmount += activations * officialPrice;
+                    } else if (subType.includes('Silver')) {
+                        results.silver.count += activations;
+                        results.silver.promoAmount += activations * promoPrice;
+                        results.silver.officialAmount += activations * officialPrice;
+                    } else if (subType.includes('Gold')) {
+                        results.gold.count += activations;
+                        results.gold.promoAmount += activations * promoPrice;
+                        results.gold.officialAmount += activations * officialPrice;
+                    } else if (subType.includes('Platinum')) {
+                        results.platinum.count += activations;
+                        results.platinum.promoAmount += activations * promoPrice;
+                        results.platinum.officialAmount += activations * officialPrice;
+                    }
+                }
+            });
+
+            // Calculate totals
+            results.total.count = results.bronze.count + results.silver.count + results.gold.count + results.platinum.count;
+            results.total.promoAmount = results.bronze.promoAmount + results.silver.promoAmount + results.gold.promoAmount + results.platinum.promoAmount;
+            results.total.officialAmount = results.bronze.officialAmount + results.silver.officialAmount + results.gold.officialAmount + results.platinum.officialAmount;
+            results.total.profit = results.total.officialAmount - results.total.promoAmount;
+
+            return results;
+        }
+
+        function displayAdvancedResults(results) {
+            // Show agent info
+            const agentInfo = document.getElementById('advancedAgentInfo');
+            agentInfo.innerHTML = `
+                <h3>العرض المخفض لثلاث أشهر</h3>
+                <p><strong>اسم الوكيل:</strong> ${results.agentName}</p>
+                <p><strong>تاريخ التحليل:</strong> ${formatArabicDate(new Date())}</p>
+                <p><strong>نوع التحليل:</strong> حساب العرض المخفض لثلاث أشهر</p>
+                <p><strong>إجمالي الراجع للوكيل :</strong> ${formatNumber(results.total.profit)} د.ع</p>
+            `;
+
+            // Show results grid
+            const resultsGrid = document.getElementById('advancedResultsGrid');
+            resultsGrid.innerHTML = `
+                <div class="result-card bronze">
+                    <h3>🥉 Bronze</h3>
+                    <div class="count">${results.bronze.count}</div>
+                    <div class="amount">عرض: ${formatNumber(results.bronze.promoAmount)} د.ع</div>
+                    <div class="amount">رسمي: ${formatNumber(results.bronze.officialAmount)} د.ع</div>
+                </div>
+                <div class="result-card silver">
+                    <h3>🥈 Silver</h3>
+                    <div class="count">${results.silver.count}</div>
+                    <div class="amount">عرض: ${formatNumber(results.silver.promoAmount)} د.ع</div>
+                    <div class="amount">رسمي: ${formatNumber(results.silver.officialAmount)} د.ع</div>
+                </div>
+                <div class="result-card gold">
+                    <h3>🥇 Gold</h3>
+                    <div class="count">${results.gold.count}</div>
+                    <div class="amount">عرض: ${formatNumber(results.gold.promoAmount)} د.ع</div>
+                    <div class="amount">رسمي: ${formatNumber(results.gold.officialAmount)} د.ع</div>
+                </div>
+                <div class="result-card platinum">
+                    <h3>💎 Platinum</h3>
+                    <div class="count">${results.platinum.count}</div>
+                    <div class="amount">عرض: ${formatNumber(results.platinum.promoAmount)} د.ع</div>
+                    <div class="amount">رسمي: ${formatNumber(results.platinum.officialAmount)} د.ع</div>
+                </div>
+                <div class="result-card">
+                    <h3>📊 المجموع</h3>
+                    <div class="count">${results.total.count}</div>
+                    <div class="amount">عرض: ${formatNumber(results.total.promoAmount)} د.ع</div>
+                    <div class="amount">رسمي: ${formatNumber(results.total.officialAmount)} د.ع</div>
+                </div>
+            `;
+
+            document.getElementById('advancedResults').classList.remove('hidden');
+        }
+
+        // Utility functions
+        function showLoading(type) {
+            document.getElementById(type + 'Loading').style.display = 'block';
+        }
+
+        function hideLoading(type) {
+            document.getElementById(type + 'Loading').style.display = 'none';
+        }
+
+        function formatNumber(num) {
+            return new Intl.NumberFormat('ar-IQ').format(num);
+        }
+
+        function resetBasicResults() {
+            document.getElementById('basicResults').classList.add('hidden');
+            document.getElementById('basicFileName').classList.add('hidden');
+            document.getElementById('basicFileInput').value = '';
+            basicData = null;
+        }
+
+        function resetAdvancedResults() {
+            document.getElementById('advancedResults').classList.add('hidden');
+            document.getElementById('advancedFileName').classList.add('hidden');
+            document.getElementById('advancedFileInput').value = '';
+            advancedData = null;
+        }
+
+        // Report functions with better implementation
+        function saveBasicReport() {
+            if (!basicData || document.getElementById('basicResults').classList.contains('hidden')) {
+                alert('لا توجد نتائج لحفظها. يرجى تحليل البيانات أولاً.');
+                return;
+            }
+            
+            // Create CSV content
+            const results = processBasicData(basicData);
+            const csvContent = generateBasicReportCSV(results);
+            downloadCSV(csvContent, `تقرير_أساسي_${results.agentName}_${formatDateForFilename(new Date())}.csv`);
+            
+            
+if (!agentReports[results.agentName]) {
+    agentReports[results.agentName] = { basic: null, advanced: null };
+}
+agentReports[results.agentName].basic = results;
+updateAgentSummary();
+alert('تم حفظ التقرير بنجاح!');
+
+        }
+
+        function saveAdvancedReport() {
+            if (!advancedData || document.getElementById('advancedResults').classList.contains('hidden')) {
+                alert('لا توجد نتائج لحفظها. يرجى تحليل البيانات أولاً.');
+                return;
+            }
+            
+            const results = processAdvancedData(advancedData);
+            const csvContent = generateAdvancedReportCSV(results);
+            downloadCSV(csvContent, `تقرير_تفعيلات_${results.agentName}_${formatDateForFilename(new Date())}.csv`);
+            
+            
+if (!agentReports[results.agentName]) {
+    agentReports[results.agentName] = { basic: null, advanced: null };
+}
+agentReports[results.agentName].advanced = results;
+updateAgentSummary();
+alert('تم حفظ تقرير التفعيلات بنجاح!');
+
+        }
+
+        function generateBasicReportCSV(results) {
+            const header = 'نوع الاشتراك,العدد,المبلغ (د.ع)\n';
+            const rows = [
+                `Bronze,${results.bronze.count},${results.bronze.amount}`,
+                `Silver,${results.silver.count},${results.silver.amount}`,
+                `Gold,${results.gold.count},${results.gold.amount}`,
+                `Platinum,${results.platinum.count},${results.platinum.amount}`,
+                `المجموع,${results.total.count},${results.total.amount}`
+            ].join('\n');
+            
+            return header + rows;
+        }
+
+        function generateAdvancedReportCSV(results) {
+            const header = 'نوع الاشتراك,عدد التفعيلات,مبلغ العرض (د.ع),المبلغ الرسمي (د.ع),الربح (د.ع)\n';
+            const rows = [
+                `Bronze,${results.bronze.count},${results.bronze.promoAmount},${results.bronze.officialAmount},${results.bronze.officialAmount - results.bronze.promoAmount}`,
+                `Silver,${results.silver.count},${results.silver.promoAmount},${results.silver.officialAmount},${results.silver.officialAmount - results.silver.promoAmount}`,
+                `Gold,${results.gold.count},${results.gold.promoAmount},${results.gold.officialAmount},${results.gold.officialAmount - results.gold.promoAmount}`,
+                `Platinum,${results.platinum.count},${results.platinum.promoAmount},${results.platinum.officialAmount},${results.platinum.officialAmount - results.platinum.promoAmount}`,
+                `المجموع,${results.total.count},${results.total.promoAmount},${results.total.officialAmount},${results.total.profit}`
+            ].join('\n');
+            
+            return header + rows;
+        }
+
+        function downloadCSV(content, filename) {
+            const blob = new Blob(['\ufeff' + content], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', filename);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function formatDateForFilename(date) {
+            return date.toISOString().split('T')[0];
+        }
+
+        function printBasicReport() {
+            if (document.getElementById('basicResults').classList.contains('hidden')) {
+                alert('لا توجد نتائج للطباعة. يرجى تحليل البيانات أولاً.');
+                return;
+            }
+            window.print();
+        }
+
+        function printAdvancedReport() {
+            if (document.getElementById('advancedResults').classList.contains('hidden')) {
+                alert('لا توجد نتائج للطباعة. يرجى تحليل البيانات أولاً.');
+                return;
+            }
+            window.print();
+        }
+
+        function exportBasicData() {
+            if (!basicData) {
+                alert('لا توجد بيانات للتصدير. يرجى تحميل ملف البيانات أولاً.');
+                return;
+            }
+            
+            // Export filtered data
+            const filteredData = basicData.filter(row => {
+                const count = row['ColumnO'] || row[14];
+                return count == 1;
+            });
+            
+            const csvContent = convertDataToCSV(filteredData);
+            downloadCSV(csvContent, `البيانات_المفلترة_${formatDateForFilename(new Date())}.csv`);
+            alert('تم تصدير البيانات الأساسية بنجاح!');
+        }
+
+        function exportAdvancedData() {
+            if (!advancedData) {
+                alert('لا توجد بيانات للتصدير. يرجى تحميل ملف البيانات أولاً.');
+                return;
+            }
+            
+            const results = processAdvancedData(advancedData);
+            const csvContent = generateAdvancedReportCSV(results);
+            downloadCSV(csvContent, `تقرير_وكيل_${results.agentName}_${formatDateForFilename(new Date())}.csv`);
+            alert('تم تصدير بيانات الوكيل بنجاح!');
+        }
+
+        function convertDataToCSV(data) {
+            if (!data || data.length === 0) return '';
+            
+            // Create headers
+            const headers = ['التاريخ', 'اسم المستخدم', 'نوع الاشتراك', 'الوكيل'];
+            let csv = headers.join(',') + '\n';
+            
+            // Add data rows
+            data.forEach(row => {
+                const rowData = [
+                    row['ColumnA'] || row[0] || '',
+                    row['ColumnB'] || row[1] || '',
+                    row['ColumnH'] || row[7] || '',
+                    row['ColumnE'] || row[4] || ''
+                ];
+                csv += rowData.map(field => `"${field}"`).join(',') + '\n';
+            });
+            
+            return csv;
+        }
+    
+function updateAgentSummary() {
+    let summaryHTML = `<div class="section"><h3 class="section-title">📋 ملخص الوكلاء</h3><div class="results-grid">`;
+    Object.entries(agentReports).forEach(([agentName, report]) => {
+        let totalBasic = report.basic?.total.amount || 0;
+        let totalAdvanced = report.advanced?.total.profit || 0;
+        let totalAll = totalBasic + totalAdvanced;
+        summaryHTML += `
+            <div class="result-card">
+                <h3>👤 ${agentName}</h3>
+                <div class="amount">💰 مجاني: ${formatNumber(totalBasic)} د.ع</div>
+                <div class="amount">💼 مخفض: ${formatNumber(totalAdvanced)} د.ع</div>
+                <div class="amount">📊 الكلي: ${formatNumber(totalAll)} د.ع</div>
+            </div>`;
+    });
+    summaryHTML += `</div></div>`;
+
+    let existing = document.getElementById('agentSummary');
+    if (existing) existing.remove();
+
+    const summaryContainer = document.createElement('div');
+    summaryContainer.id = 'agentSummary';
+    summaryContainer.innerHTML = summaryHTML;
+    document.getElementById('dashboard').appendChild(summaryContainer);
+}
+
+</script>
+</body>
+</html>
