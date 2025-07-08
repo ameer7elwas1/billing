@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IRAQCELL</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js">
 function updateAgentSummary() {
     let summaryHTML = `<div class="section"><h3 class="section-title">📋 ملخص الوكلاء</h3><div class="results-grid">`;
@@ -63,7 +64,7 @@ function updateAgentSummary() {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Tajawal', sans-serif;
         }
 
         body {
@@ -785,6 +786,23 @@ function updateAgentSummary() {
             animation: slideInRight 0.6s ease-out;
         }
 
+        .date-time-bar {
+            width: 100%;
+            text-align: center;
+            margin: 10px 0 0 0;
+        }
+        #currentDateTime {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #fff;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            padding: 8px 24px;
+            border-radius: 12px;
+            display: inline-block;
+            letter-spacing: 1px;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.10);
+        }
+
         /* Print Styles */
         @media print {
             body * {
@@ -858,8 +876,10 @@ function updateAgentSummary() {
                 <h1>IRAQCELL</h1>
                 <div class="user-info">
                     <span>مرحباً، <span id="currentUser"></span></span>
-                    <span id="currentDate"></span>
-                  
+                </div>
+                <div class="date-time-bar">
+                    <span id="currentDateTime"></span>
+                </div>
             </div>
 
             <div class="tabs">
@@ -1061,7 +1081,7 @@ document.getElementById('currentUser').textContent = '';
         function updateCurrentDate() {
             const now = new Date();
             const arabicDate = formatArabicDate(now);
-            document.getElementById('currentDate').textContent = arabicDate;
+            document.getElementById('currentDateTime').textContent = arabicDate;
         }
 
         function formatArabicDate(date) {
@@ -1700,12 +1720,10 @@ alert('تم حفظ تقرير التفعيلات بنجاح!');
 
         function convertDataToCSV(data) {
             if (!data || data.length === 0) return '';
-            
-            // Create headers
+      
             const headers = ['التاريخ', 'اسم المستخدم', 'نوع الاشتراك', 'الوكيل'];
             let csv = headers.join(',') + '\n';
-            
-            // Add data rows
+    
             data.forEach(row => {
                 const rowData = [
                     row['ColumnA'] || row[0] || '',
