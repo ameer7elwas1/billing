@@ -755,7 +755,6 @@ function updateAgentSummary() {
             }
         }
 
-        /* Scroll animations */
         @keyframes slideInLeft {
             from {
                 opacity: 0;
@@ -853,7 +852,6 @@ function updateAgentSummary() {
 <body>
     <div class="container">
         
-        <!-- Main Dashboard -->
         <div id="dashboard" class="dashboard">
             <!-- Header -->
             <div class="header">
@@ -865,7 +863,6 @@ function updateAgentSummary() {
                 </div>
             </div>
 
-            <!-- Tabs -->
             <div class="tabs">
                 <button class="tab active" onclick="switchTab('basic')">
                     <span class="tab-icon">🎁</span>
@@ -991,14 +988,7 @@ function updateAgentSummary() {
     </div>
 
     <script>
-        // Login credentials (في مشروع حقيقي، يجب استخدام قاعدة بيانات آمنة)
-        const validCredentials = {
-            'admin': 'admin123',
-            'ameer': 'ameer',
-            'user': 'user789'
-        };
 
-        // Global variables
 let agentReports = {};
         let currentUser = '';
         let basicData = null;
@@ -1010,7 +1000,6 @@ let agentReports = {};
             'تموز', 'آب', 'أيلول', 'تشرين الأول', 'تشرين الثاني', 'كانون الأول'
         ];
 
-        // Subscription prices
         const subscriptionPrices = {
             basic: {
                 'Iraqcell_Bronze_Profile_NEW': 30000,
@@ -1034,7 +1023,6 @@ let agentReports = {};
             }
         };
 
-        // Initialize app
         document.addEventListener('DOMContentLoaded', function() {
             updateCurrentDate();
             setupFileUploads();
@@ -1043,7 +1031,6 @@ document.getElementById('currentUser').textContent = 'مشرف';
 
         });
 
-        // Login functionality
         function setupLoginForm() {
             document.getElementById('loginForm').addEventListener('submit', function(e) {
                 e.preventDefault();
@@ -1072,7 +1059,6 @@ document.getElementById('currentUser').textContent = 'مشرف';
             resetAdvancedResults();
         }
 
-        // Date functions
         function updateCurrentDate() {
             const now = new Date();
             const arabicDate = formatArabicDate(now);
@@ -1086,7 +1072,6 @@ document.getElementById('currentUser').textContent = 'مشرف';
             return `${day} ${month} ${year}`;
         }
 
-        // Tab switching
         function switchTab(tabName) {
             // Remove active class from all tabs
             document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
@@ -1097,7 +1082,6 @@ document.getElementById('currentUser').textContent = 'مشرف';
             document.getElementById(tabName + 'Tab').classList.add('active');
         }
 
-        // File upload setup
         function setupFileUploads() {
             setupFileUpload('basic');
             setupFileUpload('advanced');
