@@ -852,28 +852,7 @@ function updateAgentSummary() {
 </head>
 <body>
     <div class="container">
-        <!-- Login Screen -->
-        <div id="loginScreen" class="login-screen">
-            <div class="login-form">
-                <div class="login-logo">📊</div>
-                <h2 class="login-title">IRAQCELL</h2>
-                <form id="loginForm">
-                    <div class="form-group">
-                        <label for="username">اسم المستخدم:</label>
-                        <input type="text" id="username" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">كلمة المرور:</label>
-                        <input type="password" id="password" required>
-                    </div>
-                    <button type="submit" class="login-btn">تسجيل الدخول</button>
-                </form>
-                <div id="loginError" class="error-message hidden">
-                    اسم المستخدم أو كلمة المرور غير صحيحة
-                </div>
-            </div>
-        </div>
-
+        
         <!-- Main Dashboard -->
         <div id="dashboard" class="dashboard">
             <!-- Header -->
@@ -1059,7 +1038,9 @@ let agentReports = {};
         document.addEventListener('DOMContentLoaded', function() {
             updateCurrentDate();
             setupFileUploads();
-            setupLoginForm();
+           document.getElementById('dashboard').style.display = 'block';
+document.getElementById('currentUser').textContent = 'مشرف';
+
         });
 
         // Login functionality
