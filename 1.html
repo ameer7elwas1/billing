@@ -1247,27 +1247,27 @@ function updateAgentSummary() {
                 </div>
                 <div class="sidebar-nav">
                     <div class="nav-item active" onclick="switchTab('basic')">
-                        <span class="nav-icon">🎁</span>
+                        <span class="nav-icon"></span>
                         <span class="nav-text">العرض المجاني</span>
                 </div>
                     <div class="nav-item" onclick="switchTab('advanced')">
-                        <span class="nav-icon">📊</span>
+                        <span class="nav-icon"></span>
                         <span class="nav-text">3 أشهر مخفض</span>
             </div>
                     <div class="nav-item" onclick="switchTab('twoMonths')">
-                        <span class="nav-icon">📅</span>
+                        <span class="nav-icon"></span>
                         <span class="nav-text">شهرين مخفض</span>
                     </div>
                     <div class="nav-item" onclick="switchTab('summary')">
-                        <span class="nav-icon">📋</span>
+                        <span class="nav-icon"></span>
                         <span class="nav-text">الملخص العام</span>
                     </div>
                     <div class="nav-item" onclick="switchTab('settings')">
-                        <span class="nav-icon">⚙️</span>
+                        <span class="nav-icon"></span>
                         <span class="nav-text">الإعدادات</span>
                     </div>
                     <div class="nav-item" onclick="switchTab('activity')">
-                        <span class="nav-icon">📝</span>
+                        <span class="nav-icon"></span>
                         <span class="nav-text">سجل العمليات</span>
                     </div>
                 </div>
@@ -1284,7 +1284,7 @@ function updateAgentSummary() {
             <div id="basicTab" class="tab-content active">
                 <div class="section">
                     <h3 class="section-title">
-                        🎁 رفع Excel الوكيل لحساب العرض المجاني
+                         رفع Excel الوكيل لحساب العرض المجاني
                     </h3>
                     <div class="file-upload" id="basicFileUpload">
                         <p>📄 اسحب ملف Excel أو CSV هنا أو انقر للاختيار</p>
@@ -1295,22 +1295,22 @@ function updateAgentSummary() {
 
                 <div class="section">
                     <h3 class="section-title">
-                        ⚙️ تحليل بيانات العرض المجاني
+                         تحليل بيانات العرض المجاني
                     </h3>
                     <p style="color: #666; margin-bottom: 15px; font-size: 1rem;">
                     
                     </p>
                     <button class="btn btn-primary" onclick="analyzeBasicData()">
-                        🔍 تحليل البيانات
+                         تحليل البيانات
                     </button>
                     <button class="btn btn-warning" onclick="resetBasicResults()">
-                        🗑️ مسح النتائج
+                         مسح النتائج
                     </button>
                 </div>
 
                 <div id="basicResults" class="section hidden">
                     <h3 class="section-title">
-                        📊 نتائج العرض المجاني
+                         نتائج العرض المجاني
                     </h3>
                     <div id="basicAgentInfo" class="agent-info"></div>
                     <div class="results-grid" id="basicResultsGrid"></div>
@@ -1351,23 +1351,23 @@ function updateAgentSummary() {
 
                 <div class="section">
                     <h3 class="section-title">
-                        ⚙️ تحليل العرض المخفض لثلاث أشهر
+                         تحليل العرض المخفض لثلاث أشهر
                     </h3>
                     <p style="color: #666; margin-bottom: 15px; font-size: 1rem;">
-                        📈 يتم حساب التفعيل عند وجود 3 اشتراكات لنفس المستخدم خلال 5 أيام<br>
-                        💰 مقارنة أسعار العرض المخفض مع الأسعار الرسمية لحساب الراجع للوكيل
+                         يتم حساب التفعيل عند وجود 3 اشتراكات لنفس المستخدم خلال 5 أيام<br>
+                         مقارنة أسعار العرض المخفض مع الأسعار الرسمية لحساب الراجع للوكيل
                     </p>
                     <button class="btn btn-primary" onclick="analyzeAdvancedData()">
-                        🔍 تحليل التفعيلات
+                         تحليل التفعيلات
                     </button>
                     <button class="btn btn-warning" onclick="resetAdvancedResults()">
-                        🗑️ مسح النتائج
+                         مسح النتائج
                     </button>
                 </div>
 
                 <div id="advancedResults" class="section hidden">
                     <h3 class="section-title">
-                        📊 تفاصيل الاشتراكات والمبالغ 
+                         تفاصيل الاشتراكات والمبالغ 
                     </h3>
                     <div id="advancedAgentInfo" class="agent-info"></div>
                     <div class="results-grid" id="advancedResultsGrid"></div>
@@ -1408,23 +1408,23 @@ function updateAgentSummary() {
 
                 <div class="section">
                     <h3 class="section-title">
-                        ⚙️ تحليل العرض المخفض لشهرين
+                         تحليل العرض المخفض لشهرين
                     </h3>
                     <p style="color: #666; margin-bottom: 15px; font-size: 1rem;">
-                        📈 يتم حساب التفعيل عند وجود 2 اشتراكات لنفس المستخدم خلال 5 أيام<br>
-                        💰 مقارنة أسعار العرض المخفض مع الأسعار الرسمية لحساب الراجع للوكيل
+                         يتم حساب التفعيل عند وجود 2 اشتراكات لنفس المستخدم خلال 5 أيام<br>
+                         مقارنة أسعار العرض المخفض مع الأسعار الرسمية لحساب الراجع للوكيل
                     </p>
                     <button class="btn btn-primary" onclick="analyzeTwoMonthsData()">
-                        🔍 تحليل التفعيلات
+                         تحليل التفعيلات
                     </button>
                     <button class="btn btn-warning" onclick="resetTwoMonthsResults()">
-                        🗑️ مسح النتائج
+                         مسح النتائج
                     </button>
                 </div>
 
                 <div id="twoMonthsResults" class="section hidden">
                     <h3 class="section-title">
-                        📊 تفاصيل الاشتراكات والمبالغ 
+                         تفاصيل الاشتراكات والمبالغ 
                     </h3>
                     <div id="twoMonthsAgentInfo" class="agent-info"></div>
                     <div class="results-grid" id="twoMonthsResultsGrid"></div>
@@ -1483,7 +1483,7 @@ function updateAgentSummary() {
 
                 <div id="summaryTotals" class="section hidden">
                     <h3 class="section-title">
-                        💰 الإجماليات العامة
+                         الإجماليات العامة
                     </h3>
                     <div class="results-grid" id="summaryTotalsGrid"></div>
                 </div>
@@ -1494,27 +1494,27 @@ function updateAgentSummary() {
                     <h3 class="section-title">⚙️ الإعدادات</h3>
                     <div class="settings-container">
                         <div class="settings-section">
-                            <h4>💰 إعدادات الأسعار</h4>
+                            <h4> إعدادات الأسعار</h4>
                             <div class="settings-group">
-                                <label>سعر Bronze (شهري):</label>
+                                <label>سعر Bronze :</label>
                                 <input type="number" id="priceBronze" class="settings-input" value="30000">
                             </div>
                             <div class="settings-group">
-                                <label>سعر Silver (شهري):</label>
+                                <label>سعر Silver:</label>
                                 <input type="number" id="priceSilver" class="settings-input" value="40000">
                             </div>
                             <div class="settings-group">
-                                <label>سعر Gold (شهري):</label>
+                                <label>سعر Gold :</label>
                                 <input type="number" id="priceGold" class="settings-input" value="50000">
                             </div>
                             <div class="settings-group">
-                                <label>سعر Platinum (شهري):</label>
+                                <label>سعر Platinum :</label>
                                 <input type="number" id="pricePlatinum" class="settings-input" value="65000">
                             </div>
                             <button class="btn btn-primary" onclick="savePriceSettings()">💾 حفظ الأسعار</button>
                         </div>
                         <div class="settings-section">
-                            <h4>📦 إدارة البيانات</h4>
+                            <h4> إدارة البيانات</h4>
                             <button class="btn btn-success" onclick="backupData()">💾 نسخ احتياطي</button>
                             <button class="btn btn-warning" onclick="restoreData()">📥 استعادة البيانات</button>
                             <button class="btn btn-danger" onclick="clearAllData()">🗑️ مسح جميع البيانات</button>
