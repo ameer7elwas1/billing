@@ -972,6 +972,267 @@ function updateAgentSummary() {
             transform: translateY(-2px);
             box-shadow: 0 6px 16px rgba(44, 95, 141, 0.25);
             color: #1e4a6b;
+            cursor: pointer;
+        }
+
+        .author-info-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 30px 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border: 3px solid #2C5F8D;
+            z-index: 10001;
+            min-width: 450px;
+            max-width: 650px;
+            width: auto;
+            animation: popupFadeIn 0.3s ease;
+        }
+
+        .author-info-popup.show {
+            display: block;
+        }
+
+        @keyframes popupFadeIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 10000;
+            backdrop-filter: blur(4px);
+        }
+
+        .popup-overlay.show {
+            display: block;
+        }
+
+        .popup-header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #2C5F8D;
+            padding-bottom: 15px;
+        }
+
+        .popup-header h2 {
+            color: #2C5F8D;
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .popup-content {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            background: rgba(44, 95, 141, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(44, 95, 141, 0.15);
+            transition: all 0.3s ease;
+            flex-direction: row-reverse;
+        }
+
+        .info-item:hover {
+            background: rgba(44, 95, 141, 0.1);
+            border-color: rgba(44, 95, 141, 0.3);
+            transform: translateX(-5px);
+        }
+
+        .info-icon {
+            font-size: 1.3rem;
+            width: 35px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .info-text {
+            flex: 0 0 auto;
+            color: #333333;
+            font-size: 0.9rem;
+            font-weight: 600;
+            min-width: 120px;
+            text-align: left;
+        }
+
+        .info-value {
+            color: #2C5F8D;
+            font-weight: 700;
+            font-size: 0.95rem;
+            flex: 1;
+            text-align: left;
+            direction: ltr;
+            white-space: nowrap;
+        }
+
+        .info-action {
+            padding: 6px 14px;
+            background: #2C5F8D;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            font-weight: 700;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .info-action:hover {
+            background: #1e4a6b;
+            transform: scale(1.05);
+        }
+
+        .popup-close {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: transparent;
+            border: none;
+            font-size: 1.5rem;
+            color: #2C5F8D;
+            cursor: pointer;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .popup-close:hover {
+            background: rgba(44, 95, 141, 0.1);
+            transform: rotate(90deg);
+        }
+
+        /* Settings Styles */
+        .settings-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .settings-section {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(128, 28, 50, 0.1);
+            border: 1px solid rgba(128, 28, 50, 0.2);
+        }
+
+        .settings-section h4 {
+            color: #801c32;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            border-bottom: 2px solid rgba(128, 28, 50, 0.2);
+            padding-bottom: 10px;
+        }
+
+        .settings-group {
+            margin-bottom: 15px;
+        }
+
+        .settings-group label {
+            display: block;
+            color: #333;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .settings-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid rgba(128, 28, 50, 0.3);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .settings-input:focus {
+            outline: none;
+            border-color: #801c32;
+            box-shadow: 0 0 0 3px rgba(128, 28, 50, 0.1);
+        }
+
+        .settings-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .settings-checkbox input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        /* Activity Log Styles */
+        .activity-log-container {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(128, 28, 50, 0.1);
+            border: 1px solid rgba(128, 28, 50, 0.2);
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .activity-item {
+            padding: 12px;
+            margin-bottom: 10px;
+            background: rgba(128, 28, 50, 0.05);
+            border-radius: 8px;
+            border-right: 4px solid #801c32;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .activity-item:hover {
+            background: rgba(128, 28, 50, 0.1);
+            transform: translateX(-3px);
+        }
+
+        .activity-item .activity-icon {
+            font-size: 1.5rem;
+            margin-left: 10px;
+        }
+
+        .activity-item .activity-details {
+            flex: 1;
+        }
+
+        .activity-item .activity-time {
+            color: #666;
+            font-size: 0.85rem;
         }
     </style>
 </head>
@@ -981,8 +1242,8 @@ function updateAgentSummary() {
         <div id="dashboard" class="dashboard">
             <div class="sidebar">
                 <div class="sidebar-header">
-                    <h1>IRAQCELL</h1>
-                    <div class="author-name">Ameer Helwas</div>
+                <h1>IRAQCELL</h1>
+                    <div class="author-name" onclick="showAuthorInfo()">Ameer Helwas</div>
                 </div>
                 <div class="sidebar-nav">
                     <div class="nav-item active" onclick="switchTab('basic')">
@@ -1000,6 +1261,14 @@ function updateAgentSummary() {
                     <div class="nav-item" onclick="switchTab('summary')">
                         <span class="nav-icon">📋</span>
                         <span class="nav-text">الملخص العام</span>
+                    </div>
+                    <div class="nav-item" onclick="switchTab('settings')">
+                        <span class="nav-icon">⚙️</span>
+                        <span class="nav-text">الإعدادات</span>
+                    </div>
+                    <div class="nav-item" onclick="switchTab('activity')">
+                        <span class="nav-icon">📝</span>
+                        <span class="nav-text">سجل العمليات</span>
                     </div>
                 </div>
                 <div class="sidebar-footer">
@@ -1220,6 +1489,60 @@ function updateAgentSummary() {
                 </div>
             </div>
 
+            <div id="settingsTab" class="tab-content">
+                <div class="section">
+                    <h3 class="section-title">⚙️ الإعدادات</h3>
+                    <div class="settings-container">
+                        <div class="settings-section">
+                            <h4>💰 إعدادات الأسعار</h4>
+                            <div class="settings-group">
+                                <label>سعر Bronze (شهري):</label>
+                                <input type="number" id="priceBronze" class="settings-input" value="30000">
+                            </div>
+                            <div class="settings-group">
+                                <label>سعر Silver (شهري):</label>
+                                <input type="number" id="priceSilver" class="settings-input" value="40000">
+                            </div>
+                            <div class="settings-group">
+                                <label>سعر Gold (شهري):</label>
+                                <input type="number" id="priceGold" class="settings-input" value="50000">
+                            </div>
+                            <div class="settings-group">
+                                <label>سعر Platinum (شهري):</label>
+                                <input type="number" id="pricePlatinum" class="settings-input" value="65000">
+                            </div>
+                            <button class="btn btn-primary" onclick="savePriceSettings()">💾 حفظ الأسعار</button>
+                        </div>
+                        <div class="settings-section">
+                            <h4>📦 إدارة البيانات</h4>
+                            <button class="btn btn-success" onclick="backupData()">💾 نسخ احتياطي</button>
+                            <button class="btn btn-warning" onclick="restoreData()">📥 استعادة البيانات</button>
+                            <button class="btn btn-danger" onclick="clearAllData()">🗑️ مسح جميع البيانات</button>
+                        </div>
+                        <div class="settings-section">
+                            <h4>🔔 الإشعارات</h4>
+                            <label class="settings-checkbox">
+                                <input type="checkbox" id="enableNotifications" checked>
+                                تفعيل الإشعارات
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="activityTab" class="tab-content">
+                <div class="section">
+                    <h3 class="section-title">📝 سجل العمليات</h3>
+                    <div class="activity-controls" style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
+                        <input type="text" id="activitySearch" placeholder="🔍 بحث في السجل..." class="settings-input" style="flex: 1; min-width: 200px;" onkeyup="filterActivityLog()">
+                        <button class="btn btn-primary" onclick="refreshActivityLog()">🔄 تحديث</button>
+                        <button class="btn btn-success" onclick="exportActivityLog()">📊 تصدير</button>
+                        <button class="btn btn-danger" onclick="clearActivityLog()">🗑️ مسح السجل</button>
+                    </div>
+                    <div id="activityLogContent" class="activity-log-container"></div>
+                </div>
+            </div>
+
             </div> 
         </div>
     </div>
@@ -1333,6 +1656,8 @@ document.getElementById('currentUser').textContent = '';
                 else if (tabName === 'advanced') navItems[1]?.classList.add('active');
                 else if (tabName === 'twoMonths') navItems[2]?.classList.add('active');
                 else if (tabName === 'summary') navItems[3]?.classList.add('active');
+                else if (tabName === 'settings') navItems[4]?.classList.add('active');
+                else if (tabName === 'activity') navItems[5]?.classList.add('active');
             }
             
             const tabElement = document.getElementById(tabName + 'Tab');
@@ -1341,6 +1666,8 @@ document.getElementById('currentUser').textContent = '';
                 
                 if (tabName === 'summary') {
                     updateAgentSummary();
+                } else if (tabName === 'activity') {
+                    setTimeout(() => refreshActivityLog(), 100);
                 }
             }
         }
@@ -1617,6 +1944,7 @@ document.getElementById('currentUser').textContent = '';
             document.getElementById('basicResults').classList.remove('hidden');
             
             updateAgentSummary();
+            logActivity('تحليل البيانات - العرض المجاني', `تم تحليل ${results.total.count} اشتراك مجاني للوكيل ${results.agentName}`);
         }
 
         function analyzeAdvancedData() {
@@ -1842,6 +2170,7 @@ document.getElementById('currentUser').textContent = '';
             document.getElementById('advancedResults').classList.remove('hidden');
             
             updateAgentSummary();
+            logActivity('تحليل البيانات - 3 أشهر', `تم تحليل ${results.total.count} تفعيل للعرض المخفض 3 أشهر للوكيل ${results.agentName}`);
         }
 
         function analyzeTwoMonthsData() {
@@ -2098,6 +2427,7 @@ document.getElementById('currentUser').textContent = '';
             document.getElementById('twoMonthsResults').classList.remove('hidden');
             
             updateAgentSummary();
+            logActivity('تحليل البيانات - شهرين', `تم تحليل ${results.total.count} تفعيل للعرض المخفض شهرين للوكيل ${results.agentName}`);
         }
 
         function showLoading(type) {
@@ -2799,7 +3129,271 @@ function updateAgentSummary() {
             window.print();
         }
 
+        function showAuthorInfo() {
+            const popup = document.getElementById('authorInfoPopup');
+            const overlay = document.getElementById('popupOverlay');
+            popup.classList.add('show');
+            overlay.classList.add('show');
+        }
+
+        function closeAuthorInfo() {
+            const popup = document.getElementById('authorInfoPopup');
+            const overlay = document.getElementById('popupOverlay');
+            popup.classList.remove('show');
+            overlay.classList.remove('show');
+        }
+
+        function copyToClipboard(text, label) {
+            navigator.clipboard.writeText(text).then(() => {
+                showSuccessMessage(`تم نسخ ${label} إلى الحافظة`);
+            }).catch(() => {
+                alert(`تم نسخ ${label} إلى الحافظة`);
+            });
+        }
+
+        function openLink(url) {
+            window.open(url, '_blank');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const overlay = document.getElementById('popupOverlay');
+            overlay.addEventListener('click', closeAuthorInfo);
+            loadSettings();
+            loadActivityLog();
+        });
+
+        // Activity Log System
+        let activityLog = JSON.parse(localStorage.getItem('activityLog') || '[]');
+
+        function logActivity(action, details) {
+            const logEntry = {
+                id: Date.now(),
+                timestamp: new Date().toISOString(),
+                action: action,
+                details: details,
+                user: currentUser || 'غير محدد'
+            };
+            activityLog.unshift(logEntry);
+            if (activityLog.length > 1000) activityLog = activityLog.slice(0, 1000);
+            localStorage.setItem('activityLog', JSON.stringify(activityLog));
+        }
+
+        function refreshActivityLog() {
+            const container = document.getElementById('activityLogContent');
+            if (!container) return;
+            
+            if (activityLog.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #999; padding: 40px;">لا توجد عمليات مسجلة</p>';
+                return;
+            }
+
+            let html = '';
+            activityLog.forEach(log => {
+                const date = new Date(log.timestamp);
+                const timeStr = date.toLocaleString('ar-IQ', { 
+                    year: 'numeric', month: 'long', day: 'numeric',
+                    hour: '2-digit', minute: '2-digit' 
+                });
+                html += `
+                    <div class="activity-item">
+                        <span class="activity-icon">${getActivityIcon(log.action)}</span>
+                        <div class="activity-details">
+                            <strong>${log.action}</strong>
+                            <div style="color: #666; font-size: 0.9rem; margin-top: 5px;">${log.details}</div>
+                            <div class="activity-time">${timeStr} - ${log.user}</div>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function getActivityIcon(action) {
+            if (action.includes('تحميل') || action.includes('رفع')) return '📤';
+            if (action.includes('تحليل')) return '🔍';
+            if (action.includes('تصدير')) return '📊';
+            if (action.includes('حفظ')) return '💾';
+            if (action.includes('طباعة')) return '🖨️';
+            if (action.includes('إعدادات')) return '⚙️';
+            if (action.includes('نسخ')) return '💾';
+            if (action.includes('مسح')) return '🗑️';
+            return '📝';
+        }
+
+        function filterActivityLog() {
+            const searchTerm = document.getElementById('activitySearch').value.toLowerCase();
+            const container = document.getElementById('activityLogContent');
+            const items = container.querySelectorAll('.activity-item');
+            
+            items.forEach(item => {
+                const text = item.textContent.toLowerCase();
+                item.style.display = text.includes(searchTerm) ? 'flex' : 'none';
+            });
+        }
+
+        function exportActivityLog() {
+            if (activityLog.length === 0) {
+                alert('لا توجد عمليات للتصدير');
+                return;
+            }
+            
+            const wb = XLSX.utils.book_new();
+            const excelData = activityLog.map(log => ({
+                'التاريخ والوقت': new Date(log.timestamp).toLocaleString('ar-IQ'),
+                'الإجراء': log.action,
+                'التفاصيل': log.details,
+                'المستخدم': log.user
+            }));
+            
+            const ws = XLSX.utils.json_to_sheet(excelData);
+            XLSX.utils.book_append_sheet(wb, ws, 'سجل العمليات');
+            XLSX.writeFile(wb, `سجل_العمليات_${formatDateForFilename(new Date())}.xlsx`);
+            logActivity('تصدير سجل العمليات', 'تم تصدير سجل العمليات إلى Excel');
+            showSuccessMessage('تم تصدير سجل العمليات بنجاح!');
+        }
+
+        function clearActivityLog() {
+            if (confirm('هل أنت متأكد من مسح جميع سجل العمليات؟')) {
+                activityLog = [];
+                localStorage.removeItem('activityLog');
+                refreshActivityLog();
+                logActivity('مسح سجل العمليات', 'تم مسح جميع سجل العمليات');
+                showSuccessMessage('تم مسح سجل العمليات');
+            }
+        }
+
+        // Settings Management
+        function loadSettings() {
+            const saved = JSON.parse(localStorage.getItem('appSettings') || '{}');
+            if (saved.bronze) document.getElementById('priceBronze').value = saved.bronze;
+            if (saved.silver) document.getElementById('priceSilver').value = saved.silver;
+            if (saved.gold) document.getElementById('priceGold').value = saved.gold;
+            if (saved.platinum) document.getElementById('pricePlatinum').value = saved.platinum;
+            if (saved.notifications !== undefined) document.getElementById('enableNotifications').checked = saved.notifications;
+        }
+
+        function savePriceSettings() {
+            const bronze = parseFloat(document.getElementById('priceBronze').value);
+            const silver = parseFloat(document.getElementById('priceSilver').value);
+            const gold = parseFloat(document.getElementById('priceGold').value);
+            const platinum = parseFloat(document.getElementById('pricePlatinum').value);
+            
+            subscriptionPrices.basic['Iraqcell_Bronze_Profile_NEW'] = bronze;
+            subscriptionPrices.basic['Iraqcell_Silver_Profile_NEW'] = silver;
+            subscriptionPrices.basic['Iraqcell_Gold_Profile_NEW'] = gold;
+            subscriptionPrices.basic['Iraqcell_Platinum_Profile_NEW'] = platinum;
+            
+            const settings = {
+                bronze, silver, gold, platinum,
+                notifications: document.getElementById('enableNotifications').checked
+            };
+            localStorage.setItem('appSettings', JSON.stringify(settings));
+            logActivity('حفظ الإعدادات', 'تم تحديث إعدادات الأسعار');
+            showSuccessMessage('تم حفظ الإعدادات بنجاح!');
+        }
+
+        // Backup and Restore
+        function backupData() {
+            const backup = {
+                timestamp: new Date().toISOString(),
+                agentReports: agentReports,
+                settings: JSON.parse(localStorage.getItem('appSettings') || '{}'),
+                activityLog: activityLog
+            };
+            
+            const dataStr = JSON.stringify(backup, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `backup_${formatDateForFilename(new Date())}.json`;
+            link.click();
+            URL.revokeObjectURL(url);
+            
+            logActivity('نسخ احتياطي', 'تم إنشاء نسخة احتياطية من البيانات');
+            showSuccessMessage('تم إنشاء النسخة الاحتياطية بنجاح!');
+        }
+
+        function restoreData() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = (e) => {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    try {
+                        const backup = JSON.parse(event.target.result);
+                        if (backup.agentReports) agentReports = backup.agentReports;
+                        if (backup.settings) localStorage.setItem('appSettings', JSON.stringify(backup.settings));
+                        if (backup.activityLog) {
+                            activityLog = backup.activityLog;
+                            localStorage.setItem('activityLog', JSON.stringify(activityLog));
+                        }
+                        
+                        loadSettings();
+                        updateAgentSummary();
+                        refreshActivityLog();
+                        logActivity('استعادة البيانات', 'تم استعادة البيانات من النسخة الاحتياطية');
+                        showSuccessMessage('تم استعادة البيانات بنجاح!');
+                    } catch (error) {
+                        alert('خطأ في قراءة الملف: ' + error.message);
+                    }
+                };
+                reader.readAsText(file);
+            };
+            input.click();
+        }
+
+        function clearAllData() {
+            if (confirm('هل أنت متأكد من مسح جميع البيانات؟ هذا الإجراء لا يمكن التراجع عنه!')) {
+                agentReports = {};
+                activityLog = [];
+                localStorage.clear();
+                logActivity('مسح جميع البيانات', 'تم مسح جميع البيانات من النظام');
+                showSuccessMessage('تم مسح جميع البيانات');
+                location.reload();
+            }
+        }
+
+        function loadActivityLog() {
+            refreshActivityLog();
+}
 
 </script>
+
+<div id="popupOverlay" class="popup-overlay"></div>
+<div id="authorInfoPopup" class="author-info-popup">
+    <button class="popup-close" onclick="closeAuthorInfo()">×</button>
+    <div class="popup-header">
+        <h2></h2>
+    </div>
+    <div class="popup-content">
+        <div class="info-item">
+            <button class="info-action" onclick="copyToClipboard('Ameer Helwas', 'الاسم')">📋 نسخ</button>
+            <span class="info-value">Ameer Helwas</span>
+            <span class="info-text">الاسم:</span>
+            <span class="info-icon">👨‍💻</span>
+        </div>
+        <div class="info-item">
+            <button class="info-action" onclick="copyToClipboard('ameeralgaraawi@hotmail.com', 'البريد')">📋 نسخ</button>
+            <span class="info-value">ameeralgaraawi@hotmail.com</span>
+            <span class="info-text">البريد الإلكتروني:</span>
+            <span class="info-icon">📧</span>
+        </div>
+        <div class="info-item">
+            <button class="info-action" onclick="copyToClipboard('07701024143', 'الهاتف')">📋 نسخ</button>
+            <span class="info-value">07701024143</span>
+            <span class="info-text">الهاتف:</span>
+            <span class="info-icon">📱</span>
+        </div>
+        <div class="info-item">
+            <span class="info-value">IRAQCELL</span>
+            <span class="info-text">الشركة:</span>
+            <span class="info-icon">🏢</span>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
