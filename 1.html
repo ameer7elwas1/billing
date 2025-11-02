@@ -68,52 +68,174 @@ function updateAgentSummary() {
         }
 
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background: #ffffff;
             min-height: 100vh;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: gradientShift 8s ease infinite;
+            position: relative;
+            overflow-x: hidden;
         }
 
-        @keyframes gradientShift {
-            0%, 100% { background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%); }
-            25% { background: linear-gradient(135deg, #f093fb 0%, #f5576c 50%, #4facfe 100%); }
-            50% { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 50%, #43e97b 100%); }
-            75% { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 50%, #667eea 100%); }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(128, 28, 50, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(128, 28, 50, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
         }
 
         .container {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 25px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
-            overflow: hidden;
-            width: 95%;
-            max-width: 1400px;
-            min-height: 85vh;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
         }
 
-        /* Login Screen */
+        .sidebar {
+            width: 280px;
+            background: #ffffff;
+            border-left: 2px solid #801c32;
+            box-shadow: 4px 0 20px rgba(128, 28, 50, 0.15);
+            position: fixed;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            padding: 30px 0;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 0 25px 30px;
+            border-bottom: 2px solid #801c32;
+            margin-bottom: 20px;
+        }
+
+        .sidebar-header h1 {
+            font-size: 2rem;
+            color: #801c32;
+            font-weight: 900;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 0 15px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 18px 20px;
+            margin-bottom: 10px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #333333;
+            font-weight: 600;
+            font-size: 15px;
+            position: relative;
+            overflow: hidden;
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+        }
+
+        .nav-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 4px;
+            height: 100%;
+            background: #801c32;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-item:hover::before,
+        .nav-item.active::before {
+            transform: translateX(0);
+        }
+
+        .nav-item:hover {
+            background: rgba(128, 28, 50, 0.05);
+            border-color: #801c32;
+            transform: translateX(-5px);
+            box-shadow: 0 4px 15px rgba(128, 28, 50, 0.1);
+        }
+
+        .nav-item.active {
+            background: rgba(128, 28, 50, 0.1);
+            border-color: #801c32;
+            color: #801c32;
+            box-shadow: 0 4px 20px rgba(128, 28, 50, 0.15);
+            transform: translateX(-5px);
+        }
+
+        .nav-icon {
+            font-size: 1.5rem;
+            width: 35px;
+            text-align: center;
+        }
+
+        .nav-text {
+            flex: 1;
+        }
+
+        .sidebar-footer {
+            padding: 20px 25px;
+            border-top: 2px solid #801c32;
+            margin-top: 20px;
+        }
+
+        .user-info-sidebar {
+            color: #801c32;
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .date-info-sidebar {
+            color: #666666;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .main-content {
+            flex: 1;
+            margin-right: 280px;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
         .login-screen {
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 80vh;
-            background: white;
+            min-height: 100vh;
+            width: 100%;
         }
 
         .login-form {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(15px);
-            padding: 50px 40px;
-            border-radius: 25px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            background: #ffffff;
+            padding: 60px 50px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(128, 28, 50, 0.2);
             width: 100%;
-            max-width: 450px;
+            max-width: 480px;
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 3px solid #801c32;
             position: relative;
             overflow: hidden;
         }
@@ -125,30 +247,19 @@ function updateAgentSummary() {
             left: 0;
             right: 0;
             height: 4px;
-            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #4facfe);
-            background-size: 300% 100%;
-            animation: gradientMove 3s ease infinite;
-        }
-
-        @keyframes gradientMove {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+            background: #801c32;
         }
 
         .login-logo {
             font-size: 3.5rem;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: #801c32;
             margin-bottom: 20px;
             font-weight: bold;
-            text-shadow: 0 0 30px rgba(102, 126, 234, 0.3);
         }
 
         .login-title {
             font-size: 1.8rem;
-            color: #333;
+            color: #801c32;
             margin-bottom: 35px;
             font-weight: 600;
         }
@@ -161,33 +272,32 @@ function updateAgentSummary() {
         .form-group label {
             display: block;
             margin-bottom: 8px;
-            color: #555;
+            color: #333333;
             font-weight: bold;
         }
 
         .form-group input {
             width: 100%;
             padding: 15px 20px;
-            border: 2px solid rgba(102, 126, 234, 0.2);
+            border: 2px solid #e0e0e0;
             border-radius: 15px;
             font-size: 16px;
             transition: all 0.3s ease;
             text-align: right;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
+            background: #ffffff;
         }
 
         .form-group input:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 20px rgba(102, 126, 234, 0.2);
+            border-color: #801c32;
+            box-shadow: 0 0 20px rgba(128, 28, 50, 0.2);
             transform: translateY(-2px);
         }
 
         .login-btn {
             width: 100%;
             padding: 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #801c32;
             color: white;
             border: none;
             border-radius: 15px;
@@ -195,156 +305,38 @@ function updateAgentSummary() {
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 8px 25px rgba(128, 28, 50, 0.3);
         }
 
         .login-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+            background: #6a1628;
+            box-shadow: 0 12px 35px rgba(128, 28, 50, 0.4);
         }
 
         .login-btn:active {
             transform: translateY(-1px);
         }
 
-        /* Main Dashboard */
         .dashboard {
             display: none;
-        }
-
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-            color: white;
-            padding: 30px 25px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
-            animation: patternMove 20s linear infinite;
-        }
-
-        @keyframes patternMove {
-            0% { transform: translateX(0) translateY(0); }
-            100% { transform: translateX(60px) translateY(60px); }
-        }
-
-        .header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            font-weight: 700;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            position: relative;
-            z-index: 2;
-        }
-
-        .user-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 15px;
-            position: relative;
-            z-index: 2;
-            font-size: 1.1rem;
-        }
-
-        .logout-btn {
-            background: rgba(255,255,255,0.15);
-            border: 2px solid rgba(255,255,255,0.3);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-            backdrop-filter: blur(10px);
-        }
-
-        .logout-btn:hover {
-            background: rgba(255,255,255,0.25);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        .tabs {
-            display: flex;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            border-bottom: 1px solid #dee2e6;
-            position: relative;
-        }
-
-        .tab {
-            flex: 1;
-            padding: 20px 15px;
-            text-align: center;
-            cursor: pointer;
-            border: none;
-            background: none;
-            font-size: 16px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            color: #6c757d;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .tab-icon {
-            font-size: 1.5rem;
-            transition: transform 0.3s ease;
-        }
-
-        .tab-text {
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .tab:hover {
-            background: rgba(102, 126, 234, 0.1);
-            color: #667eea;
-        }
-
-        .tab:hover .tab-icon {
-            transform: scale(1.1);
-        }
-
-        .tab.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-bottom: none;
-            box-shadow: 0 -3px 15px rgba(102, 126, 234, 0.3);
-        }
-
-        .tab.active::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            border-left: 15px solid transparent;
-            border-right: 15px solid transparent;
-            border-bottom: 15px solid white;
-        }
-
-        .tab.active .tab-icon {
-            transform: scale(1.2);
+            width: 100%;
         }
 
         .tab-content {
-            padding: 20px;
             display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .tab-content.active {
@@ -352,104 +344,146 @@ function updateAgentSummary() {
         }
 
         .section {
-            background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(248,249,250,0.9) 100%);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 25px;
-            margin-bottom: 25px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-        }
-
-        .section:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 35px rgba(0,0,0,0.12);
-        }
-
-        .section-title {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 3px solid;
-            border-image: linear-gradient(90deg, #667eea, #764ba2) 1;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .file-upload {
-            border: 3px dashed rgba(102, 126, 234, 0.3);
-            border-radius: 20px;
-            padding: 30px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-bottom: 25px;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+            background: #ffffff;
+            border-radius: 25px;
+            padding: 40px;
+            margin-bottom: 30px;
+            border: 2px solid #e0e0e0;
+            box-shadow: 
+                0 10px 30px rgba(128, 28, 50, 0.1),
+                0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
         }
 
-        .file-upload::before {
+        .section::before {
             content: '';
             position: absolute;
             top: -50%;
             left: -50%;
             width: 200%;
             height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+            background: linear-gradient(
+                45deg,
+                transparent 30%,
+                rgba(128, 28, 50, 0.05) 50%,
+                transparent 70%
+            );
             transform: rotate(45deg);
-            transition: all 0.5s ease;
+            transition: all 0.6s ease;
             opacity: 0;
         }
 
-        .file-upload:hover::before {
-            animation: shimmer 1.5s ease-in-out;
+        .section:hover::before {
+            animation: shine 1.5s ease-in-out;
             opacity: 1;
         }
 
-        @keyframes shimmer {
-            0% { transform: rotate(45deg) translateX(-100%); }
-            100% { transform: rotate(45deg) translateX(100%); }
+        @keyframes shine {
+            0% { transform: rotate(45deg) translateX(-100%) translateY(-100%); }
+            100% { transform: rotate(45deg) translateX(100%) translateY(100%); }
+        }
+
+        .section:hover {
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: 
+                0 20px 50px rgba(128, 28, 50, 0.15),
+                0 10px 30px rgba(0, 0, 0, 0.1);
+            border-color: #801c32;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #801c32;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #801c32;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            letter-spacing: 1px;
+            position: relative;
+        }
+
+        .file-upload {
+            border: 3px dashed #801c32;
+            border-radius: 20px;
+            padding: 50px 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            margin-bottom: 30px;
+            background: rgba(128, 28, 50, 0.05);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                0 10px 30px rgba(128, 28, 50, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .file-upload::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(128, 28, 50, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .file-upload:hover::before {
+            left: 100%;
         }
 
         .file-upload:hover {
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
-            border-color: #667eea;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 
+                0 20px 50px rgba(128, 28, 50, 0.15),
+                0 10px 30px rgba(128, 28, 50, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            background: rgba(128, 28, 50, 0.1);
+            border-color: #801c32;
         }
 
         .file-upload.dragover {
-            border-color: #764ba2;
-            background: linear-gradient(135deg, rgba(118, 75, 162, 0.15) 0%, rgba(240, 147, 251, 0.15) 100%);
-            transform: scale(1.02);
+            transform: scale(1.05);
+            box-shadow: 
+                0 25px 60px rgba(128, 28, 50, 0.2),
+                0 15px 40px rgba(128, 28, 50, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.5);
+            border-color: #801c32;
         }
 
         .file-upload p {
             margin: 0;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #667eea;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #801c32;
             position: relative;
             z-index: 2;
+            letter-spacing: 0.8px;
         }
 
         .btn {
-            padding: 12px 25px;
+            padding: 16px 32px;
             border: none;
-            border-radius: 12px;
+            border-radius: 15px;
             cursor: pointer;
-            font-size: 15px;
-            font-weight: 600;
-            margin: 8px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            font-size: 16px;
+            font-weight: 800;
+            margin: 10px 8px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 
+                0 8px 20px rgba(0, 0, 0, 0.15),
+                0 4px 10px rgba(0, 0, 0, 0.1);
             position: relative;
             overflow: hidden;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #ffffff;
         }
 
         .btn::before {
@@ -462,73 +496,90 @@ function updateAgentSummary() {
             background: rgba(255,255,255,0.3);
             border-radius: 50%;
             transform: translate(-50%, -50%);
-            transition: all 0.5s ease;
+            transition: all 0.6s ease;
         }
 
         .btn:active::before {
-            width: 300px;
-            height: 300px;
+            width: 400px;
+            height: 400px;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: #801c32;
+            box-shadow: 
+                0 8px 25px rgba(128, 28, 50, 0.4),
+                0 4px 15px rgba(128, 28, 50, 0.3);
         }
 
         .btn-primary:hover {
-            background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            transform: translateY(-5px) scale(1.05);
+            background: #6a1628;
+            box-shadow: 
+                0 15px 40px rgba(128, 28, 50, 0.5),
+                0 8px 25px rgba(128, 28, 50, 0.4);
         }
 
         .btn-success {
-            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
-            color: white;
+            background: #801c32;
+            box-shadow: 
+                0 8px 25px rgba(128, 28, 50, 0.4),
+                0 4px 15px rgba(128, 28, 50, 0.3);
         }
 
         .btn-success:hover {
-            background: linear-gradient(135deg, #218838 0%, #1ab085 100%);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.3);
+            transform: translateY(-5px) scale(1.05);
+            background: #6a1628;
+            box-shadow: 
+                0 15px 40px rgba(128, 28, 50, 0.5),
+                0 8px 25px rgba(128, 28, 50, 0.4);
         }
 
         .btn-warning {
-            background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);
-            color: #212529;
+            background: #801c32;
+            box-shadow: 
+                0 8px 25px rgba(128, 28, 50, 0.4),
+                0 4px 15px rgba(128, 28, 50, 0.3);
         }
 
         .btn-warning:hover {
-            background: linear-gradient(135deg, #e0a800 0%, #e8590c 100%);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(255, 193, 7, 0.3);
+            transform: translateY(-5px) scale(1.05);
+            background: #6a1628;
+            box-shadow: 
+                0 15px 40px rgba(128, 28, 50, 0.5),
+                0 8px 25px rgba(128, 28, 50, 0.4);
         }
 
         .btn-danger {
-            background: linear-gradient(135deg, #dc3545 0%, #e83e8c 100%);
-            color: white;
+            background: linear-gradient(180deg, #ef4444 0%, #dc2626 100%);
+            color: #ffffff;
+            border-color: rgba(239, 68, 68, 0.5);
         }
 
         .btn-danger:hover {
-            background: linear-gradient(135deg, #c82333 0%, #d91a7a 100%);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(220, 53, 69, 0.3);
+            background: linear-gradient(180deg, #dc2626 0%, #b91c1c 100%);
+            transform: translateY(-2px);
+            box-shadow: 
+                0 8px 25px rgba(239, 68, 68, 0.4),
+                0 0 20px rgba(239, 68, 68, 0.3);
         }
 
         .results-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 15px;
             margin: 20px 0;
+            padding: 10px;
         }
 
         .result-card {
-            background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(248,249,250,0.9) 100%);
-            backdrop-filter: blur(15px);
-            border-radius: 20px;
-            padding: 25px;
+            background: #ffffff;
+            border-radius: 15px;
+            padding: 18px 15px;
             text-align: center;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-            border-left: 5px solid #667eea;
+            box-shadow: 
+                0 6px 20px rgba(128, 28, 50, 0.1),
+                0 3px 10px rgba(0, 0, 0, 0.05);
+            border: 2px solid #e0e0e0;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
@@ -538,116 +589,121 @@ function updateAgentSummary() {
             content: '';
             position: absolute;
             top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #667eea, #764ba2);
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(128, 28, 50, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .result-card:hover::before {
+            left: 100%;
         }
 
         .result-card:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 
+                0 12px 30px rgba(128, 28, 50, 0.15),
+                0 6px 20px rgba(128, 28, 50, 0.1);
+            border-color: #801c32;
         }
 
         .result-card.bronze {
-            border-left-color: #cd7f32;
-        }
-
-        .result-card.bronze::before {
-            background: linear-gradient(90deg, #cd7f32, #e6a756);
+            border-top: 3px solid #f59e0b;
         }
 
         .result-card.silver {
-            border-left-color: #c0c0c0;
-        }
-
-        .result-card.silver::before {
-            background: linear-gradient(90deg, #c0c0c0, #d4d4d4);
+            border-top: 3px solid #94a3b8;
         }
 
         .result-card.gold {
-            border-left-color: #ffd700;
-        }
-
-        .result-card.gold::before {
-            background: linear-gradient(90deg, #ffd700, #ffed4e);
+            border-top: 3px solid #fbbf24;
         }
 
         .result-card.platinum {
-            border-left-color: #e5e4e2;
-        }
-
-        .result-card.platinum::before {
-            background: linear-gradient(90deg, #e5e4e2, #f0f0ee);
+            border-top: 3px solid #a855f7;
         }
 
         .result-card h3 {
-            color: #333;
-            margin-bottom: 15px;
-            font-size: 1.2rem;
+            color: #801c32;
+            margin-bottom: 10px;
+            font-size: 1rem;
             font-weight: 700;
+            letter-spacing: 0.5px;
+            position: relative;
+            z-index: 2;
+            text-transform: uppercase;
         }
 
         .result-card .count {
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: 900;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 10px;
-            text-shadow: 0 2px 10px rgba(102, 126, 234, 0.2);
+            color: #801c32;
+            margin-bottom: 12px;
+            line-height: 1.1;
+            position: relative;
+            z-index: 2;
         }
 
         .result-card .amount {
-            color: #28a745;
-            font-weight: 700;
-            font-size: 1.1rem;
-            background: linear-gradient(135deg, #28a745, #20c997);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: #333333;
+            font-weight: 600;
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 2;
+            margin: 8px 0;
+            padding: 6px 0;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .result-card .amount:first-of-type {
+            border-top: none;
         }
 
         .agent-info {
-            background: linear-gradient(135deg, #28a745 0%, #20c997 50%, #17a2b8 100%);
-            color: white;
-            border-radius: 20px;
-            padding: 25px;
-            margin-bottom: 25px;
+            background: #ffffff;
+            border-radius: 25px;
+            padding: 40px;
+            margin-bottom: 30px;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(40, 167, 69, 0.3);
+            box-shadow: 
+                0 15px 40px rgba(128, 28, 50, 0.1),
+                0 8px 25px rgba(128, 28, 50, 0.15);
             position: relative;
             overflow: hidden;
+            border: 3px solid #801c32;
         }
 
         .agent-info::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M30 30l10-10v20z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
-            animation: patternMove 15s linear infinite;
-            opacity: 0.3;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(128, 28, 50, 0.05), transparent);
+            transform: rotate(45deg);
+            animation: float 8s ease-in-out infinite;
         }
 
         .agent-info h3 {
-            margin-bottom: 15px;
-            font-size: 1.5rem;
-            font-weight: 700;
+            margin-bottom: 25px;
+            font-size: 2rem;
+            font-weight: 900;
             position: relative;
             z-index: 2;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            color: #801c32;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
         .agent-info p {
             position: relative;
             z-index: 2;
-            font-size: 1.1rem;
-            font-weight: 500;
-            margin-bottom: 8px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #333333;
         }
 
         .hidden {
@@ -657,20 +713,28 @@ function updateAgentSummary() {
         .loading {
             display: none;
             text-align: center;
-            padding: 30px;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
-            border-radius: 20px;
-            margin: 20px 0;
+            padding: 60px 40px;
+            background: #ffffff;
+            border-radius: 25px;
+            margin: 30px 0;
+            box-shadow: 
+                0 15px 40px rgba(128, 28, 50, 0.1),
+                0 8px 25px rgba(128, 28, 50, 0.15);
+            border: 3px solid #801c32;
         }
 
         .spinner {
-            border: 4px solid rgba(102, 126, 234, 0.2);
-            border-top: 4px solid #667eea;
+            border: 5px solid rgba(128, 28, 50, 0.2);
+            border-top: 5px solid #801c32;
+            border-right: 5px solid #801c32;
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
+            width: 70px;
+            height: 70px;
             animation: spin 1s linear infinite;
-            margin: 0 auto 15px;
+            margin: 0 auto 25px;
+            box-shadow: 
+                0 0 30px rgba(128, 28, 50, 0.4),
+                0 6px 20px rgba(0, 0, 0, 0.2);
         }
 
         @keyframes spin {
@@ -679,34 +743,41 @@ function updateAgentSummary() {
         }
 
         .loading p {
-            color: #667eea;
-            font-weight: 600;
-            font-size: 1.1rem;
+            color: #801c32;
+            font-weight: 800;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
         }
 
         .error-message {
-            background: linear-gradient(135deg, #f8d7da 0%, #f1c0c7 100%);
-            color: #721c24;
-            padding: 15px;
-            border-radius: 15px;
-            margin: 15px 0;
-            border: 1px solid #f5c6cb;
-            border-left: 5px solid #dc3545;
-            font-weight: 600;
-            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.2);
+            background: #ffffff;
+            color: #e53e3e;
+            padding: 20px 30px;
+            border-radius: 20px;
+            margin: 25px 0;
+            border: 3px solid #e53e3e;
+            font-weight: 800;
+            font-size: 1.1rem;
+            box-shadow: 
+                0 10px 30px rgba(229, 62, 62, 0.2),
+                0 5px 15px rgba(0, 0, 0, 0.1);
+            letter-spacing: 0.5px;
         }
 
         .success-message {
-            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
-            color: #155724;
-            padding: 15px;
-            border-radius: 15px;
-            margin: 15px 0;
-            border: 1px solid #c3e6cb;
-            border-left: 5px solid #28a745;
-            font-weight: 600;
-            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.2);
+            background: #ffffff;
+            color: #801c32;
+            padding: 20px 30px;
+            border-radius: 20px;
+            margin: 25px 0;
+            border: 3px solid #801c32;
+            font-weight: 800;
+            font-size: 1.1rem;
+            box-shadow: 
+                0 10px 30px rgba(128, 28, 50, 0.2),
+                0 5px 15px rgba(0, 0, 0, 0.1);
             animation: fadeInUp 0.5s ease;
+            letter-spacing: 0.5px;
         }
 
         @keyframes fadeInUp {
@@ -721,38 +792,45 @@ function updateAgentSummary() {
         }
 
         @media (max-width: 768px) {
-            .container {
+            .sidebar {
                 width: 100%;
-                margin: 0;
-                border-radius: 0;
+                position: relative;
+                height: auto;
+                border-left: none;
+                border-bottom: 2px solid #801c32;
+            }
+
+            .main-content {
+                margin-right: 0;
+                padding: 20px;
             }
 
             .results-grid {
                 grid-template-columns: 1fr;
-            }
-
-            .tabs {
-                flex-direction: column;
-            }
-
-            .tab {
-                flex-direction: row;
-                justify-content: center;
                 gap: 15px;
             }
 
-            .header h1 {
-                font-size: 1.8rem;
+            .section {
+                padding: 25px 20px;
             }
 
-            .user-info {
-                flex-direction: column;
-                gap: 10px;
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .btn {
+                padding: 12px 24px;
+                font-size: 14px;
+                margin: 8px 4px;
+            }
+
+            .file-upload {
+                padding: 30px 20px;
             }
 
             .login-form {
                 margin: 20px;
-                padding: 30px 20px;
+                padding: 40px 25px;
             }
         }
 
@@ -792,18 +870,23 @@ function updateAgentSummary() {
             margin: 10px 0 0 0;
         }
         #currentDateTime {
-            font-size: 1.4rem;
-            font-weight: bold;
-            color: #fff;
-            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-            padding: 8px 24px;
-            border-radius: 12px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #801c32;
+            background: #ffffff;
+            padding: 12px 28px;
+            border-radius: 8px;
             display: inline-block;
-            letter-spacing: 1px;
-            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.10);
+            letter-spacing: 2px;
+            box-shadow: 
+                0 4px 15px rgba(128, 28, 50, 0.15),
+                0 0 0 1px rgba(128, 28, 50, 0.2);
+            position: relative;
+            z-index: 2;
+            margin-top: 15px;
+            border: 2px solid #801c32;
         }
 
-        /* Print Styles */
         @media print {
             body * {
                 visibility: hidden;
@@ -865,35 +948,70 @@ function updateAgentSummary() {
                 color-adjust: exact;
             }
         }
+
+        .sidebar-header .author-name {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #2C5F8D;
+            text-align: center;
+            margin-top: 12px;
+            letter-spacing: 2px;
+            padding: 10px 18px;
+            background: linear-gradient(135deg, rgba(44, 95, 141, 0.1) 0%, rgba(44, 95, 141, 0.15) 100%);
+            border-radius: 12px;
+            border: 2px solid rgba(44, 95, 141, 0.3);
+            display: inline-block;
+            width: calc(100% - 30px);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(44, 95, 141, 0.1);
+        }
+
+        .sidebar-header .author-name:hover {
+            background: linear-gradient(135deg, rgba(44, 95, 141, 0.15) 0%, rgba(44, 95, 141, 0.2) 100%);
+            border-color: rgba(44, 95, 141, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(44, 95, 141, 0.25);
+            color: #1e4a6b;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         
         <div id="dashboard" class="dashboard">
-            <!-- Header -->
-            <div class="header">
-                <h1>IRAQCELL</h1>
-                <div class="user-info">
-                    <span>مرحباً، <span id="currentUser"></span></span>
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <h1>IRAQCELL</h1>
+                    <div class="author-name">Ameer Helwas</div>
                 </div>
-                <div class="date-time-bar">
-                    <span id="currentDateTime"></span>
+                <div class="sidebar-nav">
+                    <div class="nav-item active" onclick="switchTab('basic')">
+                        <span class="nav-icon">🎁</span>
+                        <span class="nav-text">العرض المجاني</span>
+                </div>
+                    <div class="nav-item" onclick="switchTab('advanced')">
+                        <span class="nav-icon">📊</span>
+                        <span class="nav-text">3 أشهر مخفض</span>
+            </div>
+                    <div class="nav-item" onclick="switchTab('twoMonths')">
+                        <span class="nav-icon">📅</span>
+                        <span class="nav-text">شهرين مخفض</span>
+                    </div>
+                    <div class="nav-item" onclick="switchTab('summary')">
+                        <span class="nav-icon">📋</span>
+                        <span class="nav-text">الملخص العام</span>
+                    </div>
+                </div>
+                <div class="sidebar-footer">
+                    <div class="user-info-sidebar">
+                        <span id="currentUser">مرحباً</span>
+                    </div>
+                    <div class="date-info-sidebar" id="currentDateTime"></div>
                 </div>
             </div>
 
-            <div class="tabs">
-                <button class="tab active" onclick="switchTab('basic')">
-                    <span class="tab-icon">🎁</span>
-                    <span class="tab-text">حساب العرض المجاني</span>
-                </button>
-                <button class="tab" onclick="switchTab('advanced')">
-                    <span class="tab-icon">📊</span>
-                    <span class="tab-text">حساب العرض المخفض لثلاث أشهر</span>
-                </button>
-            </div>
+            <div class="main-content">
 
-            <!-- Basic Analysis Tab -->
             <div id="basicTab" class="tab-content active">
                 <div class="section">
                     <h3 class="section-title">
@@ -901,7 +1019,6 @@ function updateAgentSummary() {
                     </h3>
                     <div class="file-upload" id="basicFileUpload">
                         <p>📄 اسحب ملف Excel أو CSV هنا أو انقر للاختيار</p>
-                        <p style="font-size: 12px; color: #666; margin-top: 5px;">يدعم: .xlsx, .xls, .csv</p>
                         <input type="file" id="basicFileInput" accept=".xlsx,.xls,.csv" style="display: none;">
                     </div>
                     <div id="basicFileName" class="success-message hidden"></div>
@@ -939,6 +1056,9 @@ function updateAgentSummary() {
                         <button class="btn btn-warning" onclick="exportBasicData()">
                             📤 تصدير البيانات
                         </button>
+                        <button class="btn btn-success" onclick="exportBasicDetailsToExcel()">
+                            📊 تصدير Excel بالتفاصيل
+                        </button>
                     </div>
                 </div>
 
@@ -948,7 +1068,6 @@ function updateAgentSummary() {
                 </div>
             </div>
 
-            <!-- Advanced Analysis Tab -->
             <div id="advancedTab" class="tab-content">
                 <div class="section">
                     <h3 class="section-title">
@@ -956,7 +1075,6 @@ function updateAgentSummary() {
                     </h3>
                     <div class="file-upload" id="advancedFileUpload">
                         <p>📄 اسحب ملف Excel أو CSV هنا أو انقر للاختيار</p>
-                        <p style="font-size: 12px; color: #666; margin-top: 5px;">يدعم: .xlsx, .xls, .csv</p>
                         <input type="file" id="advancedFileInput" accept=".xlsx,.xls,.csv" style="display: none;">
                     </div>
                     <div id="advancedFileName" class="success-message hidden"></div>
@@ -995,6 +1113,9 @@ function updateAgentSummary() {
                         <button class="btn btn-warning" onclick="exportAdvancedData()">
                             📤 تصدير للوكيل
                         </button>
+                        <button class="btn btn-success" onclick="exportAdvancedDetailsToExcel()">
+                            📊 تصدير Excel بالتفاصيل
+                        </button>
                     </div>
                 </div>
 
@@ -1003,6 +1124,103 @@ function updateAgentSummary() {
                     <p>جاري تحليل العرض المخفض لثلاث أشهر...</p>
                 </div>
             </div>
+
+            <div id="twoMonthsTab" class="tab-content">
+                <div class="section">
+                    <h3 class="section-title">
+                        📅 رفع Excel الوكيل لحساب العرض المخفض لشهرين
+                    </h3>
+                    <div class="file-upload" id="twoMonthsFileUpload">
+                        <p>📄 اسحب ملف Excel أو CSV هنا أو انقر للاختيار</p>
+                        <input type="file" id="twoMonthsFileInput" accept=".xlsx,.xls,.csv" style="display: none;">
+                    </div>
+                    <div id="twoMonthsFileName" class="success-message hidden"></div>
+                </div>
+
+                <div class="section">
+                    <h3 class="section-title">
+                        ⚙️ تحليل العرض المخفض لشهرين
+                    </h3>
+                    <p style="color: #666; margin-bottom: 15px; font-size: 1rem;">
+                        📈 يتم حساب التفعيل عند وجود 2 اشتراكات لنفس المستخدم خلال 5 أيام<br>
+                        💰 مقارنة أسعار العرض المخفض مع الأسعار الرسمية لحساب الراجع للوكيل
+                    </p>
+                    <button class="btn btn-primary" onclick="analyzeTwoMonthsData()">
+                        🔍 تحليل التفعيلات
+                    </button>
+                    <button class="btn btn-warning" onclick="resetTwoMonthsResults()">
+                        🗑️ مسح النتائج
+                    </button>
+                </div>
+
+                <div id="twoMonthsResults" class="section hidden">
+                    <h3 class="section-title">
+                        📊 تفاصيل الاشتراكات والمبالغ 
+                    </h3>
+                    <div id="twoMonthsAgentInfo" class="agent-info"></div>
+                    <div class="results-grid" id="twoMonthsResultsGrid"></div>
+                    
+                    <div style="text-align: center; margin-top: 20px;">
+                        <button class="btn btn-success" onclick="saveTwoMonthsReport()">
+                            💾 حفظ التقرير
+                        </button>
+                        <button class="btn btn-primary" onclick="printTwoMonthsReport()">
+                            🖨️ طباعة التقرير
+                        </button>
+                        <button class="btn btn-warning" onclick="exportTwoMonthsData()">
+                            📤 تصدير للوكيل
+                        </button>
+                        <button class="btn btn-success" onclick="exportTwoMonthsDetailsToExcel()">
+                            📊 تصدير Excel بالتفاصيل
+                        </button>
+                    </div>
+                </div>
+
+                <div id="twoMonthsLoading" class="loading">
+                    <div class="spinner"></div>
+                    <p>جاري تحليل العرض المخفض لشهرين...</p>
+                </div>
+            </div>
+
+            <div id="summaryTab" class="tab-content">
+                <div class="section">
+                    <h3 class="section-title">
+                        📋 الملخص العام لجميع الوكلاء
+                    </h3>
+                    <p style="color: #666; margin-bottom: 20px; font-size: 1rem;">
+                        يعرض هذا القسم ملخص شامل لجميع الوكلاء وعروضهم المحسوبة
+                    </p>
+                    <button class="btn btn-primary" onclick="refreshSummary()">
+                        🔄 تحديث الملخص
+                    </button>
+                    <button class="btn btn-success" onclick="exportSummaryToExcel()">
+                        📊 تصدير Excel للملخص
+                    </button>
+                    <button class="btn btn-warning" onclick="printSummaryReport()">
+                        🖨️ طباعة الملخص
+                    </button>
+                </div>
+
+                <div id="summaryResults" class="section">
+                    <h3 class="section-title">
+                        📊 ملخص الوكلاء
+                    </h3>
+                    <div id="summaryContent">
+                        <p style="text-align: center; color: #999; padding: 40px;">
+                            لا توجد بيانات للعرض. يرجى تحليل بيانات الوكلاء أولاً
+                        </p>
+                    </div>
+                </div>
+
+                <div id="summaryTotals" class="section hidden">
+                    <h3 class="section-title">
+                        💰 الإجماليات العامة
+                    </h3>
+                    <div class="results-grid" id="summaryTotalsGrid"></div>
+                </div>
+            </div>
+
+            </div> 
         </div>
     </div>
 
@@ -1012,8 +1230,11 @@ let agentReports = {};
         let currentUser = '';
         let basicData = null;
         let advancedData = null;
+        let twoMonthsData = null;
+        let twoMonthsDetails = []; 
+        let advancedDetails = [];
+        let basicDetails = [];
 
-        // Arabic month names
         const arabicMonths = [
             'كانون الثاني', 'شباط', 'آذار', 'نيسان', 'أيار', 'حزيران',
             'تموز', 'آب', 'أيلول', 'تشرين الأول', 'تشرين الثاني', 'كانون الأول'
@@ -1038,6 +1259,14 @@ let agentReports = {};
                     'Iraqcell_Silver_Profile_NEW': 120000,
                     'Iraqcell_Gold_Profile_NEW': 150000,
                     'Iraqcell_Platinum_Profile_NEW': 195000
+                }
+            },
+            twoMonths: {
+                promo: {
+                    'Iraqcell_Bronze_Profile_NEW': 50000,
+                    'Iraqcell_Silver_Profile_NEW': 70000, 
+                    'Iraqcell_Gold_Profile_NEW': 80000, 
+                    'Iraqcell_Platinum_Profile_NEW': 110000
                 }
             }
         };
@@ -1076,6 +1305,7 @@ document.getElementById('currentUser').textContent = '';
             document.getElementById('password').value = '';
             resetBasicResults();
             resetAdvancedResults();
+            resetTwoMonthsResults();
         }
 
         function updateCurrentDate() {
@@ -1092,18 +1322,33 @@ document.getElementById('currentUser').textContent = '';
         }
 
         function switchTab(tabName) {
-            // Remove active class from all tabs
-            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
             
-            // Add active class to selected tab
-            event.target.classList.add('active');
-            document.getElementById(tabName + 'Tab').classList.add('active');
+            if (event && event.target.closest('.nav-item')) {
+                event.target.closest('.nav-item').classList.add('active');
+            } else {
+                const navItems = document.querySelectorAll('.nav-item');
+                if (tabName === 'basic') navItems[0]?.classList.add('active');
+                else if (tabName === 'advanced') navItems[1]?.classList.add('active');
+                else if (tabName === 'twoMonths') navItems[2]?.classList.add('active');
+                else if (tabName === 'summary') navItems[3]?.classList.add('active');
+            }
+            
+            const tabElement = document.getElementById(tabName + 'Tab');
+            if (tabElement) {
+                tabElement.classList.add('active');
+                
+                if (tabName === 'summary') {
+                    updateAgentSummary();
+                }
+            }
         }
 
         function setupFileUploads() {
             setupFileUpload('basic');
             setupFileUpload('advanced');
+            setupFileUpload('twoMonths');
         }
 
         function setupFileUpload(type) {
@@ -1137,7 +1382,6 @@ document.getElementById('currentUser').textContent = '';
             });
         }
 
-        // File handling
         function handleFileSelect(file, type) {
             const fileName = document.getElementById(type + 'FileName');
             fileName.textContent = `تم اختيار الملف: ${file.name}`;
@@ -1147,7 +1391,6 @@ document.getElementById('currentUser').textContent = '';
             reader.onload = function(e) {
                 try {
                     if (file.name.toLowerCase().endsWith('.csv')) {
-                        // Handle CSV files
                         Papa.parse(e.target.result, {
                             header: false,
                             skipEmptyLines: true,
@@ -1155,35 +1398,35 @@ document.getElementById('currentUser').textContent = '';
                                 const processedData = convertArrayToObjects(results.data);
                                 if (type === 'basic') {
                                     basicData = processedData;
-                                } else {
+                                } else if (type === 'advanced') {
                                     advancedData = processedData;
+                                } else {
+                                    twoMonthsData = processedData;
                                 }
                                 showSuccessMessage(`تم تحميل ملف CSV بنجاح - ${results.data.length} صف`);
                             }
                         });
                     } else if (file.name.toLowerCase().match(/\.(xlsx|xls)$/)) {
-                        // Handle Excel files
                         const data = new Uint8Array(e.target.result);
                         const workbook = XLSX.read(data, { type: 'array' });
                         
-                        // Get the first worksheet
                         const firstSheetName = workbook.SheetNames[0];
                         const worksheet = workbook.Sheets[firstSheetName];
                         
-                        // Convert to array of arrays
                         const jsonData = XLSX.utils.sheet_to_json(worksheet, { 
                             header: 1,
                             defval: "",
                             raw: false
                         });
                         
-                        // Convert to objects
                         const processedData = convertArrayToObjects(jsonData);
                         
                         if (type === 'basic') {
                             basicData = processedData;
-                        } else {
+                        } else if (type === 'advanced') {
                             advancedData = processedData;
+                        } else {
+                            twoMonthsData = processedData;
                         }
                         
                         showSuccessMessage(`تم تحميل ملف Excel بنجاح - ${jsonData.length} صف`);
@@ -1196,7 +1439,6 @@ document.getElementById('currentUser').textContent = '';
                 }
             };
             
-            // Read file as ArrayBuffer for Excel, as text for CSV
             if (file.name.toLowerCase().match(/\.(xlsx|xls)$/)) {
                 reader.readAsArrayBuffer(file);
             } else {
@@ -1204,7 +1446,6 @@ document.getElementById('currentUser').textContent = '';
             }
         }
 
-        // Convert array of arrays to array of objects with column names
         function convertArrayToObjects(arrayData) {
             if (!arrayData || arrayData.length === 0) return [];
             
@@ -1214,7 +1455,6 @@ document.getElementById('currentUser').textContent = '';
             for (let i = 1; i < arrayData.length; i++) {
                 const obj = {};
                 for (let j = 0; j < headers.length; j++) {
-                    // Create both named and indexed access
                     obj[`Column${String.fromCharCode(65 + j)}`] = arrayData[i][j] || '';
                     obj[j] = arrayData[i][j] || '';
                 }
@@ -1224,9 +1464,7 @@ document.getElementById('currentUser').textContent = '';
             return result;
         }
 
-        // Show success message
         function showSuccessMessage(message) {
-            // Create temporary success message
             const messageDiv = document.createElement('div');
             messageDiv.className = 'success-message';
             messageDiv.textContent = message;
@@ -1245,12 +1483,13 @@ document.getElementById('currentUser').textContent = '';
             }, 3000);
         }
 
-        // Basic Analysis Functions
         function analyzeBasicData() {
             if (!basicData) {
                 alert('يرجى اختيار ملف البيانات أولاً');
                 return;
             }
+
+            basicDetails = [];
 
             showLoading('basic');
             
@@ -1286,23 +1525,30 @@ document.getElementById('currentUser').textContent = '';
 
             if (data.length === 0) return results;
 
-            // Get agent name from first row (column E)
             results.agentName = data[0]['ColumnE'] || data[0][4] || 'غير محدد';
 
             data.forEach(row => {
-                // Get data from specific columns
-                const createdAt = row['ColumnA'] || row[0]; // Column A
-                const username = row['ColumnB'] || row[1];   // Column B  
-                const subscription = row['ColumnH'] || row[7]; // Column H
-                const count = row['ColumnO'] || row[14];     // Column O
+                const createdAt = row['ColumnA'] || row[0];
+                const username = row['ColumnB'] || row[1];
+                const subscription = row['ColumnH'] || row[7];
+                const count = row['ColumnO'] || row[14];
+                const agent = row['ColumnE'] || row[4] || '';
 
-                // Skip row if missing required data or count is not 1
                 if (!createdAt || !username || !subscription || count != 1) return;
 
                 const subType = String(subscription).trim();
                 const price = subscriptionPrices.basic[subType];
 
                 if (price) {
+                    basicDetails.push({
+                        username: String(username).trim(),
+                        subscription: subType,
+                        agent: String(agent).trim(),
+                        date: createdAt,
+                        price: price,
+                        type: 'مجاني'
+                    });
+
                     if (subType.includes('Bronze')) {
                         results.bronze.count++;
                         results.bronze.amount += price;
@@ -1326,7 +1572,11 @@ document.getElementById('currentUser').textContent = '';
         }
 
         function displayBasicResults(results) {
-            // Show agent info
+            if (!agentReports[results.agentName]) {
+                agentReports[results.agentName] = {};
+            }
+            agentReports[results.agentName].basic = results;
+
             const agentInfo = document.getElementById('basicAgentInfo');
             agentInfo.innerHTML = `
                 <h3> العرض المجاني</h3>
@@ -1335,7 +1585,6 @@ document.getElementById('currentUser').textContent = '';
                 <p><strong>نوع التحليل:</strong> حساب العرض المجاني</p>
             `;
 
-            // Show results grid
             const resultsGrid = document.getElementById('basicResultsGrid');
             resultsGrid.innerHTML = `
                 <div class="result-card bronze">
@@ -1366,14 +1615,17 @@ document.getElementById('currentUser').textContent = '';
             `;
 
             document.getElementById('basicResults').classList.remove('hidden');
+            
+            updateAgentSummary();
         }
 
-        // Advanced Analysis Functions
         function analyzeAdvancedData() {
             if (!advancedData) {
                 alert('يرجى اختيار ملف البيانات أولاً');
                 return;
             }
+
+            advancedDetails = [];
 
             showLoading('advanced');
             
@@ -1409,29 +1661,25 @@ document.getElementById('currentUser').textContent = '';
 
             if (data.length === 0) return results;
 
-            // Get agent name from first row (column E)
             results.agentName = data[0]['ColumnE'] || data[0][4] || 'غير محدد';
 
-            // Group subscriptions by user and subscription type
             const userSubscriptions = {};
+            const subscriptionDetails = {};
 
             data.forEach(row => {
-                const createdAt = row['ColumnA'] || row[0]; // Column A
-                const username = row['ColumnB'] || row[1];   // Column B
-                const subscription = row['ColumnH'] || row[7]; // Column H
+                const createdAt = row['ColumnA'] || row[0];
+                const username = row['ColumnB'] || row[1];
+                const subscription = row['ColumnH'] || row[7];
+                const agent = row['ColumnE'] || row[4] || '';
 
                 if (!createdAt || !username || !subscription) return;
 
-                // Clean and validate the date
                 let dateObj;
                 try {
-                    // Try to parse the date - handle various formats
                     if (createdAt instanceof Date) {
                         dateObj = createdAt;
                     } else {
-                        // Handle Excel date serial numbers
                         if (typeof createdAt === 'number' && createdAt > 40000) {
-                            // Excel date serial number (days since 1900-01-01)
                             dateObj = new Date((createdAt - 25569) * 86400 * 1000);
                         } else {
                             dateObj = new Date(createdAt);
@@ -1439,27 +1687,39 @@ document.getElementById('currentUser').textContent = '';
                     }
                     
                     if (isNaN(dateObj.getTime())) {
-                        return; // Skip invalid dates
+                        return;
                     }
                 } catch (e) {
-                    return; // Skip invalid dates
+                    return;
                 }
 
                 const key = `${String(username).trim()}|${String(subscription).trim()}`;
                 if (!userSubscriptions[key]) {
                     userSubscriptions[key] = [];
+                    subscriptionDetails[key] = [];
                 }
                 userSubscriptions[key].push(dateObj);
+                subscriptionDetails[key].push({
+                    date: dateObj,
+                    dateStr: createdAt,
+                    username: String(username).trim(),
+                    subscription: String(subscription).trim(),
+                    agent: String(agent).trim()
+                });
             });
 
-            // Calculate activations (3 subscriptions within 5 days)
             Object.keys(userSubscriptions).forEach(key => {
                 const [username, subscription] = key.split('|');
                 const dates = userSubscriptions[key].sort((a, b) => a - b);
+                const details = subscriptionDetails[key];
                 
                 let activations = 0;
                 const used = new Array(dates.length).fill(false);
+                const activationDetails = [];
 
+                let found = true;
+                while (found) {
+                    found = false;
                 for (let i = 0; i < dates.length - 2; i++) {
                     if (used[i]) continue;
                     
@@ -1473,12 +1733,29 @@ document.getElementById('currentUser').textContent = '';
                             if (daysDiff <= 5) {
                                 used[i] = used[j] = used[k] = true;
                                 activations++;
+                                    
+                                    activationDetails.push({
+                                        username: details[i].username,
+                                        subscription: details[i].subscription,
+                                        agent: details[i].agent,
+                                        date1: details[i].dateStr,
+                                        date2: details[j].dateStr,
+                                        date3: details[k].dateStr,
+                                        daysDiff: Math.round(daysDiff * 100) / 100,
+                                        type: 'ثلاث أشهر'
+                                    });
+                                    
+                                    found = true;
                                 break;
                             }
                         }
-                        if (used[j]) break;
+                            if (found) break;
+                        }
+                        if (found) break;
                     }
                 }
+                
+                advancedDetails.push(...activationDetails);
 
                 if (activations > 0) {
                     const subType = subscription.trim();
@@ -1505,7 +1782,6 @@ document.getElementById('currentUser').textContent = '';
                 }
             });
 
-            // Calculate totals
             results.total.count = results.bronze.count + results.silver.count + results.gold.count + results.platinum.count;
             results.total.promoAmount = results.bronze.promoAmount + results.silver.promoAmount + results.gold.promoAmount + results.platinum.promoAmount;
             results.total.officialAmount = results.bronze.officialAmount + results.silver.officialAmount + results.gold.officialAmount + results.platinum.officialAmount;
@@ -1515,7 +1791,11 @@ document.getElementById('currentUser').textContent = '';
         }
 
         function displayAdvancedResults(results) {
-            // Show agent info
+            if (!agentReports[results.agentName]) {
+                agentReports[results.agentName] = {};
+            }
+            agentReports[results.agentName].advanced = results;
+
             const agentInfo = document.getElementById('advancedAgentInfo');
             agentInfo.innerHTML = `
                 <h3>العرض المخفض لثلاث أشهر</h3>
@@ -1525,7 +1805,6 @@ document.getElementById('currentUser').textContent = '';
                 <p><strong>إجمالي الراجع للوكيل :</strong> ${formatNumber(results.total.profit)} د.ع</p>
             `;
 
-            // Show results grid
             const resultsGrid = document.getElementById('advancedResultsGrid');
             resultsGrid.innerHTML = `
                 <div class="result-card bronze">
@@ -1561,9 +1840,266 @@ document.getElementById('currentUser').textContent = '';
             `;
 
             document.getElementById('advancedResults').classList.remove('hidden');
+            
+            updateAgentSummary();
         }
 
-        // Utility functions
+        function analyzeTwoMonthsData() {
+            if (!twoMonthsData) {
+                alert('يرجى اختيار ملف البيانات أولاً');
+                return;
+            }
+
+            twoMonthsDetails = [];
+
+            showLoading('twoMonths');
+            
+            setTimeout(() => {
+                try {
+                    const results = processTwoMonthsData(twoMonthsData);
+                    
+                    if (results.total.count === 0) {
+                        alert('لم يتم العثور على تفعيلات صالحة للعرض المخفض لشهرين. تأكد من وجود 2 اشتراكات خلال 5 أيام لنفس المستخدم.');
+                        hideLoading('twoMonths');
+                        return;
+                    }
+                    
+                    displayTwoMonthsResults(results);
+                    hideLoading('twoMonths');
+                    showSuccessMessage(`تم تحليل ${results.total.count} تفعيل للعرض المخفض لشهرين بنجاح`);
+                } catch (error) {
+                    alert('خطأ في تحليل بيانات العرض المخفض لشهرين: ' + error.message);
+                    hideLoading('twoMonths');
+                }
+            }, 1500);
+        }
+
+        function processTwoMonthsData(data) {
+            const results = {
+                bronze: { count: 0, promoAmount: 0, officialAmount: 0 },
+                silver: { count: 0, promoAmount: 0, officialAmount: 0 },
+                gold: { count: 0, promoAmount: 0, officialAmount: 0 },
+                platinum: { count: 0, promoAmount: 0, officialAmount: 0 },
+                total: { count: 0, promoAmount: 0, officialAmount: 0, profit: 0 },
+                agentName: ''
+            };
+
+            if (data.length === 0) return results;
+
+            results.agentName = data[0]['ColumnE'] || data[0][4] || 'غير محدد';
+
+            const userSubscriptions = {};
+            const subscriptionDetails = {};
+
+            data.forEach(row => {
+                const createdAt = row['ColumnA'] || row[0];
+                const username = row['ColumnB'] || row[1];
+                const subscription = row['ColumnH'] || row[7];
+                const agent = row['ColumnE'] || row[4] || '';
+
+                if (!createdAt || !username || !subscription) return;
+
+                let dateObj;
+                try {
+                    if (createdAt instanceof Date) {
+                        dateObj = createdAt;
+                    } else {
+                        if (typeof createdAt === 'number' && createdAt > 40000) {
+                            dateObj = new Date((createdAt - 25569) * 86400 * 1000);
+                        } else {
+                            dateObj = new Date(createdAt);
+                        }
+                    }
+                    
+                    if (isNaN(dateObj.getTime())) {
+                        return;
+                    }
+                } catch (e) {
+                    return;
+                }
+
+                const key = `${String(username).trim()}|${String(subscription).trim()}`;
+                if (!userSubscriptions[key]) {
+                    userSubscriptions[key] = [];
+                    subscriptionDetails[key] = [];
+                }
+                userSubscriptions[key].push(dateObj);
+                subscriptionDetails[key].push({
+                    date: dateObj,
+                    dateStr: createdAt,
+                    username: String(username).trim(),
+                    subscription: String(subscription).trim(),
+                    agent: String(agent).trim()
+                });
+            });
+
+            Object.keys(userSubscriptions).forEach(key => {
+                const [username, subscription] = key.split('|');
+                let dates = userSubscriptions[key].sort((a, b) => a - b);
+                
+                const usedForThreeMonths = new Array(dates.length).fill(false);
+                
+                let foundThreeMonths = true;
+                while (foundThreeMonths) {
+                    foundThreeMonths = false;
+                    for (let i = 0; i < dates.length - 2; i++) {
+                        if (usedForThreeMonths[i]) continue;
+                        
+                        for (let j = i + 1; j < dates.length - 1; j++) {
+                            if (usedForThreeMonths[j]) continue;
+                            
+                            for (let k = j + 1; k < dates.length; k++) {
+                                if (usedForThreeMonths[k]) continue;
+                                
+                                const daysDiff = (dates[k] - dates[i]) / (1000 * 60 * 60 * 24);
+                                if (daysDiff <= 5) {
+                                    usedForThreeMonths[i] = true;
+                                    usedForThreeMonths[j] = true;
+                                    usedForThreeMonths[k] = true;
+                                    foundThreeMonths = true;
+                                    break;
+                                }
+                            }
+                            if (foundThreeMonths) break;
+                        }
+                        if (foundThreeMonths) break;
+                    }
+                }
+                
+                const remainingDates = dates.filter((date, index) => !usedForThreeMonths[index]);
+                const remainingDetails = subscriptionDetails[key].filter((detail, index) => !usedForThreeMonths[index]);
+                
+                let activations = 0;
+                const used = new Array(remainingDates.length).fill(false);
+                const activationDetails = [];
+
+                let found = true;
+                while (found) {
+                    found = false;
+                    for (let i = 0; i < remainingDates.length - 1; i++) {
+                    if (used[i]) continue;
+                    
+                        for (let j = i + 1; j < remainingDates.length; j++) {
+                        if (used[j]) continue;
+                        
+                            const daysDiff = (remainingDates[j] - remainingDates[i]) / (1000 * 60 * 60 * 24);
+                        if (daysDiff <= 5) {
+                            used[i] = used[j] = true;
+                            activations++;
+                                
+                                activationDetails.push({
+                                    username: remainingDetails[i].username,
+                                    subscription: remainingDetails[i].subscription,
+                                    agent: remainingDetails[i].agent,
+                                    date1: remainingDetails[i].dateStr,
+                                    date2: remainingDetails[j].dateStr,
+                                    daysDiff: Math.round(daysDiff * 100) / 100,
+                                    type: 'شهرين'
+                                });
+                                
+                                found = true;
+                            break;
+                        }
+                        }
+                        if (found) break;
+                    }
+                }
+                
+                twoMonthsDetails.push(...activationDetails);
+
+                if (activations > 0) {
+                    const subType = subscription.trim();
+                    const promoPrice = subscriptionPrices.twoMonths.promo[subType] || 0;
+                    const monthlyOfficialPrice = subscriptionPrices.basic[subType] || 0;
+                    const officialPrice = monthlyOfficialPrice * 2;
+
+                    if (subType.includes('Bronze')) {
+                        results.bronze.count += activations;
+                        results.bronze.promoAmount += activations * promoPrice;
+                        results.bronze.officialAmount += activations * officialPrice;
+                    } else if (subType.includes('Silver')) {
+                        results.silver.count += activations;
+                        results.silver.promoAmount += activations * promoPrice;
+                        results.silver.officialAmount += activations * officialPrice;
+                    } else if (subType.includes('Gold')) {
+                        results.gold.count += activations;
+                        results.gold.promoAmount += activations * promoPrice;
+                        results.gold.officialAmount += activations * officialPrice;
+                    } else if (subType.includes('Platinum')) {
+                        results.platinum.count += activations;
+                        results.platinum.promoAmount += activations * promoPrice;
+                        results.platinum.officialAmount += activations * officialPrice;
+                    }
+                }
+            });
+
+            results.total.count = results.bronze.count + results.silver.count + results.gold.count + results.platinum.count;
+            results.total.promoAmount = results.bronze.promoAmount + results.silver.promoAmount + results.gold.promoAmount + results.platinum.promoAmount;
+            results.total.officialAmount = results.bronze.officialAmount + results.silver.officialAmount + results.gold.officialAmount + results.platinum.officialAmount;
+            results.total.profit = results.total.officialAmount - results.total.promoAmount;
+
+            return results;
+        }
+
+        function displayTwoMonthsResults(results) {
+            if (!agentReports[results.agentName]) {
+                agentReports[results.agentName] = {};
+            }
+            agentReports[results.agentName].twoMonths = results;
+
+            const agentInfo = document.getElementById('twoMonthsAgentInfo');
+            agentInfo.innerHTML = `
+                <h3>العرض المخفض لشهرين</h3>
+                <p><strong>اسم الوكيل:</strong> ${results.agentName}</p>
+                <p><strong>تاريخ التحليل:</strong> ${formatArabicDate(new Date())}</p>
+                <p><strong>نوع التحليل:</strong> حساب العرض المخفض لشهرين</p>
+                <p><strong>إجمالي الراجع للوكيل :</strong> ${formatNumber(results.total.profit)} د.ع</p>
+            `;
+
+            const resultsGrid = document.getElementById('twoMonthsResultsGrid');
+            resultsGrid.innerHTML = `
+                <div class="result-card bronze">
+                    <h3>🥉 Bronze</h3>
+                    <div class="count">${results.bronze.count}</div>
+                    <div class="amount">عرض: ${formatNumber(results.bronze.promoAmount)} د.ع</div>
+                    <div class="amount">رسمي: ${formatNumber(results.bronze.officialAmount)} د.ع</div>
+                    <div class="amount" style="color: #28a745; font-weight: 700; margin-top: 5px;">راجع: ${formatNumber(results.bronze.officialAmount - results.bronze.promoAmount)} د.ع</div>
+                </div>
+                <div class="result-card silver">
+                    <h3>🥈 Silver</h3>
+                    <div class="count">${results.silver.count}</div>
+                    <div class="amount">عرض: ${formatNumber(results.silver.promoAmount)} د.ع</div>
+                    <div class="amount">رسمي: ${formatNumber(results.silver.officialAmount)} د.ع</div>
+                    <div class="amount" style="color: #28a745; font-weight: 700; margin-top: 5px;">راجع: ${formatNumber(results.silver.officialAmount - results.silver.promoAmount)} د.ع</div>
+                </div>
+                <div class="result-card gold">
+                    <h3>🥇 Gold</h3>
+                    <div class="count">${results.gold.count}</div>
+                    <div class="amount">عرض: ${formatNumber(results.gold.promoAmount)} د.ع</div>
+                    <div class="amount">رسمي: ${formatNumber(results.gold.officialAmount)} د.ع</div>
+                    <div class="amount" style="color: #28a745; font-weight: 700; margin-top: 5px;">راجع: ${formatNumber(results.gold.officialAmount - results.gold.promoAmount)} د.ع</div>
+                </div>
+                <div class="result-card platinum">
+                    <h3>💎 Platinum</h3>
+                    <div class="count">${results.platinum.count}</div>
+                    <div class="amount">عرض: ${formatNumber(results.platinum.promoAmount)} د.ع</div>
+                    <div class="amount">رسمي: ${formatNumber(results.platinum.officialAmount)} د.ع</div>
+                    <div class="amount" style="color: #28a745; font-weight: 700; margin-top: 5px;">راجع: ${formatNumber(results.platinum.officialAmount - results.platinum.promoAmount)} د.ع</div>
+                </div>
+                <div class="result-card">
+                    <h3>📊 المجموع</h3>
+                    <div class="count">${results.total.count}</div>
+                    <div class="amount">عرض: ${formatNumber(results.total.promoAmount)} د.ع</div>
+                    <div class="amount">رسمي: ${formatNumber(results.total.officialAmount)} د.ع</div>
+                    <div class="amount" style="color: #28a745; font-weight: 700; margin-top: 5px; font-size: 1.2rem;">راجع الكلي: ${formatNumber(results.total.profit)} د.ع</div>
+                </div>
+            `;
+
+            document.getElementById('twoMonthsResults').classList.remove('hidden');
+            
+            updateAgentSummary();
+        }
+
         function showLoading(type) {
             document.getElementById(type + 'Loading').style.display = 'block';
         }
@@ -1590,21 +2126,26 @@ document.getElementById('currentUser').textContent = '';
             advancedData = null;
         }
 
-        // Report functions with better implementation
+        function resetTwoMonthsResults() {
+            document.getElementById('twoMonthsResults').classList.add('hidden');
+            document.getElementById('twoMonthsFileName').classList.add('hidden');
+            document.getElementById('twoMonthsFileInput').value = '';
+            twoMonthsData = null;
+        }
+
         function saveBasicReport() {
             if (!basicData || document.getElementById('basicResults').classList.contains('hidden')) {
                 alert('لا توجد نتائج لحفظها. يرجى تحليل البيانات أولاً.');
                 return;
             }
             
-            // Create CSV content
             const results = processBasicData(basicData);
             const csvContent = generateBasicReportCSV(results);
             downloadCSV(csvContent, `تقرير_أساسي_${results.agentName}_${formatDateForFilename(new Date())}.csv`);
             
             
 if (!agentReports[results.agentName]) {
-    agentReports[results.agentName] = { basic: null, advanced: null };
+    agentReports[results.agentName] = { basic: null, advanced: null, twoMonths: null };
 }
 agentReports[results.agentName].basic = results;
 updateAgentSummary();
@@ -1624,12 +2165,30 @@ alert('تم حفظ التقرير بنجاح!');
             
             
 if (!agentReports[results.agentName]) {
-    agentReports[results.agentName] = { basic: null, advanced: null };
+    agentReports[results.agentName] = { basic: null, advanced: null, twoMonths: null };
 }
 agentReports[results.agentName].advanced = results;
 updateAgentSummary();
 alert('تم حفظ تقرير التفعيلات بنجاح!');
 
+        }
+
+        function saveTwoMonthsReport() {
+            if (!twoMonthsData || document.getElementById('twoMonthsResults').classList.contains('hidden')) {
+                alert('لا توجد نتائج لحفظها. يرجى تحليل البيانات أولاً.');
+                return;
+            }
+            
+            const results = processTwoMonthsData(twoMonthsData);
+            const csvContent = generateTwoMonthsReportCSV(results);
+            downloadCSV(csvContent, `تقرير_شهرين_${results.agentName}_${formatDateForFilename(new Date())}.csv`);
+            
+            if (!agentReports[results.agentName]) {
+                agentReports[results.agentName] = { basic: null, advanced: null, twoMonths: null };
+            }
+            agentReports[results.agentName].twoMonths = results;
+            updateAgentSummary();
+            alert('تم حفظ تقرير العرض المخفض لشهرين بنجاح!');
         }
 
         function generateBasicReportCSV(results) {
@@ -1646,6 +2205,19 @@ alert('تم حفظ تقرير التفعيلات بنجاح!');
         }
 
         function generateAdvancedReportCSV(results) {
+            const header = 'نوع الاشتراك,عدد التفعيلات,مبلغ العرض (د.ع),المبلغ الرسمي (د.ع),الربح (د.ع)\n';
+            const rows = [
+                `Bronze,${results.bronze.count},${results.bronze.promoAmount},${results.bronze.officialAmount},${results.bronze.officialAmount - results.bronze.promoAmount}`,
+                `Silver,${results.silver.count},${results.silver.promoAmount},${results.silver.officialAmount},${results.silver.officialAmount - results.silver.promoAmount}`,
+                `Gold,${results.gold.count},${results.gold.promoAmount},${results.gold.officialAmount},${results.gold.officialAmount - results.gold.promoAmount}`,
+                `Platinum,${results.platinum.count},${results.platinum.promoAmount},${results.platinum.officialAmount},${results.platinum.officialAmount - results.platinum.promoAmount}`,
+                `المجموع,${results.total.count},${results.total.promoAmount},${results.total.officialAmount},${results.total.profit}`
+            ].join('\n');
+            
+            return header + rows;
+        }
+
+        function generateTwoMonthsReportCSV(results) {
             const header = 'نوع الاشتراك,عدد التفعيلات,مبلغ العرض (د.ع),المبلغ الرسمي (د.ع),الربح (د.ع)\n';
             const rows = [
                 `Bronze,${results.bronze.count},${results.bronze.promoAmount},${results.bronze.officialAmount},${results.bronze.officialAmount - results.bronze.promoAmount}`,
@@ -1689,13 +2261,20 @@ alert('تم حفظ تقرير التفعيلات بنجاح!');
             window.print();
         }
 
+        function printTwoMonthsReport() {
+            if (document.getElementById('twoMonthsResults').classList.contains('hidden')) {
+                alert('لا توجد نتائج للطباعة. يرجى تحليل البيانات أولاً.');
+                return;
+            }
+            window.print();
+        }
+
         function exportBasicData() {
             if (!basicData) {
                 alert('لا توجد بيانات للتصدير. يرجى تحميل ملف البيانات أولاً.');
                 return;
             }
             
-            // Export filtered data
             const filteredData = basicData.filter(row => {
                 const count = row['ColumnO'] || row[14];
                 return count == 1;
@@ -1718,6 +2297,168 @@ alert('تم حفظ تقرير التفعيلات بنجاح!');
             alert('تم تصدير بيانات الوكيل بنجاح!');
         }
 
+        function exportTwoMonthsData() {
+            if (!twoMonthsData) {
+                alert('لا توجد بيانات للتصدير. يرجى تحميل ملف البيانات أولاً.');
+                return;
+            }
+            
+            const results = processTwoMonthsData(twoMonthsData);
+            const csvContent = generateTwoMonthsReportCSV(results);
+            downloadCSV(csvContent, `تقرير_شهرين_وكيل_${results.agentName}_${formatDateForFilename(new Date())}.csv`);
+            alert('تم تصدير بيانات العرض المخفض لشهرين بنجاح!');
+        }
+
+        function exportTwoMonthsDetailsToExcel() {
+            if (!twoMonthsDetails || twoMonthsDetails.length === 0) {
+                alert('لا توجد تفاصيل للتصدير. يرجى تحليل البيانات أولاً.');
+                return;
+            }
+
+            try {
+                const wb = XLSX.utils.book_new();
+                
+                const excelData = twoMonthsDetails.map((detail, index) => ({
+                    'رقم': index + 1,
+                    'اسم المستخدم': detail.username,
+                    'نوع الاشتراك': detail.subscription,
+                    'اسم الوكيل': detail.agent,
+                    'تاريخ الاشتراك الأول': detail.date1,
+                    'تاريخ الاشتراك الثاني': detail.date2,
+                    'الفرق بالأيام': detail.daysDiff,
+                    'نوع التفعيل': detail.type,
+                    'السعر المخفض (د.ع)': subscriptionPrices.twoMonths.promo[detail.subscription] || 0,
+                    'السعر الرسمي (د.ع)': (subscriptionPrices.basic[detail.subscription] || 0) * 2,
+                    'الراجع للوكيل (د.ع)': ((subscriptionPrices.basic[detail.subscription] || 0) * 2) - (subscriptionPrices.twoMonths.promo[detail.subscription] || 0)
+                }));
+
+                const ws = XLSX.utils.json_to_sheet(excelData);
+                
+                ws['!cols'] = [
+                    { wch: 8 },
+                    { wch: 25 },
+                    { wch: 30 },
+                    { wch: 20 },
+                    { wch: 20 },
+                    { wch: 20 },
+                    { wch: 12 },
+                    { wch: 15 },
+                    { wch: 18 },
+                    { wch: 18 },
+                    { wch: 18 }
+                ];
+
+                XLSX.utils.book_append_sheet(wb, ws, 'تفاصيل التفعيلات');
+
+                const agentName = twoMonthsDetails.length > 0 ? twoMonthsDetails[0].agent : 'غير محدد';
+                const filename = `تفاصيل_التفعيلات_شهرين_${agentName}_${formatDateForFilename(new Date())}.xlsx`;
+                XLSX.writeFile(wb, filename);
+                
+                showSuccessMessage(`تم تصدير ${twoMonthsDetails.length} تفعيل إلى ملف Excel بنجاح!`);
+            } catch (error) {
+                alert('حدث خطأ أثناء التصدير: ' + error.message);
+                console.error('Export error:', error);
+            }
+        }
+
+        function exportAdvancedDetailsToExcel() {
+            if (!advancedDetails || advancedDetails.length === 0) {
+                alert('لا توجد تفاصيل للتصدير. يرجى تحليل البيانات أولاً.');
+                return;
+            }
+
+            try {
+                const wb = XLSX.utils.book_new();
+                
+                const excelData = advancedDetails.map((detail, index) => ({
+                    'رقم': index + 1,
+                    'اسم المستخدم': detail.username,
+                    'نوع الاشتراك': detail.subscription,
+                    'اسم الوكيل': detail.agent,
+                    'تاريخ الاشتراك الأول': detail.date1,
+                    'تاريخ الاشتراك الثاني': detail.date2,
+                    'تاريخ الاشتراك الثالث': detail.date3,
+                    'الفرق بالأيام': detail.daysDiff,
+                    'نوع التفعيل': detail.type,
+                    'السعر المخفض (د.ع)': subscriptionPrices.advanced.promo[detail.subscription] || 0,
+                    'السعر الرسمي (د.ع)': subscriptionPrices.advanced.official[detail.subscription] || 0,
+                    'الراجع للوكيل (د.ع)': (subscriptionPrices.advanced.official[detail.subscription] || 0) - (subscriptionPrices.advanced.promo[detail.subscription] || 0)
+                }));
+
+                const ws = XLSX.utils.json_to_sheet(excelData);
+                
+                ws['!cols'] = [
+                    { wch: 8 },
+                    { wch: 25 },
+                    { wch: 30 },
+                    { wch: 20 },
+                    { wch: 20 },
+                    { wch: 20 },
+                    { wch: 20 },
+                    { wch: 12 },
+                    { wch: 15 },
+                    { wch: 18 },
+                    { wch: 18 },
+                    { wch: 18 }
+                ];
+
+                XLSX.utils.book_append_sheet(wb, ws, 'تفاصيل التفعيلات');
+
+                const agentName = advancedDetails.length > 0 ? advancedDetails[0].agent : 'غير محدد';
+                const filename = `تفاصيل_التفعيلات_ثلاث_أشهر_${agentName}_${formatDateForFilename(new Date())}.xlsx`;
+                XLSX.writeFile(wb, filename);
+                
+                showSuccessMessage(`تم تصدير ${advancedDetails.length} تفعيل إلى ملف Excel بنجاح!`);
+            } catch (error) {
+                alert('حدث خطأ أثناء التصدير: ' + error.message);
+                console.error('Export error:', error);
+            }
+        }
+
+        function exportBasicDetailsToExcel() {
+            if (!basicDetails || basicDetails.length === 0) {
+                alert('لا توجد تفاصيل للتصدير. يرجى تحليل البيانات أولاً.');
+                return;
+            }
+
+            try {
+                const wb = XLSX.utils.book_new();
+                
+                const excelData = basicDetails.map((detail, index) => ({
+                    'رقم': index + 1,
+                    'اسم المستخدم': detail.username,
+                    'نوع الاشتراك': detail.subscription,
+                    'اسم الوكيل': detail.agent,
+                    'تاريخ الاشتراك': detail.date,
+                    'نوع العرض': detail.type,
+                    'المبلغ (د.ع)': detail.price
+                }));
+
+                const ws = XLSX.utils.json_to_sheet(excelData);
+                
+                ws['!cols'] = [
+                    { wch: 8 },
+                    { wch: 25 },
+                    { wch: 30 },
+                    { wch: 20 },
+                    { wch: 20 },
+                    { wch: 15 },
+                    { wch: 15 }
+                ];
+
+                XLSX.utils.book_append_sheet(wb, ws, 'تفاصيل الاشتراكات');
+
+                const agentName = basicDetails.length > 0 ? basicDetails[0].agent : 'غير محدد';
+                const filename = `تفاصيل_العرض_المجاني_${agentName}_${formatDateForFilename(new Date())}.xlsx`;
+                XLSX.writeFile(wb, filename);
+                
+                showSuccessMessage(`تم تصدير ${basicDetails.length} اشتراك إلى ملف Excel بنجاح!`);
+            } catch (error) {
+                alert('حدث خطأ أثناء التصدير: ' + error.message);
+                console.error('Export error:', error);
+            }
+        }
+
         function convertDataToCSV(data) {
             if (!data || data.length === 0) return '';
       
@@ -1738,29 +2479,326 @@ alert('تم حفظ تقرير التفعيلات بنجاح!');
         }
     
 function updateAgentSummary() {
-    let summaryHTML = `<div class="section"><h3 class="section-title">📋 ملخص الوكلاء</h3><div class="results-grid">`;
-    Object.entries(agentReports).forEach(([agentName, report]) => {
+            if (!agentReports || Object.keys(agentReports).length === 0) {
+                document.getElementById('summaryContent').innerHTML = `
+                    <p style="text-align: center; color: #999; padding: 40px;">
+                        لا توجد بيانات للعرض. يرجى تحليل بيانات الوكلاء أولاً
+                    </p>
+                `;
+                document.getElementById('summaryTotals').classList.add('hidden');
+                return;
+            }
+
+            let totalBasicAll = 0;
+            let totalAdvancedAll = 0;
+            let totalTwoMonthsAll = 0;
+            let totalAllAgents = 0;
+
+            let summaryHTML = `<div class="results-grid">`;
+            
+            const sortedAgents = Object.entries(agentReports).sort((a, b) => {
+                let totalA = 0;
+                let totalB = 0;
+                
+                if (a[1].basic && a[1].basic.total.amount > 0) totalA += a[1].basic.total.amount;
+                if (a[1].advanced && a[1].advanced.total.profit > 0) totalA += a[1].advanced.total.profit;
+                if (a[1].twoMonths && a[1].twoMonths.total.profit > 0) totalA += a[1].twoMonths.total.profit;
+                
+                if (b[1].basic && b[1].basic.total.amount > 0) totalB += b[1].basic.total.amount;
+                if (b[1].advanced && b[1].advanced.total.profit > 0) totalB += b[1].advanced.total.profit;
+                if (b[1].twoMonths && b[1].twoMonths.total.profit > 0) totalB += b[1].twoMonths.total.profit;
+                
+                return totalB - totalA;
+            });
+
+            sortedAgents.forEach(([agentName, report]) => {
         let totalBasic = report.basic?.total.amount || 0;
         let totalAdvanced = report.advanced?.total.profit || 0;
-        let totalAll = totalBasic + totalAdvanced;
+        let totalTwoMonths = report.twoMonths?.total.profit || 0;
+                
+                let totalAll = 0;
+                let offersCount = 0;
+                
+                if (report.basic && totalBasic > 0) {
+                    totalAll += totalBasic;
+                    offersCount++;
+                }
+                if (report.advanced && totalAdvanced > 0) {
+                    totalAll += totalAdvanced;
+                    offersCount++;
+                }
+                if (report.twoMonths && totalTwoMonths > 0) {
+                    totalAll += totalTwoMonths;
+                    offersCount++;
+                }
+
+                totalBasicAll += totalBasic;
+                totalAdvancedAll += totalAdvanced;
+                totalTwoMonthsAll += totalTwoMonths;
+                totalAllAgents += totalAll;
+                
+                let agentOffersHTML = '';
+                if (report.basic && totalBasic > 0) {
+                    agentOffersHTML += `<div class="amount">💰 مجاني: ${formatNumber(totalBasic)} د.ع</div>`;
+                }
+                if (report.advanced && totalAdvanced > 0) {
+                    agentOffersHTML += `<div class="amount">💼 مخفض 3 أشهر: ${formatNumber(totalAdvanced)} د.ع</div>`;
+                }
+                if (report.twoMonths && totalTwoMonths > 0) {
+                    agentOffersHTML += `<div class="amount">📅 مخفض شهرين: ${formatNumber(totalTwoMonths)} د.ع</div>`;
+                }
+
         summaryHTML += `
             <div class="result-card">
                 <h3>👤 ${agentName}</h3>
-                <div class="amount">💰 مجاني: ${formatNumber(totalBasic)} د.ع</div>
-                <div class="amount">💼 مخفض: ${formatNumber(totalAdvanced)} د.ع</div>
-                <div class="amount">📊 الكلي: ${formatNumber(totalAll)} د.ع</div>
+                        ${agentOffersHTML}
+                        <div class="amount" style="font-weight: 800; font-size: 1rem; color: #667eea; margin-top: 10px; padding-top: 10px; border-top: 2px solid rgba(102, 126, 234, 0.3);">
+                            📊 الإجمالي: ${formatNumber(totalAll)} د.ع
+                        </div>
             </div>`;
     });
-    summaryHTML += `</div></div>`;
+            summaryHTML += `</div>`;
 
-    let existing = document.getElementById('agentSummary');
-    if (existing) existing.remove();
+            document.getElementById('summaryContent').innerHTML = summaryHTML;
 
-    const summaryContainer = document.createElement('div');
-    summaryContainer.id = 'agentSummary';
-    summaryContainer.innerHTML = summaryHTML;
-    document.getElementById('dashboard').appendChild(summaryContainer);
-}
+            let totalsHTML = `
+                <div class="result-card" style="border-top: 4px solid; border-image: linear-gradient(135deg, #667eea, #764ba2, #f093fb) 1;">
+                    <h3>💰 إجمالي العرض المجاني</h3>
+                    <div class="count">${formatNumber(totalBasicAll)}</div>
+                    <div class="amount">دينار عراقي</div>
+                </div>
+                <div class="result-card" style="border-top: 4px solid; border-image: linear-gradient(135deg, #667eea, #764ba2, #f093fb) 1;">
+                    <h3>💼 إجمالي العرض المخفض 3 أشهر</h3>
+                    <div class="count">${formatNumber(totalAdvancedAll)}</div>
+                    <div class="amount">دينار عراقي</div>
+                </div>
+                <div class="result-card" style="border-top: 4px solid; border-image: linear-gradient(135deg, #667eea, #764ba2, #f093fb) 1;">
+                    <h3>📅 إجمالي العرض المخفض شهرين</h3>
+                    <div class="count">${formatNumber(totalTwoMonthsAll)}</div>
+                    <div class="amount">دينار عراقي</div>
+                </div>
+                <div class="result-card" style="border-top: 4px solid; border-image: linear-gradient(135deg, #667eea, #764ba2, #f093fb) 1;">
+                    <h3>📊 الإجمالي الكلي</h3>
+                    <div class="count" style="font-size: 2.5rem;">${formatNumber(totalAllAgents)}</div>
+                    <div class="amount">دينار عراقي</div>
+                </div>
+            `;
+
+            document.getElementById('summaryTotalsGrid').innerHTML = totalsHTML;
+            document.getElementById('summaryTotals').classList.remove('hidden');
+        }
+
+        function refreshSummary() {
+            updateAgentSummary();
+            showSuccessMessage('تم تحديث الملخص بنجاح!');
+        }
+
+        function exportSummaryToExcel() {
+            if (!agentReports || Object.keys(agentReports).length === 0) {
+                alert('لا توجد بيانات للتصدير. يرجى تحليل بيانات الوكلاء أولاً.');
+                return;
+            }
+
+            try {
+                const wb = XLSX.utils.book_new();
+                const agentData = [];
+                
+                const sortedAgents = Object.entries(agentReports).sort((a, b) => {
+                    let totalA = 0;
+                    let totalB = 0;
+                    
+                    if (a[1].basic && a[1].basic.total.amount > 0) totalA += a[1].basic.total.amount;
+                    if (a[1].advanced && a[1].advanced.total.profit > 0) totalA += a[1].advanced.total.profit;
+                    if (a[1].twoMonths && a[1].twoMonths.total.profit > 0) totalA += a[1].twoMonths.total.profit;
+                    
+                    if (b[1].basic && b[1].basic.total.amount > 0) totalB += b[1].basic.total.amount;
+                    if (b[1].advanced && b[1].advanced.total.profit > 0) totalB += b[1].advanced.total.profit;
+                    if (b[1].twoMonths && b[1].twoMonths.total.profit > 0) totalB += b[1].twoMonths.total.profit;
+                    
+                    return totalB - totalA;
+                });
+
+                let totalBronze = 0, totalSilver = 0, totalGold = 0, totalPlatinum = 0;
+                let totalActivations = 0, totalOfferAmount = 0, totalOfficialAmount = 0, totalReturned = 0;
+
+                sortedAgents.forEach(([agentName, report]) => {
+                    const now = new Date();
+                    const dateTime = `${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()} ${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')}`;
+                    
+                    let bronzeCount = 0, silverCount = 0, goldCount = 0, platinumCount = 0;
+                    let totalCount = 0, offerAmount = 0, officialAmount = 0, returned = 0;
+                    
+                    
+                    if (report.basic) {
+                        bronzeCount += report.basic.bronze?.count || 0;
+                        silverCount += report.basic.silver?.count || 0;
+                        goldCount += report.basic.gold?.count || 0;
+                        platinumCount += report.basic.platinum?.count || 0;
+                        totalCount += report.basic.total?.count || 0;
+                        offerAmount += report.basic.total?.amount || 0;
+                        officialAmount += report.basic.total?.amount || 0;
+                        returned += report.basic.total?.amount || 0;
+                    }
+                    
+                    if (report.advanced) {
+                        bronzeCount += report.advanced.bronze?.count || 0;
+                        silverCount += report.advanced.silver?.count || 0;
+                        goldCount += report.advanced.gold?.count || 0;
+                        platinumCount += report.advanced.platinum?.count || 0;
+                        totalCount += report.advanced.total?.count || 0;
+                        offerAmount += report.advanced.total?.promoAmount || 0;
+                        officialAmount += report.advanced.total?.officialAmount || 0;
+                        returned += report.advanced.total?.profit || 0;
+                    }
+                    
+                    if (report.twoMonths) {
+                        bronzeCount += report.twoMonths.bronze?.count || 0;
+                        silverCount += report.twoMonths.silver?.count || 0;
+                        goldCount += report.twoMonths.gold?.count || 0;
+                        platinumCount += report.twoMonths.platinum?.count || 0;
+                        totalCount += report.twoMonths.total?.count || 0;
+                        offerAmount += report.twoMonths.total?.promoAmount || 0;
+                        officialAmount += report.twoMonths.total?.officialAmount || 0;
+                        returned += report.twoMonths.total?.profit || 0;
+                    }
+
+                    totalBronze += bronzeCount;
+                    totalSilver += silverCount;
+                    totalGold += goldCount;
+                    totalPlatinum += platinumCount;
+                    totalActivations += totalCount;
+                    totalOfferAmount += offerAmount;
+                    totalOfficialAmount += officialAmount;
+                    totalReturned += returned;
+
+                    agentData.push({
+                        'اسم الوكيل': agentName,
+                        'التاريخ والوقت': dateTime,
+                        'عدد - برونزي': bronzeCount,
+                        'عدد - سلفر': silverCount,
+                        'عدد - ذهبي': goldCount,
+                        'عدد - بلاتينيوم': platinumCount,
+                        'مجموع التفعيلات': totalCount,
+                        'مجموع المبالغ (عرض)': offerAmount,
+                        'المبلغ المستقطع (الرسمي)': officialAmount,
+                        'راجع الوكيل': returned
+                    });
+                });
+
+                const ws = XLSX.utils.json_to_sheet(agentData);
+                
+                ws['!cols'] = [
+                     { wch: 18 },
+                     { wch: 16 },
+                     { wch: 11 },
+                     { wch: 11 },
+                     { wch: 11 },
+                     { wch: 13 },
+                     { wch: 14 },
+                     { wch: 16 },
+                     { wch: 18 },
+                     { wch: 14 }
+                ];
+                
+                const headerRange = XLSX.utils.decode_range(ws['!ref']);
+                headerRange.e.c = headerRange.e.c || 9;
+                
+                const colNames = ['اسم الوكيل', 'التاريخ والوقت', 'عدد - برونزي', 'عدد - سلفر', 'عدد - ذهبي', 'عدد - بلاتينيوم', 'مجموع التفعيلات', 'مجموع المبالغ (عرض)', 'المبلغ المستقطع (الرسمي)', 'راجع الوكيل'];
+                
+                for (let col = 0; col <= headerRange.e.c; col++) {
+                    const cellAddress = XLSX.utils.encode_cell({ r: 0, c: col });
+                    if (!ws[cellAddress]) {
+                        ws[cellAddress] = { t: 's', v: colNames[col] || '' };
+                    }
+                    
+                    ws[cellAddress].s = {
+                        fill: {
+                             fgColor: { rgb: "B8D4F0" }
+                        },
+                        font: {
+                            bold: true,
+                             sz: 14,
+                            color: { rgb: "000000" }
+                        },
+                        alignment: {
+                             horizontal: "center",
+                            vertical: "center",
+                            wrapText: true
+                        },
+                        border: {
+                            top: { style: "medium", color: { rgb: "000000" } },
+                            bottom: { style: "medium", color: { rgb: "000000" } },
+                            left: { style: "medium", color: { rgb: "000000" } },
+                            right: { style: "medium", color: { rgb: "000000" } }
+                        }
+                    };
+                }
+                
+                for (let row = 1; row <= agentData.length; row++) {                    
+                    const isEvenRow = row % 2 === 0;
+                     const bgColor = isEvenRow ? "F2F2F2" : "FFFFFF";
+                    
+                    for (let col = 0; col <= headerRange.e.c; col++) {
+                        const cellAddress = XLSX.utils.encode_cell({ r: row, c: col });
+                        
+                        if (!ws[cellAddress]) {
+                            continue;
+                        }
+                         
+                        if (ws[cellAddress].t === 'n' && col >= 2) {
+                            ws[cellAddress].z = '#,##0';
+                        }
+                         
+                        ws[cellAddress].s = {
+                            fill: {
+                                fgColor: { rgb: bgColor }
+                            },
+                            font: {
+                                sz: 11,
+                                color: { rgb: "000000" }
+                            },
+                            alignment: {
+                                horizontal: "center",
+                                vertical: "center"
+                            },
+                            border: {
+                                top: { style: "thin", color: { rgb: "CCCCCC" } },
+                                bottom: { style: "thin", color: { rgb: "CCCCCC" } },
+                                left: { style: "thin", color: { rgb: "CCCCCC" } },
+                                right: { style: "thin", color: { rgb: "CCCCCC" } }
+                            }
+                        };
+                    }
+                }
+                
+                if (!ws['!rows']) {
+                    ws['!rows'] = [];
+                }
+                 ws['!rows'][0] = { hpt: 30 };
+
+                XLSX.utils.book_append_sheet(wb, ws, 'ملخص الوكلاء');
+
+                const filename = `ملخص_الوكلاء_${formatDateForFilename(new Date())}.xlsx`;
+                XLSX.writeFile(wb, filename);
+                
+                showSuccessMessage(`تم تصدير ملخص ${sortedAgents.length} وكيل إلى ملف Excel بنجاح!`);
+            } catch (error) {
+                alert('حدث خطأ أثناء التصدير: ' + error.message);
+                console.error('Export error:', error);
+            }
+        }
+
+        function printSummaryReport() {
+            if (!agentReports || Object.keys(agentReports).length === 0) {
+                alert('لا توجد بيانات للطباعة. يرجى تحليل بيانات الوكلاء أولاً.');
+                return;
+            }
+
+            updateAgentSummary();
+            
+            window.print();
+        }
+
 
 </script>
 </body>
