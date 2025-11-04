@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>شركة عراق سيل </title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700;800;900&display=swap">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
@@ -93,7 +93,17 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Tajawal', sans-serif;
+            font-family: 'Tajawal', 'Segoe UI', 'Arial', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+
+        html, body {
+            width: 100%;
+            max-width: 100vw;
+            overflow-x: hidden;
+            box-sizing: border-box;
         }
 
         body {
@@ -104,6 +114,24 @@
             position: relative;
             overflow-x: hidden;
             transition: background-color 0.3s ease, color 0.3s ease;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 1.6;
+            letter-spacing: 0.01em;
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
+            -webkit-overflow-scrolling: touch;
+            margin: 0;
+            padding: 0;
+        }
+
+        input, textarea {
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
         }
 
         body::before {
@@ -128,13 +156,17 @@
         .container {
             display: flex;
             width: 100%;
+            max-width: 100vw;
             min-height: 100vh;
             position: relative;
             z-index: 1;
+            overflow-x: hidden;
+            box-sizing: border-box;
         }
 
         .sidebar {
             width: 240px;
+            max-width: 240px;
             background: var(--sidebar-bg);
             border-left: 3px solid var(--primary-color);
             box-shadow: 4px 0 20px var(--shadow-md);
@@ -147,7 +179,11 @@
             flex-direction: column;
             padding: 20px 0;
             overflow-y: auto;
+            overflow-x: hidden;
             transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior: contain;
+            box-sizing: border-box;
         }
 
         .sidebar.hidden {
@@ -289,14 +325,22 @@
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            color: var(--text-secondary);
-            font-weight: 500;
-            font-size: 0.875rem;
+            color: #1a1a1a;
+            font-weight: 600;
+            font-size: 0.95rem;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
             position: relative;
             overflow: hidden;
             background: var(--nav-bg);
             border: 1px solid transparent;
             backdrop-filter: blur(10px);
+            line-height: 1.5;
+        }
+
+        [data-theme="dark"] .nav-item {
+            color: #f5f5f5;
         }
 
         .nav-item::before {
@@ -365,11 +409,20 @@
 
         .nav-text {
             flex: 1;
-            font-size: 0.875rem;
+            font-size: 0.95rem;
+            font-weight: 600;
             letter-spacing: 0.2px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+            color: #1a1a1a;
+        }
+
+        [data-theme="dark"] .nav-text {
+            color: #f5f5f5;
         }
 
         .sidebar-footer {
@@ -389,10 +442,15 @@
         }
 
         .date-info-sidebar {
-            color: var(--text-secondary);
+            color: #1a1a1a;
             font-size: 12px;
             text-align: center;
             transition: color 0.3s ease;
+            font-weight: 600;
+        }
+
+        [data-theme="dark"] .date-info-sidebar {
+            color: #f5f5f5;
         }
 
         .main-content {
@@ -400,11 +458,19 @@
             margin-right: 280px;
             padding: 50px 45px;
             min-height: 100vh;
-            transition: margin-right 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            width: calc(100% - 280px);
+            max-width: calc(100% - 280px);
+            overflow-x: hidden;
+            position: relative;
+            z-index: 1;
+            box-sizing: border-box;
         }
 
         .main-content.sidebar-hidden {
             margin-right: 0;
+            width: 100%;
+            max-width: 100%;
         }
 
         .login-screen {
@@ -475,10 +541,15 @@
             border: 2px solid var(--input-border);
             border-radius: 15px;
             font-size: 16px;
+            font-weight: 500;
             transition: all 0.3s ease;
             text-align: right;
             background: var(--input-bg);
             color: var(--text-primary);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+            line-height: 1.5;
         }
 
         .form-group input:focus {
@@ -487,6 +558,7 @@
             box-shadow: 0 0 20px var(--shadow-md);
             transform: translateY(-2px);
             background: var(--input-bg);
+            font-weight: 600;
         }
 
         .login-btn {
@@ -516,11 +588,19 @@
         .dashboard {
             display: none;
             width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+            position: relative;
+            box-sizing: border-box;
         }
 
         .tab-content {
             display: none;
             animation: fadeIn 0.5s ease;
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+            box-sizing: border-box;
         }
 
         @keyframes fadeIn {
@@ -536,6 +616,10 @@
 
         .tab-content.active {
             display: block;
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+            box-sizing: border-box;
         }
 
         .section {
@@ -550,11 +634,80 @@
             transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
+            overflow-x: hidden;
             color: var(--text-primary);
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
         }
 
         #percentageResults.section {
             overflow: visible;
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+
+        #percentageTableContainer {
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+            overflow-x: auto !important;
+            overflow-y: auto !important;
+            will-change: scroll-position;
+            contain: layout style paint;
+            position: relative;
+            isolation: isolate;
+        }
+
+        #percentageTableContainer::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        #percentageTableContainer::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        #percentageTableContainer::-webkit-scrollbar-thumb {
+            background: #801c32;
+            border-radius: 4px;
+        }
+
+        #percentageTableContainer::-webkit-scrollbar-thumb:hover {
+            background: #a52d45;
+        }
+
+        #percentageTable {
+            width: auto;
+            min-width: 100%;
+            table-layout: auto;
+            border-collapse: collapse;
+            box-sizing: border-box;
+            display: table;
+        }
+
+        #percentageTable th,
+        #percentageTable td {
+            box-sizing: border-box;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        #agentPercentageTab {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+            box-sizing: border-box;
+        }
+
+        #agentPercentageTab .section {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+            box-sizing: border-box;
         }
 
         .section::before {
@@ -606,6 +759,10 @@
             letter-spacing: 1px;
             position: relative;
             transition: color 0.3s ease, border-color 0.3s ease;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+            line-height: 1.4;
         }
 
         .file-upload {
@@ -687,6 +844,10 @@
             letter-spacing: 1px;
             text-transform: uppercase;
             color: #ffffff;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+            line-height: 1.5;
         }
 
         .btn::before {
@@ -775,33 +936,13 @@
         }
 
         .agents-grid-improved {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
             margin: 20px 0;
             padding: 0;
-            align-items: stretch;
-        }
-
-        @media (max-width: 768px) {
-            .agents-grid-improved {
-                grid-template-columns: 1fr;
-                gap: 14px;
-            }
-        }
-
-        @media (min-width: 1200px) {
-            .agents-grid-improved {
-                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-                gap: 18px;
-            }
-        }
-
-        @media (min-width: 1600px) {
-            .agents-grid-improved {
-                grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-                gap: 20px;
-            }
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .result-card {
@@ -1433,11 +1574,15 @@
 
         .info-text {
             flex: 0 0 auto;
-            color: var(--text-secondary);
+            color: #1a1a1a;
             font-size: 0.9rem;
             font-weight: 600;
             min-width: 120px;
             text-align: left;
+        }
+
+        [data-theme="dark"] .info-text {
+            color: #f5f5f5;
         }
 
         .info-value {
@@ -1577,11 +1722,15 @@
 
         .settings-group label {
             display: block;
-            color: var(--text-secondary);
+            color: #1a1a1a;
             margin-bottom: 8px;
             font-weight: 600;
             font-size: 0.9rem;
             transition: color 0.3s ease;
+        }
+
+        [data-theme="dark"] .settings-group label {
+            color: #f5f5f5;
         }
 
         .settings-input {
@@ -1590,10 +1739,15 @@
             border: 2px solid var(--input-border);
             border-radius: 8px;
             font-size: 0.95rem;
+            font-weight: 500;
             transition: all 0.3s ease;
             background: var(--input-bg);
             color: var(--text-primary);
             box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+            line-height: 1.5;
         }
 
         .settings-input:focus {
@@ -1601,6 +1755,7 @@
             border-color: var(--primary-color);
             box-shadow: 0 0 0 3px var(--shadow-sm);
             background: var(--input-bg);
+            font-weight: 600;
         }
 
         .settings-input:hover {
@@ -1674,8 +1829,13 @@
         }
 
         .activity-item .activity-time {
-            color: #666;
+            color: #1a1a1a;
             font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        [data-theme="dark"] .activity-item .activity-time {
+            color: #f5f5f5;
         }
 
         .agent-card {
@@ -1741,16 +1901,25 @@
         .agent-card-improved {
             background: var(--card-bg);
             border-radius: 12px;
-            padding: 14px;
-            border: 1px solid var(--border-light);
-            box-shadow: 0 2px 10px var(--shadow-sm);
+            padding: 16px 20px;
+            border: 2px solid rgba(128, 28, 50, 0.2);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
-            overflow: hidden;
+            overflow: visible;
             display: flex;
-            flex-direction: column;
-            height: 100%;
-            color: var(--text-primary);
+            flex-direction: row;
+            align-items: stretch;
+            gap: 20px;
+            color: #1a1a1a;
+            width: 100%;
+            box-sizing: border-box;
+            min-height: 100px;
+        }
+
+        [data-theme="dark"] .agent-card-improved {
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: #f5f5f5;
         }
 
         .agent-card-improved::before {
@@ -1766,8 +1935,8 @@
         }
 
         .agent-card-improved:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 24px var(--shadow-md);
+            transform: translateX(4px);
+            box-shadow: 0 4px 16px rgba(128, 28, 50, 0.12);
             border-color: var(--primary-color);
         }
 
@@ -1777,39 +1946,63 @@
 
         .agent-card-header-improved {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
+            justify-content: flex-start;
             align-items: flex-start;
-            margin-bottom: 12px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid var(--border-light);
+            flex: 0 0 220px;
+            min-width: 220px;
+            max-width: 220px;
             gap: 8px;
+            padding-right: 16px;
+            border-right: 1px solid rgba(128, 28, 50, 0.1);
+            box-sizing: border-box;
         }
 
         .agent-name-section {
             flex: 1;
             min-width: 0;
+            width: 100%;
             overflow: hidden;
+            box-sizing: border-box;
         }
 
         .agent-name-title {
-            font-size: 1rem;
+            font-size: 1.05rem;
             font-weight: 800;
-            color: var(--primary-color);
+            color: #1a1a1a;
             margin: 0 0 4px 0;
-            line-height: 1.2;
+            line-height: 1.4;
             letter-spacing: 0.2px;
             word-wrap: break-word;
             overflow-wrap: break-word;
             transition: color 0.3s ease;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        [data-theme="dark"] .agent-name-title {
+            color: #f5f5f5;
         }
 
         .agent-name-subtitle {
-            font-size: 0.75rem;
-            font-weight: 500;
-            color: var(--text-secondary);
-            margin: 0 0 4px 0;
-            line-height: 1.3;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin: 0 0 6px 0;
+            line-height: 1.4;
             transition: color 0.3s ease;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        [data-theme="dark"] .agent-name-subtitle {
+            color: #f5f5f5;
         }
 
         .agent-badge {
@@ -1829,7 +2022,7 @@
             display: inline-block;
             padding: 3px 8px;
             background: rgba(128, 28, 50, 0.08);
-            color: #666;
+            color: #1a1a1a;
             border-radius: 10px;
             font-size: 0.65rem;
             font-weight: 600;
@@ -1837,33 +2030,40 @@
             border: 1px solid rgba(128, 28, 50, 0.15);
         }
 
+        [data-theme="dark"] .agent-badge-empty {
+            color: #f5f5f5;
+        }
+
         .agent-actions-improved {
             display: flex;
-            gap: 4px;
+            gap: 6px;
             flex-shrink: 0;
-            flex-wrap: nowrap;
+            flex-wrap: wrap;
             align-items: center;
             justify-content: flex-end;
+            min-width: 180px;
+            max-width: 200px;
+            box-sizing: border-box;
         }
 
         .btn-action {
-            padding: 5px 8px;
-            min-width: auto;
+            padding: 6px 10px;
+            min-width: 60px;
             width: auto;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.65rem;
+            font-size: 0.7rem;
             font-weight: 700;
             color: white;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             letter-spacing: 0.05px;
             white-space: nowrap;
-            line-height: 1.2;
+            line-height: 1.3;
             flex-shrink: 0;
         }
 
@@ -1904,39 +2104,54 @@
 
 
         .agent-info-section {
-            margin-bottom: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+            flex: 0 0 auto;
+            min-width: 200px;
+            max-width: 250px;
+            padding-right: 16px;
+            border-right: 1px solid rgba(128, 28, 50, 0.1);
+            box-sizing: border-box;
         }
 
         .info-item-improved {
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 7px 10px;
-            background: var(--bg-secondary);
+            padding: 8px 12px;
+            background: rgba(128, 28, 50, 0.04);
             border-radius: 8px;
-            margin-bottom: 6px;
             transition: all 0.25s ease;
-            border: 1px solid var(--border-light);
+            border: 1px solid rgba(128, 28, 50, 0.1);
+            white-space: nowrap;
+            margin: 0;
+            box-sizing: border-box;
+            width: 100%;
+            clear: both;
         }
 
         .info-item-improved:hover {
-            background: var(--bg-tertiary);
-            border-color: var(--border-color);
-            transform: translateX(-4px);
-            box-shadow: 0 2px 8px var(--shadow-sm);
+            background: rgba(128, 28, 50, 0.08);
+            border-color: rgba(128, 28, 50, 0.2);
         }
 
         .info-label {
             font-weight: 600;
-            color: var(--text-secondary);
+            color: #1a1a1a;
             min-width: 45px;
             font-size: 0.75rem;
             transition: color 0.3s ease;
         }
 
+        [data-theme="dark"] .info-label {
+            color: #f5f5f5;
+        }
+
         .info-value {
             font-weight: 700;
-            color: var(--primary-color);
+            color: #1a1a1a;
             flex: 1;
             text-align: right;
             direction: ltr;
@@ -1945,8 +2160,12 @@
             transition: color 0.3s ease;
         }
 
+        [data-theme="dark"] .info-value {
+            color: #f5f5f5;
+        }
+
         .info-label-empty {
-            color: var(--text-tertiary);
+            color: #1a1a1a;
             font-style: italic;
             font-size: 0.85rem;
             text-align: center;
@@ -1955,27 +2174,38 @@
             transition: color 0.3s ease;
         }
 
+        [data-theme="dark"] .info-label-empty {
+            color: #f5f5f5;
+        }
+
         .agent-reports-section {
-            margin-top: auto;
-            padding-top: 12px;
-            border-top: 1px solid var(--border-light);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+            flex: 1;
+            min-width: 300px;
+            box-sizing: border-box;
         }
 
         .reports-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(95px, 1fr));
-            gap: 8px;
-            margin-bottom: 10px;
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
         }
 
         .report-item {
-            padding: 9px 8px;
-            border-radius: 10px;
+            padding: 8px 14px;
+            border-radius: 8px;
             text-align: center;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             border: 1px solid transparent;
             position: relative;
             overflow: hidden;
+            min-width: 90px;
+            white-space: nowrap;
         }
 
         .report-item::before {
@@ -1994,8 +2224,9 @@
         }
 
         .report-item:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border-color: rgba(128, 28, 50, 0.3);
         }
 
         .report-basic {
@@ -2016,34 +2247,48 @@
         .report-label {
             font-size: 0.7rem;
             font-weight: 700;
-            color: #555;
+            color: #1a1a1a;
             margin-bottom: 4px;
             letter-spacing: 0.1px;
+        }
+
+        [data-theme="dark"] .report-label {
+            color: #f5f5f5;
         }
 
         .report-value {
             font-size: 0.85rem;
             font-weight: 900;
-            color: #801c32;
+            color: #1a1a1a;
             line-height: 1.2;
+        }
+
+        [data-theme="dark"] .report-value {
+            color: #f5f5f5;
         }
 
         .currency {
             font-size: 0.75rem;
             font-weight: 600;
-            color: #666;
+            color: #1a1a1a;
+        }
+
+        [data-theme="dark"] .currency {
+            color: #f5f5f5;
         }
 
         .agent-total-section {
             background: linear-gradient(135deg, #801c32 0%, #a52d45 100%);
-            padding: 10px 10px;
-            border-radius: 10px;
+            padding: 10px 16px;
+            border-radius: 8px;
             text-align: center;
             color: white;
-            box-shadow: 0 3px 12px rgba(128, 28, 50, 0.2);
-            margin-top: 10px;
+            box-shadow: 0 2px 8px rgba(128, 28, 50, 0.2);
             position: relative;
             overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            min-width: 140px;
+            white-space: nowrap;
         }
 
         .agent-total-section::before {
@@ -2089,11 +2334,14 @@
 
         .no-reports-message {
             text-align: center;
-            padding: 12px 10px;
+            padding: 10px 12px;
             background: rgba(128, 28, 50, 0.04);
-            border-radius: 10px;
+            border-radius: 8px;
             border: 1px dashed rgba(128, 28, 50, 0.25);
-            margin-top: 10px;
+            margin: 0;
+            box-sizing: border-box;
+            width: 100%;
+            clear: both;
         }
 
         .no-reports-message p {
@@ -2102,6 +2350,7 @@
             margin: 0;
             font-style: italic;
             line-height: 1.4;
+            padding: 0;
         }
 
         .modal {
@@ -2240,6 +2489,16 @@
             margin: 0;
         }
 
+        .message-textarea,
+        textarea,
+        select {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+            font-weight: 500;
+            line-height: 1.6;
+        }
+
         .message-textarea {
             width: 100%;
             min-height: 150px;
@@ -2247,16 +2506,19 @@
             border: 2px solid #e0e0e0;
             border-radius: 10px;
             font-size: 1rem;
-            font-family: 'Tajawal', sans-serif;
+            font-family: 'Tajawal', 'Segoe UI', 'Arial', sans-serif;
+            font-weight: 500;
             resize: vertical;
             direction: rtl;
             text-align: right;
+            line-height: 1.6;
         }
 
         .message-textarea:focus {
             outline: none;
             border-color: #801c32;
             box-shadow: 0 0 0 3px rgba(128, 28, 50, 0.1);
+            font-weight: 600;
         }
 
         .message-preview {
@@ -2380,7 +2642,7 @@
                     <h3 class="section-title">
                          تحليل بيانات العرض المجاني
                     </h3>
-                    <p style="color: #666; margin-bottom: 15px; font-size: 1rem;">
+                    <p style="color: #1a1a1a; margin-bottom: 15px; font-size: 1rem; font-weight: 600;">
                     
                     </p>
                     <button class="btn btn-primary" onclick="analyzeBasicData()">
@@ -2436,7 +2698,7 @@
                     <h3 class="section-title">
                          تحليل العرض المخفض لثلاث أشهر
                     </h3>
-                    <p style="color: #666; margin-bottom: 15px; font-size: 1rem;">
+                    <p style="color: #1a1a1a; margin-bottom: 15px; font-size: 1rem; font-weight: 600;">
                          يتم حساب التفعيل عند وجود 3 اشتراكات لنفس المستخدم خلال 5 أيام<br>
                          مقارنة أسعار العرض المخفض مع الأسعار الرسمية لحساب الراجع للوكيل
                     </p>
@@ -2493,7 +2755,7 @@
                     <h3 class="section-title">
                          تحليل العرض المخفض لشهرين
                     </h3>
-                    <p style="color: #666; margin-bottom: 15px; font-size: 1rem;">
+                    <p style="color: #1a1a1a; margin-bottom: 15px; font-size: 1rem; font-weight: 600;">
                          يتم حساب التفعيل عند وجود 2 اشتراكات لنفس المستخدم خلال 5 أيام<br>
                          مقارنة أسعار العرض المخفض مع الأسعار الرسمية لحساب الراجع للوكيل
                     </p>
@@ -2548,7 +2810,7 @@
                             <input type="text" id="agentSearchInput" class="settings-input" placeholder="بحث عن وكيل..." onkeyup="filterAgents()" style="width: 100%; position: relative; z-index: 10; pointer-events: auto;">
                         </div>
                         <div style="display: flex; gap: 10px; align-items: center; position: relative; z-index: 10;">
-                            <label style="font-weight: 600; color: #666;">ترتيب حسب:</label>
+                            <label style="font-weight: 600; color: #1a1a1a;">ترتيب حسب:</label>
                             <select id="agentSortSelect" class="settings-input" onchange="sortAgents()" style="min-width: 180px; position: relative; z-index: 10; pointer-events: auto;">
                                 <option value="name">الاسم (أ-ي)</option>
                                 <option value="name-desc">الاسم (ي-أ)</option>
@@ -2558,7 +2820,7 @@
                                 <option value="reports-asc">عدد التقارير (الأقل أولاً)</option>
                             </select>
                         </div>
-                        <div style="color: #666; font-size: 0.9rem;">
+                        <div style="color: #1a1a1a; font-size: 0.9rem; font-weight: 600;">
                             <span id="agentsCount">0</span> وكيل
                         </div>
                     </div>
@@ -2572,7 +2834,7 @@
                     <h3 class="section-title">
  الملخص العام لجميع الوكلاء
                     </h3>
-                    <p style="color: #666; margin-bottom: 20px; font-size: 1rem;">
+                    <p style="color: #1a1a1a; margin-bottom: 20px; font-size: 1rem; font-weight: 600;">
                         يعرض هذا القسم ملخص شامل لجميع الوكلاء وعروضهم المحسوبة
                     </p>
                     <button class="btn btn-primary" onclick="refreshSummary()">
@@ -2608,13 +2870,13 @@
             <div id="agentPercentageTab" class="tab-content">
                 <div class="section">
                     <h3 class="section-title"> نسبة الوكلاء</h3>
-                    <p style="color: #666; margin-bottom: 20px; font-size: 1rem;">
+                    <p style="color: #1a1a1a; margin-bottom: 20px; font-size: 1rem; font-weight: 600;">
                         اختر الوكيل وارفع ملف Excel الخاص به لاحتساب نسبة الوكيل بناءً على الأسعار المخزنة في النظام
                     </p>
                     
                     <div style="margin-bottom: 20px; padding: 20px; background: rgba(128, 28, 50, 0.05); border-radius: 12px;">
                         <label style="display: block; margin-bottom: 10px; font-weight: 600; color: #801c32;">اختر الوكيل:</label>
-                        <select id="selectedAgentForPercentage" class="settings-input" style="width: 100%; margin-bottom: 15px;" onchange="onAgentSelectedForPercentage()">
+                        <select id="selectedAgentForPercentage" class="settings-input" style="width: 100%; margin-bottom: 15px; position: relative; z-index: 10; pointer-events: auto;">
                             <option value="">-- اختر وكيل --</option>
                         </select>
                         
@@ -2629,7 +2891,7 @@
                             <div style="margin-top: 15px;">
                                 <label style="display: block; margin-bottom: 10px; font-weight: 600; color: #801c32;">النسبة</label>
                                 <input type="number" id="percentageRateSelect" class="settings-input" value="16" min="0" max="100" step="0.01" style="width: 200px; position: relative; z-index: 10; pointer-events: auto;" onchange="updatePercentageRate()">
-                                <p style="margin-top: 5px; font-size: 0.85rem; color: #666;" id="percentageRateInfo">
+                                <p style="margin-top: 5px; font-size: 0.85rem; color: #1a1a1a; font-weight: 600;" id="percentageRateInfo">
                                     سيتم استخدام النسبة المحفوظة للوكيل (16% افتراضي)
                                 </p>
                             </div>
@@ -2642,15 +2904,15 @@
                     </div>
                 </div>
 
-                <div id="percentageResults" class="section hidden" style="padding: 20px; overflow: visible;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <div id="percentageResults" class="section hidden" style="padding: 20px; overflow: visible; overflow-x: hidden; width: 100%; max-width: 100%; box-sizing: border-box;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; width: 100%; max-width: 100%; box-sizing: border-box;">
                         <h3 class="section-title" style="margin: 0; font-size: 1.3rem; padding-bottom: 10px;"> بيانات نسبة الوكلاء</h3>
                         <button class="btn btn-success" onclick="exportPercentageToExcel()" style="padding: 8px 16px; font-size: 0.85rem;">
                             تصدير Excel
                         </button>
                     </div>
-                    <div id="percentageTableContainer" style="overflow-x: auto; overflow-y: visible; max-height: none; width: 100%; position: relative; z-index: 1;">
-                        <table id="percentageTable" style="width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.8rem; min-width: max-content; position: relative;">
+                    <div id="percentageTableContainer" style="overflow-x: auto; overflow-y: auto; max-height: 70vh; width: 100%; max-width: 100%; position: relative; z-index: 1; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; box-sizing: border-box; will-change: scroll-position; contain: layout style paint;">
+                        <table id="percentageTable" style="width: auto; min-width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.8rem; table-layout: auto; box-sizing: border-box;">
                             <thead>
                                 <tr style="background: #801c32; color: white;">
                                     <th rowspan="2" style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; vertical-align: middle; font-size: 0.75rem; font-weight: 600;">اسم الوكيل</th>
@@ -2691,9 +2953,9 @@
                     <h3 class="section-title"> الإعدادات</h3>
                     <div class="settings-container">
                         <div class="settings-section">
-                            <h4> إعدادات WhatsApp</h4>
+                            <h4> إعدادات واتساب</h4>
                             <div id="whatsappStatus" style="margin-bottom: 0; padding: 16px; background: rgba(128, 28, 50, 0.05); border-radius: 8px; border: 1px solid rgba(128, 28, 50, 0.1);">
-                                <p style="margin-bottom: 12px; font-size: 0.85rem; color: #666; line-height: 1.6;">
+                                <p style="margin-bottom: 12px; font-size: 0.85rem; color: #1a1a1a; line-height: 1.6; font-weight: 600;">
                                     <strong style="color: #801c32;">ملاحظة:</strong> أدخل رقم هاتفك المرتبط بـ WhatsApp لاستخدام إرسال الرسائل المباشر
                                 </p>
                                 <p style="margin-bottom: 12px; font-size: 0.9rem;">
@@ -2703,8 +2965,8 @@
                                 <div id="whatsappQRCode" style="text-align: center; margin: 15px 0;"></div>
                                 <button class="btn btn-primary" onclick="connectWhatsApp()" style="width: 100%; margin-top: 0;"> إعداد WhatsApp</button>
                                 <button class="btn btn-danger" onclick="disconnectWhatsApp()" style="width: 100%; margin-top: 10px;"> إلغاء الإعداد</button>
-                                <p style="margin-top: 12px; font-size: 0.8rem; color: #666; text-align: center; line-height: 1.5;">
-                                    سيتم فتح WhatsApp مباشرة لإرسال الرسائل دون الحاجة لتسجيل الدخول
+                                <p style="margin-top: 12px; font-size: 0.8rem; color: #1a1a1a; text-align: center; line-height: 1.5; font-weight: 600;">
+                                    سيتم فتح واتساب مباشرة لإرسال الرسائل دون الحاجة لتسجيل الدخول
                                 </p>
                             </div>
                         </div>
@@ -2742,7 +3004,7 @@
                             <div class="settings-group">
                                 <label>النسبة الافتراضية للوكلاء الجدد (%):</label>
                                 <input type="number" id="defaultAgentPercentage" class="settings-input" value="16" min="0" max="100" step="0.01" onchange="saveDefaultPercentage()">
-                                <p style="margin-top: 5px; font-size: 0.85rem; color: #666;">النسبة الافتراضية المستخدمة عند إضافة وكيل جديد (0-100%)</p>
+                                <p style="margin-top: 5px; font-size: 0.85rem; color: #1a1a1a; font-weight: 600;">النسبة الافتراضية المستخدمة عند إضافة وكيل جديد (0-100%)</p>
                             </div>
                         </div>
                         
@@ -2752,7 +3014,7 @@
                                 <input type="checkbox" id="enableNotifications" checked>
                                 <span style="font-weight: 500; color: #333;">تفعيل الإشعارات</span>
                             </label>
-                            <p style="margin-top: 12px; font-size: 0.85rem; color: #666; line-height: 1.5;">
+                            <p style="margin-top: 12px; font-size: 0.85rem; color: #1a1a1a; line-height: 1.5; font-weight: 600;">
                                 عند تفعيل الإشعارات، سيتم إظهار رسائل تأكيد عند إتمام العمليات
                             </p>
                         </div>
@@ -2797,7 +3059,7 @@
             <div style="display: flex; gap: 15px; justify-content: flex-end; margin-top: 20px;">
                 <button class="btn btn-danger" onclick="closeMessageCustomizationModal()">إلغاء</button>
                 <button class="btn btn-success" onclick="sendViaEmail()">إرسال عبر البريد</button>
-                <button class="btn btn-primary" onclick="sendCustomizedWhatsAppMessage()">إرسال WhatsApp</button>
+                <button class="btn btn-primary" onclick="sendCustomizedWhatsAppMessage()">إرسال واتساب</button>
             </div>
         </div>
     </div>
@@ -2815,7 +3077,7 @@
                 </div>
                 <div class="form-group">
                     <label>اسم الوكيل :</label>
-                    <input type="text" id="agentSubName" class="settings-input" placeholder="اسم ثانوي أو معرف">
+                    <input type="text" id="agentSubName" class="settings-input" placeholder=" ">
                 </div>
                 <div class="form-group">
                     <label>رقم الهاتف:</label>
@@ -2857,33 +3119,178 @@ let agentReports = {};
         const subscriptionPrices = {
             basic: {
                 'Iraqcell_Bronze_Profile_NEW': 30000,
+                'Iraqcell_Bronze_Profile': 30000,
                 'Iraqcell_Silver_Profile_NEW': 40000,
+                'Iraqcell_Silver_Profile': 40000,
                 'Iraqcell_Gold_Profile_NEW': 50000,
-                'Iraqcell_Platinum_Profile_NEW': 65000
+                'Iraqcell_Gold_Profile': 50000,
+                'Iraqcell_Platinum_Profile_NEW': 65000,
+                'Iraqcell_Platinum_Profile': 65000
             },
             advanced: {
                 promo: {
                     'Iraqcell_Bronze_Profile_NEW': 75000,
+                    'Iraqcell_Bronze_Profile': 75000,
                     'Iraqcell_Silver_Profile_NEW': 105000,
+                    'Iraqcell_Silver_Profile': 105000,
                     'Iraqcell_Gold_Profile_NEW': 120000,
-                    'Iraqcell_Platinum_Profile_NEW': 165000
+                    'Iraqcell_Gold_Profile': 120000,
+                    'Iraqcell_Platinum_Profile_NEW': 165000,
+                    'Iraqcell_Platinum_Profile': 165000
                 },
                 official: {
                     'Iraqcell_Bronze_Profile_NEW': 90000,
+                    'Iraqcell_Bronze_Profile': 90000,
                     'Iraqcell_Silver_Profile_NEW': 120000,
+                    'Iraqcell_Silver_Profile': 120000,
                     'Iraqcell_Gold_Profile_NEW': 150000,
-                    'Iraqcell_Platinum_Profile_NEW': 195000
+                    'Iraqcell_Gold_Profile': 150000,
+                    'Iraqcell_Platinum_Profile_NEW': 195000,
+                    'Iraqcell_Platinum_Profile': 195000
                 }
             },
             twoMonths: {
                 promo: {
                     'Iraqcell_Bronze_Profile_NEW': 50000,
+                    'Iraqcell_Bronze_Profile': 50000,
                     'Iraqcell_Silver_Profile_NEW': 70000, 
+                    'Iraqcell_Silver_Profile': 70000,
                     'Iraqcell_Gold_Profile_NEW': 80000, 
-                    'Iraqcell_Platinum_Profile_NEW': 110000
+                    'Iraqcell_Gold_Profile': 80000,
+                    'Iraqcell_Platinum_Profile_NEW': 110000,
+                    'Iraqcell_Platinum_Profile': 110000
                 }
             }
         };
+
+        function getSubscriptionCategory(subscriptionName, agentName) {
+            if (!subscriptionName) return '';
+            
+            const subscription = String(subscriptionName).trim();
+            let agent = null;
+            
+            if (agentName) {
+                agent = agentsList.find(a => a.name === agentName);
+            }
+            
+            if (agent && agent.subscriptionNames) {
+                const subNames = agent.subscriptionNames;
+                
+                if (subscription === subNames.bronze || subscription.toLowerCase() === subNames.bronze.toLowerCase()) {
+                    return 'B';
+                }
+                if (subscription === subNames.silver || subscription.toLowerCase() === subNames.silver.toLowerCase()) {
+                    return 'S';
+                }
+                if (subscription === subNames.gold || subscription.toLowerCase() === subNames.gold.toLowerCase()) {
+                    return 'G';
+                }
+                if (subscription === subNames.platinum || subscription.toLowerCase() === subNames.platinum.toLowerCase()) {
+                    return 'P';
+                }
+                
+                if (subscription.toLowerCase().includes(subNames.bronze.toLowerCase()) || 
+                    subNames.bronze.toLowerCase().includes(subscription.toLowerCase())) {
+                    return 'B';
+                }
+                if (subscription.toLowerCase().includes(subNames.silver.toLowerCase()) || 
+                    subNames.silver.toLowerCase().includes(subscription.toLowerCase())) {
+                    return 'S';
+                }
+                if (subscription.toLowerCase().includes(subNames.gold.toLowerCase()) || 
+                    subNames.gold.toLowerCase().includes(subscription.toLowerCase())) {
+                    return 'G';
+                }
+                if (subscription.toLowerCase().includes(subNames.platinum.toLowerCase()) || 
+                    subNames.platinum.toLowerCase().includes(subscription.toLowerCase())) {
+                    return 'P';
+                }
+            }
+            
+            if (subscription.includes('Platinum') || subscription.includes('بلاتينيوم') || subscription.toLowerCase().includes('platinum')) {
+                return 'P';
+            } else if (subscription.includes('Gold') || subscription.includes('كولد') || subscription.toLowerCase().includes('gold')) {
+                return 'G';
+            } else if (subscription.includes('Silver') || subscription.includes('سلفر') || subscription.toLowerCase().includes('silver')) {
+                return 'S';
+            } else if (subscription.includes('Bronze') || subscription.includes('برونز') || subscription.toLowerCase().includes('bronze')) {
+                return 'B';
+            }
+            
+            return '';
+        }
+
+        function getSubscriptionFullName(category, agentName, type = 'basic') {
+            let agent = null;
+            
+            if (agentName) {
+                agent = agentsList.find(a => a.name === agentName);
+            }
+            
+            if (agent && agent.subscriptionNames) {
+                const subNames = agent.subscriptionNames;
+                switch(category) {
+                    case 'B': return subNames.bronze || 'Iraqcell_Bronze_Profile_NEW';
+                    case 'S': return subNames.silver || 'Iraqcell_Silver_Profile_NEW';
+                    case 'G': return subNames.gold || 'Iraqcell_Gold_Profile_NEW';
+                    case 'P': return subNames.platinum || 'Iraqcell_Platinum_Profile_NEW';
+                    default: return '';
+                }
+            }
+            
+            switch(category) {
+                case 'B': return 'Iraqcell_Bronze_Profile_NEW';
+                case 'S': return 'Iraqcell_Silver_Profile_NEW';
+                case 'G': return 'Iraqcell_Gold_Profile_NEW';
+                case 'P': return 'Iraqcell_Platinum_Profile_NEW';
+                default: return '';
+            }
+        }
+
+        function getSubscriptionPrice(subscriptionName, category, type = 'basic', priceType = 'basic') {
+            if (!subscriptionName || !category) return 0;
+            
+            const subType = String(subscriptionName).trim();
+            const defaultNames = {
+                'B': 'Iraqcell_Bronze_Profile_NEW',
+                'S': 'Iraqcell_Silver_Profile_NEW',
+                'G': 'Iraqcell_Gold_Profile_NEW',
+                'P': 'Iraqcell_Platinum_Profile_NEW'
+            };
+            
+            if (type === 'basic') {
+                if (subscriptionPrices.basic[subType]) {
+                    return subscriptionPrices.basic[subType];
+                }
+            } else if (type === 'advanced') {
+                if (priceType === 'promo' && subscriptionPrices.advanced.promo[subType]) {
+                    return subscriptionPrices.advanced.promo[subType];
+                } else if (priceType === 'official' && subscriptionPrices.advanced.official[subType]) {
+                    return subscriptionPrices.advanced.official[subType];
+                }
+            } else if (type === 'twoMonths') {
+                if (subscriptionPrices.twoMonths.promo[subType]) {
+                    return subscriptionPrices.twoMonths.promo[subType];
+                }
+            }
+            
+            const defaultName = defaultNames[category];
+            if (!defaultName) return 0;
+            
+            if (type === 'basic') {
+                return subscriptionPrices.basic[defaultName] || 0;
+            } else if (type === 'advanced') {
+                if (priceType === 'promo') {
+                    return subscriptionPrices.advanced.promo[defaultName] || 0;
+                } else if (priceType === 'official') {
+                    return subscriptionPrices.advanced.official[defaultName] || 0;
+                }
+            } else if (type === 'twoMonths') {
+                return subscriptionPrices.twoMonths.promo[defaultName] || 0;
+            }
+            
+            return 0;
+        }
 
         function setupPercentageFileUpload() {
             const fileUpload = document.getElementById('percentageFileUpload');
@@ -2996,6 +3403,8 @@ let agentReports = {};
             const select = document.getElementById('selectedAgentForPercentage');
             if (!select) return;
             
+            const currentValue = select.value;
+            
             select.innerHTML = '<option value="">-- اختر وكيل --</option>';
             agentsList.forEach(agent => {
                 const option = document.createElement('option');
@@ -3003,6 +3412,13 @@ let agentReports = {};
                 option.textContent = agent.name;
                 select.appendChild(option);
             });
+            
+            if (currentValue) {
+                select.value = currentValue;
+            }
+            
+            select.removeEventListener('change', onAgentSelectedForPercentage);
+            select.addEventListener('change', onAgentSelectedForPercentage);
         }
 
         function analyzeAgentPercentageData() {
@@ -3074,16 +3490,7 @@ let agentReports = {};
                 
                 if (!profileType) continue;
 
-                let category = '';
-                if (profileType.includes('Platinum') || profileType.includes('بلاتينيوم') || profileType.includes('platinum')) {
-                    category = 'P';
-                } else if (profileType.includes('Gold') || profileType.includes('كولد') || profileType.includes('gold')) {
-                    category = 'G';
-                } else if (profileType.includes('Silver') || profileType.includes('سلفر') || profileType.includes('silver')) {
-                    category = 'S';
-                } else if (profileType.includes('Bronze') || profileType.includes('برونز') || profileType.includes('bronze')) {
-                    category = 'B';
-                }
+                const category = getSubscriptionCategory(profileType, agentName);
                 
                 if (!category) continue;
 
@@ -3290,16 +3697,7 @@ let agentReports = {};
                     amount = parseFloat(row[amountCol]) || 0;
                 }
 
-                let category = 'B';
-                if (profileType.includes('Platinum') || profileType.includes('بلاتينيوم') || profileType.includes('platinum')) {
-                    category = 'P';
-                } else if (profileType.includes('Gold') || profileType.includes('كولد') || profileType.includes('gold')) {
-                    category = 'G';
-                } else if (profileType.includes('Silver') || profileType.includes('سلفر') || profileType.includes('silver')) {
-                    category = 'S';
-                } else if (profileType.includes('Bronze') || profileType.includes('برونز') || profileType.includes('bronze')) {
-                    category = 'B';
-                }
+                const category = getSubscriptionCategory(profileType, agentName) || 'B';
 
                 if (!agentData[agentName]) {
                     agentData[agentName] = { 
@@ -3448,10 +3846,6 @@ let agentReports = {};
                 };
             }
 
-            const tableContainer = document.getElementById('percentageTableContainer');
-            const scrollTop = tableContainer ? tableContainer.scrollTop : 0;
-            const scrollLeft = tableContainer ? tableContainer.scrollLeft : 0;
-
             tbody.innerHTML = '';
             
             const agents = Object.keys(agentPercentages);
@@ -3517,14 +3911,14 @@ let agentReports = {};
                         <input type="number" id="deduction_${agentName.replace(/[^a-zA-Z0-9]/g, '_')}" value="${data.deductions || 0}" 
                                data-agent-name="${agentName}"
                                data-field-type="deduction"
-                               style="width: 80px; padding: 4px; text-align: center; direction: ltr; font-size: 0.7rem; position: relative; z-index: 10; pointer-events: auto; cursor: text;" 
+                               style="width: 80px; padding: 4px; text-align: center; direction: ltr; font-size: 0.7rem; position: relative; z-index: 10; pointer-events: auto; cursor: text; -webkit-user-select: text; -moz-user-select: text; user-select: text; border: 1px solid #ccc; border-radius: 4px;" 
                                step="0.01" min="0" placeholder="0">
                     </td>
                     <td style="padding: 6px 4px; text-align: center; border: 1px solid #ddd; position: relative; z-index: 10;">
                         <input type="number" id="penalty_${agentName.replace(/[^a-zA-Z0-9]/g, '_')}" value="${data.penalties || 0}" 
                                data-agent-name="${agentName}"
                                data-field-type="penalty"
-                               style="width: 80px; padding: 4px; text-align: center; direction: ltr; font-size: 0.7rem; position: relative; z-index: 10; pointer-events: auto; cursor: text;" 
+                               style="width: 80px; padding: 4px; text-align: center; direction: ltr; font-size: 0.7rem; position: relative; z-index: 10; pointer-events: auto; cursor: text; -webkit-user-select: text; -moz-user-select: text; user-select: text; border: 1px solid #ccc; border-radius: 4px;" 
                                step="0.01" min="0" placeholder="0">
                     </td>
                     <td style="padding: 6px 4px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; color: #25D366; font-size: 0.85rem;">
@@ -3572,39 +3966,28 @@ let agentReports = {};
             }
             
             setupPercentageTableEventListeners();
-            
-            if (tableContainer) {
-                requestAnimationFrame(() => {
-                    requestAnimationFrame(() => {
-                        tableContainer.scrollTop = scrollTop;
-                        tableContainer.scrollLeft = scrollLeft;
                         
                         if (savedFocus) {
+                setTimeout(() => {
                             const inputId = savedFocus.fieldType === 'deduction' 
                                 ? `deduction_${savedFocus.agentName.replace(/[^a-zA-Z0-9]/g, '_')}`
                                 : `penalty_${savedFocus.agentName.replace(/[^a-zA-Z0-9]/g, '_')}`;
                             const input = document.getElementById(inputId);
                             if (input) {
-                                setTimeout(() => {
                                     try {
-                                        input.focus();
                                         input.value = savedFocus.value;
+                            input.focus();
                                         if (input.setSelectionRange) {
                                             input.setSelectionRange(input.value.length, input.value.length);
                                         }
                                     } catch (err) {
                                         console.warn('Error restoring focus:', err);
                                     }
-                                }, 20);
                             }
+                }, 100);
                         }
                         
-                        isRenderingTable = false;
-                    });
-                });
-            } else {
                 isRenderingTable = false;
-            }
         }
 
         async function exportPercentageToExcel() {
@@ -3987,26 +4370,24 @@ let agentReports = {};
                 lastPercentageDataHash = currentDataHash;
                 
                 renderPercentageTableTimeout = setTimeout(() => {
-                    if (Object.keys(agentPercentages).length > 0) {
+                    if (Object.keys(agentPercentages).length > 0 && !isRenderingTable) {
                         renderPercentageTable();
                     }
                     renderPercentageTableTimeout = null;
-                }, 50);
+                }, 1000);
             }
         }
 
         function setupPercentageTableEventListeners() {
-            const tbody = document.getElementById('percentageTableBody');
+                const tbody = document.getElementById('percentageTableBody');
             if (!tbody) return;
             
-            // Remove old listeners if exist
             const oldInputs = tbody.querySelectorAll('input[data-agent-name]');
             oldInputs.forEach(input => {
                 const newInput = input.cloneNode(true);
                 input.parentNode.replaceChild(newInput, input);
             });
             
-            // Add new event listeners
             tbody.addEventListener('input', function(e) {
                 const input = e.target;
                 if (input && input.tagName === 'INPUT' && input.hasAttribute('data-agent-name') && input.hasAttribute('data-field-type')) {
@@ -4108,6 +4489,12 @@ let agentReports = {};
             }
             document.getElementById('currentUser').textContent = '';
             loadPercentageData();
+            
+            const select = document.getElementById('selectedAgentForPercentage');
+            if (select) {
+                select.addEventListener('change', onAgentSelectedForPercentage);
+                updateAgentsListForPercentage();
+            }
         });
 
         function setupLoginForm() {
@@ -4367,45 +4754,57 @@ let agentReports = {};
 
             if (data.length === 0) return results;
 
-            results.agentName = data[0]['ColumnE'] || data[0][4] || 'غير محدد';
+            results.agentName = data[0]['ColumnF'] || data[0][5] || 'غير محدد';
 
-            data.forEach(row => {
-                const createdAt = row['ColumnA'] || row[0];
-                const username = row['ColumnB'] || row[1];
-                const subscription = row['ColumnH'] || row[7];
-                const count = row['ColumnO'] || row[14];
-                const agent = row['ColumnE'] || row[4] || '';
+            for (let i = 0; i < data.length; i++) {
+                const row = data[i];
+                const id = row['ColumnA'] || row[0];
+                const createdAt = row['ColumnB'] || row[1];
+                const username = row['ColumnC'] || row[2];
+                const subscription = row['ColumnI'] || row[8];
+                const count = row['ColumnP'] || row[15];
+                const agent = row['ColumnF'] || row[5] || '';
 
-                if (!createdAt || !username || !subscription || count != 1) return;
+                if (!createdAt || !username || !subscription || count != 1) continue;
 
                 const subType = String(subscription).trim();
-                const price = subscriptionPrices.basic[subType];
+                const agentName = String(agent).trim();
+                const category = getSubscriptionCategory(subType, agentName);
+                
+                if (!category) continue;
+                
+                const price = getSubscriptionPrice(subType, category, 'basic');
 
-                if (price) {
+                if (price > 0) {
                     basicDetails.push({
                         username: String(username).trim(),
                         subscription: subType,
-                        agent: String(agent).trim(),
+                        agent: agentName,
                         date: createdAt,
                         price: price,
                         type: 'مجاني'
                     });
 
-                    if (subType.includes('Bronze')) {
+                    switch(category) {
+                        case 'B':
                         results.bronze.count++;
                         results.bronze.amount += price;
-                    } else if (subType.includes('Silver')) {
+                            break;
+                        case 'S':
                         results.silver.count++;
                         results.silver.amount += price;
-                    } else if (subType.includes('Gold')) {
+                            break;
+                        case 'G':
                         results.gold.count++;
                         results.gold.amount += price;
-                    } else if (subType.includes('Platinum')) {
+                            break;
+                        case 'P':
                         results.platinum.count++;
                         results.platinum.amount += price;
+                            break;
                     }
                 }
-            });
+            }
 
             results.total.count = results.bronze.count + results.silver.count + results.gold.count + results.platinum.count;
             results.total.amount = results.bronze.amount + results.silver.amount + results.gold.amount + results.platinum.amount;
@@ -4506,16 +4905,17 @@ let agentReports = {};
 
             if (data.length === 0) return results;
 
-            results.agentName = data[0]['ColumnE'] || data[0][4] || 'غير محدد';
+            results.agentName = data[0]['ColumnF'] || data[0][5] || 'غير محدد';
 
             const userSubscriptions = {};
             const subscriptionDetails = {};
 
             data.forEach(row => {
-                const createdAt = row['ColumnA'] || row[0];
-                const username = row['ColumnB'] || row[1];
-                const subscription = row['ColumnH'] || row[7];
-                const agent = row['ColumnE'] || row[4] || '';
+                const id = row['ColumnA'] || row[0];
+                const createdAt = row['ColumnB'] || row[1];
+                const username = row['ColumnC'] || row[2];
+                const subscription = row['ColumnI'] || row[8];
+                const agent = row['ColumnF'] || row[5] || '';
 
                 if (!createdAt || !username || !subscription) return;
 
@@ -4604,25 +5004,35 @@ let agentReports = {};
 
                 if (activations > 0) {
                     const subType = subscription.trim();
-                    const promoPrice = subscriptionPrices.advanced.promo[subType] || 0;
-                    const officialPrice = subscriptionPrices.advanced.official[subType] || 0;
+                    const agentName = details[0]?.agent || '';
+                    const category = getSubscriptionCategory(subType, agentName);
+                    
+                    if (category) {
+                        const promoPrice = getSubscriptionPrice(subType, category, 'advanced', 'promo');
+                        const officialPrice = getSubscriptionPrice(subType, category, 'advanced', 'official');
 
-                    if (subType.includes('Bronze')) {
+                        switch(category) {
+                            case 'B':
                         results.bronze.count += activations;
                         results.bronze.promoAmount += activations * promoPrice;
                         results.bronze.officialAmount += activations * officialPrice;
-                    } else if (subType.includes('Silver')) {
+                                break;
+                            case 'S':
                         results.silver.count += activations;
                         results.silver.promoAmount += activations * promoPrice;
                         results.silver.officialAmount += activations * officialPrice;
-                    } else if (subType.includes('Gold')) {
+                                break;
+                            case 'G':
                         results.gold.count += activations;
                         results.gold.promoAmount += activations * promoPrice;
                         results.gold.officialAmount += activations * officialPrice;
-                    } else if (subType.includes('Platinum')) {
+                                break;
+                            case 'P':
                         results.platinum.count += activations;
                         results.platinum.promoAmount += activations * promoPrice;
                         results.platinum.officialAmount += activations * officialPrice;
+                                break;
+                        }
                     }
                 }
             });
@@ -4729,21 +5139,24 @@ let agentReports = {};
                 gold: { count: 0, promoAmount: 0, officialAmount: 0 },
                 platinum: { count: 0, promoAmount: 0, officialAmount: 0 },
                 total: { count: 0, promoAmount: 0, officialAmount: 0, profit: 0 },
-                agentName: ''
+                agentName: '',
+                dateFrom: null,
+                dateTo: null
             };
 
             if (data.length === 0) return results;
 
-            results.agentName = data[0]['ColumnE'] || data[0][4] || 'غير محدد';
+            results.agentName = data[0]['ColumnF'] || data[0][5] || 'غير محدد';
 
             const userSubscriptions = {};
             const subscriptionDetails = {};
 
             data.forEach(row => {
-                const createdAt = row['ColumnA'] || row[0];
-                const username = row['ColumnB'] || row[1];
-                const subscription = row['ColumnH'] || row[7];
-                const agent = row['ColumnE'] || row[4] || '';
+                const id = row['ColumnA'] || row[0];
+                const createdAt = row['ColumnB'] || row[1];
+                const username = row['ColumnC'] || row[2];
+                const subscription = row['ColumnI'] || row[8];
+                const agent = row['ColumnF'] || row[5] || '';
 
                 if (!createdAt || !username || !subscription) return;
 
@@ -4784,72 +5197,60 @@ let agentReports = {};
             Object.keys(userSubscriptions).forEach(key => {
                 const [username, subscription] = key.split('|');
                 let dates = userSubscriptions[key].sort((a, b) => a - b);
+                const details = subscriptionDetails[key].sort((a, b) => a.date - b.date);
                 
                 const usedForThreeMonths = new Array(dates.length).fill(false);
                 
-                let foundThreeMonths = true;
-                while (foundThreeMonths) {
-                    foundThreeMonths = false;
-                    for (let i = 0; i < dates.length - 2; i++) {
-                        if (usedForThreeMonths[i]) continue;
+                for (let i = 0; i < dates.length - 2; i++) {
+                    if (usedForThreeMonths[i]) continue;
+                    
+                    for (let j = i + 1; j < dates.length - 1; j++) {
+                        if (usedForThreeMonths[j]) continue;
                         
-                        for (let j = i + 1; j < dates.length - 1; j++) {
-                            if (usedForThreeMonths[j]) continue;
+                        for (let k = j + 1; k < dates.length; k++) {
+                            if (usedForThreeMonths[k]) continue;
                             
-                            for (let k = j + 1; k < dates.length; k++) {
-                                if (usedForThreeMonths[k]) continue;
-                                
-                                const daysDiff = (dates[k] - dates[i]) / (1000 * 60 * 60 * 24);
-                                if (daysDiff <= 5) {
-                                    usedForThreeMonths[i] = true;
-                                    usedForThreeMonths[j] = true;
-                                    usedForThreeMonths[k] = true;
-                                    foundThreeMonths = true;
-                                    break;
-                                }
+                            const daysDiff = (dates[k] - dates[i]) / (1000 * 60 * 60 * 24);
+                            if (daysDiff >= 0 && daysDiff <= 5) {
+                                usedForThreeMonths[i] = true;
+                                usedForThreeMonths[j] = true;
+                                usedForThreeMonths[k] = true;
+                                break;
                             }
-                            if (foundThreeMonths) break;
                         }
-                        if (foundThreeMonths) break;
                     }
                 }
                 
                 const remainingDates = dates.filter((date, index) => !usedForThreeMonths[index]);
-                const remainingDetails = subscriptionDetails[key].filter((detail, index) => !usedForThreeMonths[index]);
+                const remainingDetails = details.filter((detail, index) => !usedForThreeMonths[index]);
                 
                 let activations = 0;
                 const used = new Array(remainingDates.length).fill(false);
                 const activationDetails = [];
 
-                let found = true;
-                while (found) {
-                    found = false;
-                    for (let i = 0; i < remainingDates.length - 1; i++) {
+                for (let i = 0; i < remainingDates.length - 1; i++) {
                     if (used[i]) continue;
                     
-                        for (let j = i + 1; j < remainingDates.length; j++) {
+                    for (let j = i + 1; j < remainingDates.length; j++) {
                         if (used[j]) continue;
                         
-                            const daysDiff = (remainingDates[j] - remainingDates[i]) / (1000 * 60 * 60 * 24);
-                        if (daysDiff <= 5) {
-                            used[i] = used[j] = true;
+                        const daysDiff = (remainingDates[j] - remainingDates[i]) / (1000 * 60 * 60 * 24);
+                        if (daysDiff >= 0 && daysDiff <= 5) {
+                            used[i] = true;
+                            used[j] = true;
                             activations++;
-                                
-                                activationDetails.push({
-                                    username: remainingDetails[i].username,
-                                    subscription: remainingDetails[i].subscription,
-                                    agent: remainingDetails[i].agent,
-                                    date1: remainingDetails[i].dateStr,
-                                    date2: remainingDetails[j].dateStr,
-                                    daysDiff: Math.round(daysDiff * 100) / 100,
-                                    type: 'شهرين'
-                                });
-                                
-                                found = true;
+                            
+                            activationDetails.push({
+                                username: remainingDetails[i].username,
+                                subscription: remainingDetails[i].subscription,
+                                agent: remainingDetails[i].agent,
+                                date1: remainingDetails[i].dateStr,
+                                date2: remainingDetails[j].dateStr,
+                                daysDiff: Math.round(daysDiff * 100) / 100,
+                                type: 'شهرين'
+                            });
                             break;
                         }
-                        }
-                        if (found) break;
                     }
                 }
                 
@@ -4857,26 +5258,36 @@ let agentReports = {};
 
                 if (activations > 0) {
                     const subType = subscription.trim();
-                    const promoPrice = subscriptionPrices.twoMonths.promo[subType] || 0;
-                    const monthlyOfficialPrice = subscriptionPrices.basic[subType] || 0;
+                    const agentName = remainingDetails[0]?.agent || '';
+                    const category = getSubscriptionCategory(subType, agentName);
+                    
+                    if (category) {
+                        const promoPrice = getSubscriptionPrice(subType, category, 'twoMonths');
+                        const monthlyOfficialPrice = getSubscriptionPrice(subType, category, 'basic');
                     const officialPrice = monthlyOfficialPrice * 2;
 
-                    if (subType.includes('Bronze')) {
+                        switch(category) {
+                            case 'B':
                         results.bronze.count += activations;
                         results.bronze.promoAmount += activations * promoPrice;
                         results.bronze.officialAmount += activations * officialPrice;
-                    } else if (subType.includes('Silver')) {
+                                break;
+                            case 'S':
                         results.silver.count += activations;
                         results.silver.promoAmount += activations * promoPrice;
                         results.silver.officialAmount += activations * officialPrice;
-                    } else if (subType.includes('Gold')) {
+                                break;
+                            case 'G':
                         results.gold.count += activations;
                         results.gold.promoAmount += activations * promoPrice;
                         results.gold.officialAmount += activations * officialPrice;
-                    } else if (subType.includes('Platinum')) {
+                                break;
+                            case 'P':
                         results.platinum.count += activations;
                         results.platinum.promoAmount += activations * promoPrice;
                         results.platinum.officialAmount += activations * officialPrice;
+                                break;
+                        }
                     }
                 }
             });
@@ -4960,7 +5371,8 @@ let agentReports = {};
         }
 
         function formatNumber(num) {
-            return new Intl.NumberFormat('ar-IQ').format(num);
+            if (num === null || num === undefined || isNaN(num)) return '0';
+            return new Intl.NumberFormat('en-US').format(Math.floor(num));
         }
 
         function resetBasicResults() {
@@ -5096,7 +5508,7 @@ alert('تم حفظ تقرير التفعيلات بنجاح!');
             return date.toISOString().split('T')[0];
         }
 
-        function formatNumber(num) {
+        function formatNumberOld(num) {
             if (num === null || num === undefined || isNaN(num)) return '0';
             
             const numStr = String(Math.floor(num));
@@ -5135,7 +5547,18 @@ alert('تم حفظ تقرير التفعيلات بنجاح!');
             
             if (reportType === 'twoMonths') {
                 reportData = reports.twoMonths || {};
-                reportTitle = `كشف تفعيلات الوكلاء عن العرض (شهرين) المخفض لشهر ${monthName} من 1-${month}-${year} الى ${new Date(year, month, 0).getDate()}-${month}-${year}`;
+                if (reportData.dateFrom && reportData.dateTo) {
+                    dateFrom = reportData.dateFrom;
+                    dateTo = reportData.dateTo;
+                    const dateFromParts = dateFrom.split('/');
+                    const dateToParts = dateTo.split('/');
+                    const monthFrom = parseInt(dateFromParts[1]);
+                    const yearFrom = parseInt(dateFromParts[2]);
+                    const monthNameFrom = arabicMonths[monthFrom - 1];
+                    reportTitle = `كشف تفعيلات الوكلاء عن العرض (شهرين) المخفض لشهر ${monthNameFrom} من ${dateFromParts[0]}-${monthFrom}-${yearFrom} الى ${dateToParts[0]}-${dateToParts[1]}-${dateToParts[2]}`;
+                } else {
+                    reportTitle = `كشف تفعيلات الوكلاء عن العرض (شهرين) المخفض لشهر ${monthName} من 1-${month}-${year} الى ${new Date(year, month, 0).getDate()}-${month}-${year}`;
+                }
             } else if (reportType === 'advanced') {
                 reportData = reports.advanced || {};
                 reportTitle = `كشف تفعيلات الوكلاء عن العرض المخفض لثلاثة أشهر لشهر ${monthName} من 1-${month}-${year} الى ${new Date(year, month, 0).getDate()}-${month}-${year}`;
@@ -5260,7 +5683,7 @@ alert('تم حفظ تقرير التفعيلات بنجاح!');
             }
             
             const filteredData = basicData.filter(row => {
-                const count = row['ColumnO'] || row[14];
+                const count = row['ColumnP'] || row[15];
                 return count == 1;
             });
             
@@ -5446,15 +5869,16 @@ alert('تم حفظ تقرير التفعيلات بنجاح!');
         function convertDataToCSV(data) {
             if (!data || data.length === 0) return '';
       
-            const headers = ['التاريخ', 'اسم المستخدم', 'نوع الاشتراك', 'الوكيل'];
+            const headers = ['ID', 'التاريخ', 'اسم المستخدم', 'نوع الاشتراك', 'الوكيل'];
             let csv = headers.join(',') + '\n';
     
             data.forEach(row => {
                 const rowData = [
                     row['ColumnA'] || row[0] || '',
                     row['ColumnB'] || row[1] || '',
-                    row['ColumnH'] || row[7] || '',
-                    row['ColumnE'] || row[4] || ''
+                    row['ColumnC'] || row[2] || '',
+                    row['ColumnI'] || row[8] || '',
+                    row['ColumnF'] || row[5] || ''
                 ];
                 csv += rowData.map(field => `"${field}"`).join(',') + '\n';
             });
@@ -6137,7 +6561,7 @@ function updateAgentSummary() {
                             <div class="agent-name-section">
                                 <h3 class="agent-name-title">${agent.name}</h3>
                                 ${agent.subName ? `<p class="agent-name-subtitle">${agent.subName}</p>` : ''}
-                                ${hasReports ? `<span class="agent-badge">${reportsCount} تقرير</span>` : '<span class="agent-badge-empty">لا توجد تقارير</span>'}
+                                ${hasReports ? `<span class="agent-badge">${formatNumberEnglish(reportsCount)} تقرير</span>` : '<span class="agent-badge-empty">لا توجد تقارير</span>'}
                             </div>
                             <div class="agent-actions-improved">
                                 <button class="btn-action btn-action-edit" onclick="showEditAgentModal(${index})" title="تعديل البيانات">
@@ -6224,6 +6648,10 @@ function updateAgentSummary() {
         function showAddAgentModal() {
             document.getElementById('agentModalTitle').textContent = 'إضافة وكيل جديد';
             document.getElementById('agentForm').reset();
+            document.getElementById('agentBronzeName').value = '';
+            document.getElementById('agentSilverName').value = '';
+            document.getElementById('agentGoldName').value = '';
+            document.getElementById('agentPlatinumName').value = '';
             document.getElementById('agentForm').onsubmit = function(e) {
                 e.preventDefault();
                 addAgent();
@@ -6238,6 +6666,13 @@ function updateAgentSummary() {
             document.getElementById('agentSubName').value = agent.subName || '';
             document.getElementById('agentPhone').value = agent.phone || '';
             document.getElementById('agentEmail').value = agent.email || '';
+            
+            const subNames = agent.subscriptionNames || {};
+            document.getElementById('agentBronzeName').value = subNames.bronze && subNames.bronze !== 'Iraqcell_Bronze_Profile_NEW' ? subNames.bronze : '';
+            document.getElementById('agentSilverName').value = subNames.silver && subNames.silver !== 'Iraqcell_Silver_Profile_NEW' ? subNames.silver : '';
+            document.getElementById('agentGoldName').value = subNames.gold && subNames.gold !== 'Iraqcell_Gold_Profile_NEW' ? subNames.gold : '';
+            document.getElementById('agentPlatinumName').value = subNames.platinum && subNames.platinum !== 'Iraqcell_Platinum_Profile_NEW' ? subNames.platinum : '';
+            
             document.getElementById('agentForm').onsubmit = function(e) {
                 e.preventDefault();
                 updateAgent(index);
@@ -6251,9 +6686,14 @@ function updateAgentSummary() {
 
         function addAgent() {
             const name = document.getElementById('agentName').value.trim();
-            const subName = document.getElementById('agentSubName').value.trim();
+            const subName = document.getElementById('agentSubName') ? document.getElementById('agentSubName').value.trim() : '';
             const phone = document.getElementById('agentPhone').value.trim();
             const email = document.getElementById('agentEmail').value.trim();
+            
+            const bronzeName = document.getElementById('agentBronzeName').value.trim();
+            const silverName = document.getElementById('agentSilverName').value.trim();
+            const goldName = document.getElementById('agentGoldName').value.trim();
+            const platinumName = document.getElementById('agentPlatinumName').value.trim();
 
             if (!name) {
                 alert('يرجى إدخال اسم الوكيل');
@@ -6265,9 +6705,23 @@ function updateAgentSummary() {
                 return;
             }
 
-            agentsList.push({ name, subName: subName || '', phone, email });
+            const agentData = { 
+                name, 
+                subName: subName || '', 
+                phone, 
+                email,
+                subscriptionNames: {
+                    bronze: bronzeName || 'Iraqcell_Bronze_Profile_NEW',
+                    silver: silverName || 'Iraqcell_Silver_Profile_NEW',
+                    gold: goldName || 'Iraqcell_Gold_Profile_NEW',
+                    platinum: platinumName || 'Iraqcell_Platinum_Profile_NEW'
+                }
+            };
+            
+            agentsList.push(agentData);
             localStorage.setItem('agentsList', JSON.stringify(agentsList));
             refreshAgentsList();
+            updateAgentsListForPercentage();
             closeAgentModal();
             showSuccessMessage('تم إضافة الوكيل بنجاح');
             logActivity('إضافة وكيل', `تم إضافة وكيل جديد: ${name}`);
@@ -6294,9 +6748,14 @@ function updateAgentSummary() {
 
         function updateAgent(index) {
             const name = document.getElementById('agentName').value.trim();
-            const subName = document.getElementById('agentSubName').value.trim();
+            const subName = document.getElementById('agentSubName') ? document.getElementById('agentSubName').value.trim() : '';
             const phone = document.getElementById('agentPhone').value.trim();
             const email = document.getElementById('agentEmail').value.trim();
+            
+            const bronzeName = document.getElementById('agentBronzeName').value.trim();
+            const silverName = document.getElementById('agentSilverName').value.trim();
+            const goldName = document.getElementById('agentGoldName').value.trim();
+            const platinumName = document.getElementById('agentPlatinumName').value.trim();
 
             if (!name) {
                 alert('يرجى إدخال اسم الوكيل');
@@ -6314,10 +6773,24 @@ function updateAgentSummary() {
                 delete agentReports[oldName];
             }
 
-            agentsList[index] = { name, subName: subName || '', phone, email };
+            const agentData = { 
+                name, 
+                subName: subName || '', 
+                phone, 
+                email,
+                subscriptionNames: {
+                    bronze: bronzeName || 'Iraqcell_Bronze_Profile_NEW',
+                    silver: silverName || 'Iraqcell_Silver_Profile_NEW',
+                    gold: goldName || 'Iraqcell_Gold_Profile_NEW',
+                    platinum: platinumName || 'Iraqcell_Platinum_Profile_NEW'
+                }
+            };
+            
+            agentsList[index] = agentData;
             localStorage.setItem('agentsList', JSON.stringify(agentsList));
             refreshAgentsList();
             updateAgentSummary();
+            updateAgentsListForPercentage();
             closeAgentModal();
             showSuccessMessage('تم تحديث بيانات الوكيل بنجاح');
             logActivity('تعديل وكيل', `تم تعديل بيانات الوكيل: ${name}`);
@@ -6330,6 +6803,7 @@ function updateAgentSummary() {
             agentsList.splice(index, 1);
             localStorage.setItem('agentsList', JSON.stringify(agentsList));
             refreshAgentsList();
+            updateAgentsListForPercentage();
             showSuccessMessage('تم حذف الوكيل بنجاح');
             logActivity('حذف وكيل', `تم حذف الوكيل: ${agent.name}`);
         }
@@ -6441,7 +6915,7 @@ function updateAgentSummary() {
             localStorage.setItem('whatsappConnected', 'true');
             
             showSuccessMessage('تم إعداد WhatsApp بنجاح! يمكنك الآن إرسال الرسائل');
-            logActivity('ربط WhatsApp', `تم إعداد WhatsApp برقم: ${cleanPhone}`);
+            logActivity('ربط واتساب', `تم إعداد واتساب برقم: ${cleanPhone}`);
         }
 
         function disconnectWhatsApp() {
@@ -6515,7 +6989,7 @@ function updateAgentSummary() {
             const agentSubName = agent?.subName || '';
 
             document.getElementById('customMessageAgentName').textContent = agentName;
-
+            
             let defaultMessage = `${agentName}`;
             if (agentSubName) {
                 defaultMessage += `\n${agentSubName}`;
@@ -6597,22 +7071,43 @@ function updateAgentSummary() {
 
             let finalMessage = message;
             
-            // إضافة العروض تلقائياً إذا كانت موجودة
-            if (totalBasic > 0 && !finalMessage.includes('العرض المجاني')) {
+            const hasBasicInMessage = finalMessage.includes('العرض المجاني') || 
+                                     finalMessage.includes('اشتراك العرض المجاني') ||
+                                     finalMessage.includes('المجاني:') ||
+                                     finalMessage.match(/المجاني[:\s]+[\d,]+/);
+            
+            const hasAdvancedInMessage = finalMessage.includes('مخفض 3 أشهر') || 
+                                         finalMessage.includes('مخفض 3') ||
+                                         finalMessage.includes('ثلاثة أشهر') ||
+                                         finalMessage.includes('ثلاث أشهر') ||
+                                         finalMessage.includes('العرض المخفَّض لثلاثة أشهر') ||
+                                         finalMessage.includes('العرض المخفض لثلاثة أشهر') ||
+                                         finalMessage.match(/مخف[ضف]\s*3/);
+            
+            const hasTwoMonthsInMessage = finalMessage.includes('مخفض شهرين') || 
+                                          finalMessage.includes('مخفض شهرين') ||
+                                          finalMessage.includes('شهرين') ||
+                                          finalMessage.includes('العرض المخفَّض لشهرين') ||
+                                          finalMessage.includes('العرض المخفض لشهرين') ||
+                                          finalMessage.match(/مخف[ضف]\s*شهرين/);
+            
+            const hasTotalInMessage = finalMessage.includes('الإجمالي الكلي') || 
+                                     finalMessage.includes('الإجمالي:');
+            
+            if (totalBasic > 0 && !hasBasicInMessage) {
                 finalMessage += `\n\nالعرض المجاني: ${formatNumberEnglish(totalBasic)} دينار عراقي`;
             }
             
-            if (totalAdvanced > 0 && !finalMessage.includes('مخفض 3 أشهر')) {
+            if (totalAdvanced > 0 && !hasAdvancedInMessage) {
                 finalMessage += `\n\nمخفض 3 أشهر: ${formatNumberEnglish(totalAdvanced)} دينار عراقي`;
             }
             
-            if (totalTwoMonths > 0 && !finalMessage.includes('مخفض شهرين')) {
+            if (totalTwoMonths > 0 && !hasTwoMonthsInMessage) {
                 finalMessage += `\n\nمخفض شهرين: ${formatNumberEnglish(totalTwoMonths)} دينار عراقي`;
             }
 
-            // إضافة الإجمالي
-            const total = totalBasic + totalAdvanced + totalTwoMonths;
-            if (total > 0 && !finalMessage.includes('الإجمالي')) {
+                const total = totalBasic + totalAdvanced + totalTwoMonths;
+            if (total > 0 && !hasTotalInMessage) {
                 finalMessage += `\n\nالإجمالي الكلي: ${formatNumberEnglish(total)} دينار عراقي`;
             }
 
@@ -6635,7 +7130,6 @@ function updateAgentSummary() {
                 return;
             }
 
-            // إضافة العروض تلقائياً
             message = addOffersToMessage(message, agentName);
 
             const fileType = 'excel';
@@ -6674,7 +7168,6 @@ function updateAgentSummary() {
                 return;
             }
 
-            // إضافة العروض تلقائياً
             message = addOffersToMessage(message, agentName);
 
             const fileType = 'excel';
@@ -7432,6 +7925,30 @@ function updateAgentSummary() {
                 <label>البريد الإلكتروني</label>
                 <input type="email" id="agentEmail" class="settings-input" placeholder="example@email.com">
             </div>
+            <div class="form-group" style="margin-top: 20px; padding-top: 20px; border-top: 2px solid rgba(128, 28, 50, 0.1);">
+                <label style="font-weight: 700; color: #801c32; margin-bottom: 15px; display: block;">أسماء الاشتراكات الخاصة بالوكيل:</label>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div>
+                        <label style="font-weight: 600; color: #1a1a1a; margin-bottom: 5px; display: block;">اسم اشتراك Bronze:</label>
+                        <input type="text" id="agentBronzeName" class="settings-input" placeholder="مثال: Iraqcell_Bronze_Profile">
+                    </div>
+                    <div>
+                        <label style="font-weight: 600; color: #1a1a1a; margin-bottom: 5px; display: block;">اسم اشتراك Silver:</label>
+                        <input type="text" id="agentSilverName" class="settings-input" placeholder="مثال: Iraqcell_Silver_Profile">
+                    </div>
+                    <div>
+                        <label style="font-weight: 600; color: #1a1a1a; margin-bottom: 5px; display: block;">اسم اشتراك Gold:</label>
+                        <input type="text" id="agentGoldName" class="settings-input" placeholder="مثال: Iraqcell_Gold_Profile">
+                    </div>
+                    <div>
+                        <label style="font-weight: 600; color: #1a1a1a; margin-bottom: 5px; display: block;">اسم اشتراك Platinum:</label>
+                        <input type="text" id="agentPlatinumName" class="settings-input" placeholder="مثال: Iraqcell_Platinum_Profile">
+                    </div>
+                </div>
+                <p style="margin-top: 10px; font-size: 0.85rem; color: #666; font-weight: 600;">
+                    إذا لم يتم إدخال أسماء، سيتم استخدام الأسماء الافتراضية (Iraqcell_*_Profile_NEW)
+                </p>
+            </div>
             <div style="display: flex; gap: 10px; margin-top: 20px;">
                 <button type="submit" class="btn btn-primary" style="flex: 1;"> حفظ</button>
                 <button type="button" class="btn btn-danger" style="flex: 1;" onclick="closeAgentModal()"> إلغاء</button>
@@ -7443,18 +7960,18 @@ function updateAgentSummary() {
 <div id="messageCustomizationModal" class="modal">
     <div class="modal-content message-customization">
         <div class="modal-header">
-            <h3> تخصيص رسالة WhatsApp</h3>
+            <h3> تخصيص رسالة واتساب</h3>
             <button class="modal-close" onclick="closeMessageCustomizationModal()">×</button>
         </div>
         <div style="padding: 10px 0;">
-            <p style="margin-bottom: 20px; color: #666; text-align: right;">
+            <p style="margin-bottom: 20px; color: #1a1a1a; text-align: right; font-weight: 600;">
                 <strong>الوكيل:</strong> <span id="customMessageAgentName" data-agent=""></span>
             </p>
-            
+
             <div class="form-group">
-                <label>✍️ نص الرسالة:</label>
+                <label> نص الرسالة:</label>
                 <textarea id="customMessageText" class="message-textarea" placeholder="اكتب رسالتك هنا..."></textarea>
-                <p style="margin-top: 5px; font-size: 0.85rem; color: #666;">
+                <p style="margin-top: 5px; font-size: 0.85rem; color: #1a1a1a; font-weight: 600;">
                 </p>
             </div>
 
@@ -7487,12 +8004,12 @@ function updateAgentSummary() {
         </div>
         <div class="info-item">
             <button class="info-action" onclick="copyToClipboard('07701024143', 'الهاتف')" title="نسخ رقم الهاتف">نسخ</button>
-            <span class="info-value">07701024143</span>
+            <span class="info-value">+9647701024143</span>
             <span class="info-text">الهاتف:</span>
             <span class="info-icon">📱</span>
         </div>
         <div class="info-item">
-            <span class="info-value">IRAQCELL</span>
+            <span class="info-value">عراق سيل للإتصالات</span>
             <span class="info-text">الشركة:</span>
             <span class="info-icon">🏢</span>
         </div>
