@@ -1227,16 +1227,22 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: #ffffff;
-            border-radius: 20px;
-            padding: 30px 40px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            border: 3px solid #2C5F8D;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 24px;
+            padding: 0;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.25), 0 10px 30px rgba(128, 28, 50, 0.15);
+            border: 2px solid #801c32;
             z-index: 10001;
-            min-width: 450px;
-            max-width: 650px;
-            width: auto;
-            animation: popupFadeIn 0.3s ease;
+            min-width: 480px;
+            max-width: 600px;
+            width: 90%;
+            animation: popupFadeIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            overflow: hidden;
+        }
+
+        [data-theme="dark"] .author-info-popup {
+            background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+            border-color: #ff4757;
         }
 
         .author-info-popup.show {
@@ -1246,7 +1252,7 @@
         @keyframes popupFadeIn {
             from {
                 opacity: 0;
-                transform: translate(-50%, -50%) scale(0.9);
+                transform: translate(-50%, -50%) scale(0.85);
             }
             to {
                 opacity: 1;
@@ -1261,64 +1267,173 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.6);
             z-index: 10000;
-            backdrop-filter: blur(4px);
+            backdrop-filter: blur(6px);
+            transition: opacity 0.3s ease;
         }
 
         .popup-overlay.show {
             display: block;
+            animation: overlayFadeIn 0.3s ease;
+        }
+
+        @keyframes overlayFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .popup-close {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            width: 36px;
+            height: 36px;
+            background: rgba(128, 28, 50, 0.1);
+            border: 2px solid #801c32;
+            border-radius: 50%;
+            color: #801c32;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 10;
+            line-height: 1;
+        }
+
+        .popup-close:hover {
+            background: #801c32;
+            color: white;
+            transform: rotate(90deg) scale(1.1);
+            box-shadow: 0 4px 12px rgba(128, 28, 50, 0.4);
+        }
+
+        [data-theme="dark"] .popup-close {
+            background: rgba(255, 71, 87, 0.15);
+            border-color: #ff4757;
+            color: #ff4757;
+        }
+
+        [data-theme="dark"] .popup-close:hover {
+            background: #ff4757;
+            color: white;
         }
 
         .popup-header {
             text-align: center;
-            margin-bottom: 25px;
-            border-bottom: 2px solid #2C5F8D;
-            padding-bottom: 15px;
+            margin: 0;
+            padding: 30px 40px 20px;
+            background: linear-gradient(135deg, #801c32 0%, #a52d45 100%);
+            color: white;
+            position: relative;
+        }
+
+        [data-theme="dark"] .popup-header {
+            background: linear-gradient(135deg, #ff4757 0%, #ff6b7a 100%);
+        }
+
+        .popup-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
         }
 
         .popup-header h2 {
-            color: #2C5F8D;
-            font-size: 1.4rem;
-            font-weight: 800;
-            margin-bottom: 5px;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0;
             letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
         .popup-content {
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 16px;
+            padding: 30px 40px;
+            background: var(--bg-primary);
         }
 
         .info-item {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 12px 15px;
-            background: rgba(44, 95, 141, 0.05);
-            border-radius: 12px;
-            border: 1px solid rgba(44, 95, 141, 0.15);
-            transition: all 0.3s ease;
+            gap: 15px;
+            padding: 18px 20px;
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            border: 2px solid var(--border-light);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             flex-direction: row-reverse;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #801c32 0%, #a52d45 100%);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        [data-theme="dark"] .info-item::before {
+            background: linear-gradient(180deg, #ff4757 0%, #ff6b7a 100%);
         }
 
         .info-item:hover {
-            background: rgba(44, 95, 141, 0.1);
-            border-color: rgba(44, 95, 141, 0.3);
-            transform: translateX(-5px);
+            background: var(--bg-tertiary);
+            border-color: var(--primary-color);
+            transform: translateX(-8px) translateY(-2px);
+            box-shadow: 0 8px 20px var(--shadow-md);
+        }
+
+        .info-item:hover::before {
+            transform: scaleY(1);
         }
 
         .info-icon {
-            font-size: 1.3rem;
-            width: 35px;
-            text-align: center;
+            font-size: 1.8rem;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(128, 28, 50, 0.1) 0%, rgba(128, 28, 50, 0.15) 100%);
+            border-radius: 12px;
             flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] .info-icon {
+            background: linear-gradient(135deg, rgba(255, 71, 87, 0.15) 0%, rgba(255, 71, 87, 0.25) 100%);
+        }
+
+        .info-item:hover .info-icon {
+            transform: scale(1.1) rotate(5deg);
+            background: linear-gradient(135deg, rgba(128, 28, 50, 0.2) 0%, rgba(128, 28, 50, 0.3) 100%);
+        }
+
+        [data-theme="dark"] .info-item:hover .info-icon {
+            background: linear-gradient(135deg, rgba(255, 71, 87, 0.25) 0%, rgba(255, 71, 87, 0.35) 100%);
         }
 
         .info-text {
             flex: 0 0 auto;
-            color: #333333;
+            color: var(--text-secondary);
             font-size: 0.9rem;
             font-weight: 600;
             min-width: 120px;
@@ -1326,55 +1441,79 @@
         }
 
         .info-value {
-            color: #2C5F8D;
+            color: var(--primary-color);
             font-weight: 700;
-            font-size: 0.95rem;
+            font-size: 1rem;
             flex: 1;
             text-align: left;
             direction: ltr;
             white-space: nowrap;
+            transition: color 0.3s ease;
+        }
+
+        [data-theme="dark"] .info-value {
+            color: #ff6b7a;
+        }
+
+        .info-item:hover .info-value {
+            color: var(--primary-color);
+        }
+
+        [data-theme="dark"] .info-item:hover .info-value {
+            color: #ff4757;
         }
 
         .info-action {
-            padding: 6px 14px;
-            background: #2C5F8D;
+            padding: 8px 18px;
+            background: linear-gradient(135deg, #801c32 0%, #a52d45 100%);
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
             font-size: 0.85rem;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             font-weight: 700;
             white-space: nowrap;
             flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(128, 28, 50, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        [data-theme="dark"] .info-action {
+            background: linear-gradient(135deg, #ff4757 0%, #ff6b7a 100%);
+            box-shadow: 0 2px 8px rgba(255, 71, 87, 0.3);
+        }
+
+        .info-action::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.5s ease, height 0.5s ease;
         }
 
         .info-action:hover {
-            background: #1e4a6b;
-            transform: scale(1.05);
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 4px 16px rgba(128, 28, 50, 0.4);
         }
 
-        .popup-close {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background: transparent;
-            border: none;
-            font-size: 1.5rem;
-            color: #2C5F8D;
-            cursor: pointer;
-            width: 35px;
-            height: 35px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            transition: all 0.3s ease;
+        [data-theme="dark"] .info-action:hover {
+            box-shadow: 0 4px 16px rgba(255, 71, 87, 0.4);
         }
 
-        .popup-close:hover {
-            background: rgba(44, 95, 141, 0.1);
-            transform: rotate(90deg);
+        .info-action:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .info-action:active {
+            transform: translateY(0) scale(1);
         }
 
         .settings-container {
@@ -2404,13 +2543,13 @@
                         <button class="btn btn-success" onclick="refreshAgentsList()"> تحديث القائمة</button>
                     </div>
                     
-                    <div class="agents-controls" style="margin-bottom: 20px; padding: 15px; background: rgba(128, 28, 50, 0.05); border-radius: 12px; display: flex; gap: 15px; flex-wrap: wrap; align-items: center;">
-                        <div style="flex: 1; min-width: 250px;">
-                            <input type="text" id="agentSearchInput" class="settings-input" placeholder="بحث عن وكيل..." onkeyup="filterAgents()" style="width: 100%;">
+                    <div class="agents-controls" style="margin-bottom: 20px; padding: 15px; background: rgba(128, 28, 50, 0.05); border-radius: 12px; display: flex; gap: 15px; flex-wrap: wrap; align-items: center; position: relative; z-index: 10;">
+                        <div style="flex: 1; min-width: 250px; position: relative; z-index: 10;">
+                            <input type="text" id="agentSearchInput" class="settings-input" placeholder="بحث عن وكيل..." onkeyup="filterAgents()" style="width: 100%; position: relative; z-index: 10; pointer-events: auto;">
                         </div>
-                        <div style="display: flex; gap: 10px; align-items: center;">
+                        <div style="display: flex; gap: 10px; align-items: center; position: relative; z-index: 10;">
                             <label style="font-weight: 600; color: #666;">ترتيب حسب:</label>
-                            <select id="agentSortSelect" class="settings-input" onchange="sortAgents()" style="min-width: 180px;">
+                            <select id="agentSortSelect" class="settings-input" onchange="sortAgents()" style="min-width: 180px; position: relative; z-index: 10; pointer-events: auto;">
                                 <option value="name">الاسم (أ-ي)</option>
                                 <option value="name-desc">الاسم (ي-أ)</option>
                                 <option value="total-desc">الإجمالي (الأعلى أولاً)</option>
@@ -2488,8 +2627,8 @@
                             <div id="percentageFileName" class="success-message hidden" style="margin-top: 10px;"></div>
                             
                             <div style="margin-top: 15px;">
-                                <label style="display: block; margin-bottom: 10px; font-weight: 600; color: #801c32;">النسبة المئوية:</label>
-                                <input type="number" id="percentageRateSelect" class="settings-input" value="16" min="0" max="100" step="0.01" style="width: 200px;" onchange="updatePercentageRate()">
+                                <label style="display: block; margin-bottom: 10px; font-weight: 600; color: #801c32;">النسبة</label>
+                                <input type="number" id="percentageRateSelect" class="settings-input" value="16" min="0" max="100" step="0.01" style="width: 200px; position: relative; z-index: 10; pointer-events: auto;" onchange="updatePercentageRate()">
                                 <p style="margin-top: 5px; font-size: 0.85rem; color: #666;" id="percentageRateInfo">
                                     سيتم استخدام النسبة المحفوظة للوكيل (16% افتراضي)
                                 </p>
@@ -2510,8 +2649,8 @@
                             تصدير Excel
                         </button>
                     </div>
-                    <div id="percentageTableContainer" style="overflow-x: auto; overflow-y: visible; max-height: none; width: 100%;">
-                        <table id="percentageTable" style="width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.8rem; min-width: max-content;">
+                    <div id="percentageTableContainer" style="overflow-x: auto; overflow-y: visible; max-height: none; width: 100%; position: relative; z-index: 1;">
+                        <table id="percentageTable" style="width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.8rem; min-width: max-content; position: relative;">
                             <thead>
                                 <tr style="background: #801c32; color: white;">
                                     <th rowspan="2" style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; vertical-align: middle; font-size: 0.75rem; font-weight: 600;">اسم الوكيل</th>
@@ -2603,7 +2742,7 @@
                             <div class="settings-group">
                                 <label>النسبة الافتراضية للوكلاء الجدد (%):</label>
                                 <input type="number" id="defaultAgentPercentage" class="settings-input" value="16" min="0" max="100" step="0.01" onchange="saveDefaultPercentage()">
-                                <p style="margin-top: 5px; font-size: 0.85rem; color: #666;">النسبة المئوية الافتراضية المستخدمة عند إضافة وكيل جديد (0-100%)</p>
+                                <p style="margin-top: 5px; font-size: 0.85rem; color: #666;">النسبة الافتراضية المستخدمة عند إضافة وكيل جديد (0-100%)</p>
                             </div>
                         </div>
                         
@@ -2650,48 +2789,9 @@
                 <span id="customMessageAgentName" style="font-size: 1.1rem; font-weight: 600;" data-agent=""></span>
             </div>
             
-            <div class="offer-options">
-                <h4>اختر العروض المطلوبة:</h4>
-                <div class="offer-checkbox-group">
-                    <div class="offer-checkbox-item">
-                        <input type="checkbox" id="offerBasic" onchange="handleCheckboxChange()">
-                        <label for="offerBasic">العرض المجاني</label>
-                    </div>
-                    <div class="offer-checkbox-item">
-                        <input type="checkbox" id="offerAdvanced" onchange="handleCheckboxChange()">
-                        <label for="offerAdvanced">مخفض 3 أشهر</label>
-                    </div>
-                    <div class="offer-checkbox-item">
-                        <input type="checkbox" id="offerTwoMonths" onchange="handleCheckboxChange()">
-                        <label for="offerTwoMonths">مخفض شهرين</label>
-                    </div>
-                </div>
-                
-                <div class="info-buttons">
-                    <button class="info-btn" onclick="insertOfferInfo('basic')">إدراج المجاني</button>
-                    <button class="info-btn" onclick="insertOfferInfo('advanced')">إدراج 3 أشهر</button>
-                    <button class="info-btn" onclick="insertOfferInfo('twomonths')">إدراج شهرين</button>
-                    <button class="info-btn" onclick="insertOfferInfo('total')">إدراج الإجمالي</button>
-                </div>
-            </div>
-            
             <div style="margin: 20px 0;">
                 <label class="preview-label">نص الرسالة:</label>
-                <textarea id="customMessageText" class="message-textarea" rows="10" oninput="updateMessagePreview()"></textarea>
-            </div>
-            
-            <div style="margin: 20px 0;">
-                <label class="preview-label">معاينة:</label>
-                <div id="messagePreview" class="message-preview"></div>
-            </div>
-            
-            <div style="margin: 20px 0;">
-                <label class="preview-label">نوع الملف المرسل:</label>
-                <select id="fileTypeSelect" class="message-textarea" style="min-height: auto; height: 40px; padding: 8px;">
-                    <option value="excel" selected>Excel (.xlsx) - أوضح ومرتب</option>
-                    <option value="word">Word (.doc) - أوضح ومرتب</option>
-                    <option value="pdf">PDF (.pdf)</option>
-                </select>
+                <textarea id="customMessageText" class="message-textarea" rows="10"></textarea>
             </div>
             
             <div style="display: flex; gap: 15px; justify-content: flex-end; margin-top: 20px;">
@@ -2710,11 +2810,11 @@
             </div>
             <form id="agentForm">
                 <div class="form-group">
-                    <label>اسم الوكيل:</label>
+                    <label>اسم اللوحة</label>
                     <input type="text" id="agentName" class="settings-input" required>
                 </div>
                 <div class="form-group">
-                    <label>اسم إضافي (اختياري):</label>
+                    <label>اسم الوكيل :</label>
                     <input type="text" id="agentSubName" class="settings-input" placeholder="اسم ثانوي أو معرف">
                 </div>
                 <div class="form-group">
@@ -2724,11 +2824,6 @@
                 <div class="form-group">
                     <label>البريد الإلكتروني:</label>
                     <input type="email" id="agentEmail" class="settings-input">
-                </div>
-                <div class="form-group">
-                    <label>النسبة المئوية (%):</label>
-                    <input type="number" id="agentPercentage" class="settings-input" value="16" min="0" max="100" step="0.01" required>
-                    <p style="margin-top: 5px; font-size: 0.85rem; color: #666;">النسبة المئوية المستخدمة لحساب نسبة الوكيل من الاشتراكات (0-100%)</p>
                 </div>
                 <div style="display: flex; gap: 15px; justify-content: flex-end; margin-top: 20px;">
                     <button type="button" class="btn btn-danger" onclick="closeAgentModal()">إلغاء</button>
@@ -3418,18 +3513,18 @@ let agentReports = {};
                     <td style="padding: 6px 4px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; color: #801c32; font-size: 0.85rem;">
                         ${formatNumber(data.agentPercentageAmount || 0)}
                     </td>
-                    <td style="padding: 6px 4px; text-align: center; border: 1px solid #ddd;">
+                    <td style="padding: 6px 4px; text-align: center; border: 1px solid #ddd; position: relative; z-index: 10;">
                         <input type="number" id="deduction_${agentName.replace(/[^a-zA-Z0-9]/g, '_')}" value="${data.deductions || 0}" 
                                data-agent-name="${agentName}"
                                data-field-type="deduction"
-                               style="width: 80px; padding: 4px; text-align: center; direction: ltr; font-size: 0.7rem;" 
+                               style="width: 80px; padding: 4px; text-align: center; direction: ltr; font-size: 0.7rem; position: relative; z-index: 10; pointer-events: auto; cursor: text;" 
                                step="0.01" min="0" placeholder="0">
                     </td>
-                    <td style="padding: 6px 4px; text-align: center; border: 1px solid #ddd;">
+                    <td style="padding: 6px 4px; text-align: center; border: 1px solid #ddd; position: relative; z-index: 10;">
                         <input type="number" id="penalty_${agentName.replace(/[^a-zA-Z0-9]/g, '_')}" value="${data.penalties || 0}" 
                                data-agent-name="${agentName}"
                                data-field-type="penalty"
-                               style="width: 80px; padding: 4px; text-align: center; direction: ltr; font-size: 0.7rem;" 
+                               style="width: 80px; padding: 4px; text-align: center; direction: ltr; font-size: 0.7rem; position: relative; z-index: 10; pointer-events: auto; cursor: text;" 
                                step="0.01" min="0" placeholder="0">
                     </td>
                     <td style="padding: 6px 4px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; color: #25D366; font-size: 0.85rem;">
@@ -3530,7 +3625,7 @@ let agentReports = {};
                 const headerRow1 = worksheet.addRow([
                     'اسم الوكيل',
                     'النسبة (%)',
-                    '',                     '', '', '', '', '',
+                    '', '', '', '', '',
                     '', '', '', '',
                     '', '', '', '',
                     'نسبة الوكيل',
@@ -3545,7 +3640,9 @@ let agentReports = {};
                     'IQ.T', 'IQ.P', 'IQ.G', 'IQ.S', 'IQ.B',
                     'IQ.P%', 'IQ.G%', 'IQ.S%', 'IQ.B%',
                     'P', 'G', 'S', 'B',
-                    '', '', '', ''
+                    '',
+                    '',
+                    ''
                 ]);
                 
                 [headerRow1, headerRow2].forEach(row => {
@@ -3898,16 +3995,20 @@ let agentReports = {};
             }
         }
 
-        let percentageTableEventListenersInitialized = false;
         function setupPercentageTableEventListeners() {
-            if (percentageTableEventListenersInitialized) return;
-            percentageTableEventListenersInitialized = true;
+            const tbody = document.getElementById('percentageTableBody');
+            if (!tbody) return;
             
-            document.addEventListener('input', function(e) {
+            // Remove old listeners if exist
+            const oldInputs = tbody.querySelectorAll('input[data-agent-name]');
+            oldInputs.forEach(input => {
+                const newInput = input.cloneNode(true);
+                input.parentNode.replaceChild(newInput, input);
+            });
+            
+            // Add new event listeners
+            tbody.addEventListener('input', function(e) {
                 const input = e.target;
-                const tbody = document.getElementById('percentageTableBody');
-                if (!tbody || !tbody.contains(input)) return;
-                
                 if (input && input.tagName === 'INPUT' && input.hasAttribute('data-agent-name') && input.hasAttribute('data-field-type')) {
                     const agentName = input.getAttribute('data-agent-name');
                     const fieldType = input.getAttribute('data-field-type');
@@ -3919,13 +4020,10 @@ let agentReports = {};
                         updatePenalty(agentName, value, true);
                     }
                 }
-            }, true);
+            });
             
-            document.addEventListener('change', function(e) {
+            tbody.addEventListener('change', function(e) {
                 const input = e.target;
-                const tbody = document.getElementById('percentageTableBody');
-                if (!tbody || !tbody.contains(input)) return;
-                
                 if (input && input.tagName === 'INPUT' && input.hasAttribute('data-agent-name') && input.hasAttribute('data-field-type')) {
                     const agentName = input.getAttribute('data-agent-name');
                     const fieldType = input.getAttribute('data-field-type');
@@ -3939,11 +4037,8 @@ let agentReports = {};
                 }
             });
             
-            document.addEventListener('blur', function(e) {
+            tbody.addEventListener('blur', function(e) {
                 const input = e.target;
-                const tbody = document.getElementById('percentageTableBody');
-                if (!tbody || !tbody.contains(input)) return;
-                
                 if (input && input.tagName === 'INPUT' && input.hasAttribute('data-agent-name') && input.hasAttribute('data-field-type')) {
                     const agentName = input.getAttribute('data-agent-name');
                     const fieldType = input.getAttribute('data-field-type');
@@ -6060,7 +6155,7 @@ function updateAgentSummary() {
                         <div class="agent-info-section">
                             <div class="info-item-improved">
                                 <span class="info-label">النسبة:</span>
-                                <input type="number" id="agentPercentage_${index}" class="info-value-input" value="${agent.percentage || 16}" min="0" max="100" step="0.01" onchange="updateAgentPercentage(${index}, this.value)" style="width: 80px; padding: 4px; text-align: center; direction: ltr; font-size: 0.8rem; border: 1px solid rgba(128, 28, 50, 0.2); border-radius: 6px;">
+                                <input type="number" id="agentPercentage_${index}" class="info-value-input" value="${agent.percentage || 16}" min="0" max="100" step="0.01" onchange="updateAgentPercentage(${index}, this.value)" style="width: 80px; padding: 4px; text-align: center; direction: ltr; font-size: 0.8rem; border: 1px solid rgba(128, 28, 50, 0.2); border-radius: 6px; position: relative; z-index: 10; pointer-events: auto; cursor: text;">
                                 <span style="margin-right: 5px; color: #801c32; font-weight: 700;">%</span>
                             </div>
                             ${agent.phone ? `
@@ -6129,8 +6224,6 @@ function updateAgentSummary() {
         function showAddAgentModal() {
             document.getElementById('agentModalTitle').textContent = 'إضافة وكيل جديد';
             document.getElementById('agentForm').reset();
-            const defaultPercentage = parseFloat(localStorage.getItem('defaultAgentPercentage')) || 16;
-            document.getElementById('agentPercentage').value = defaultPercentage;
             document.getElementById('agentForm').onsubmit = function(e) {
                 e.preventDefault();
                 addAgent();
@@ -6145,7 +6238,6 @@ function updateAgentSummary() {
             document.getElementById('agentSubName').value = agent.subName || '';
             document.getElementById('agentPhone').value = agent.phone || '';
             document.getElementById('agentEmail').value = agent.email || '';
-            document.getElementById('agentPercentage').value = agent.percentage || 16;
             document.getElementById('agentForm').onsubmit = function(e) {
                 e.preventDefault();
                 updateAgent(index);
@@ -6173,17 +6265,12 @@ function updateAgentSummary() {
                 return;
             }
 
-            const percentage = parseFloat(document.getElementById('agentPercentage').value) || 16;
-            if (percentage < 0 || percentage > 100) {
-                alert('النسبة المئوية يجب أن تكون بين 0 و 100');
-                return;
-            }
-            agentsList.push({ name, subName: subName || '', phone, email, percentage });
+            agentsList.push({ name, subName: subName || '', phone, email });
             localStorage.setItem('agentsList', JSON.stringify(agentsList));
             refreshAgentsList();
             closeAgentModal();
-            showSuccessMessage(`تم إضافة الوكيل بنجاح (نسبة ${percentage}%)`);
-            logActivity('إضافة وكيل', `تم إضافة وكيل جديد: ${name} (نسبة ${percentage}%)`);
+            showSuccessMessage('تم إضافة الوكيل بنجاح');
+            logActivity('إضافة وكيل', `تم إضافة وكيل جديد: ${name}`);
         }
 
         function updateAgentPercentage(index, newPercentage) {
@@ -6210,12 +6297,6 @@ function updateAgentSummary() {
             const subName = document.getElementById('agentSubName').value.trim();
             const phone = document.getElementById('agentPhone').value.trim();
             const email = document.getElementById('agentEmail').value.trim();
-            const percentage = parseFloat(document.getElementById('agentPercentage').value) || 16;
-            
-            if (percentage < 0 || percentage > 100) {
-                alert('النسبة المئوية يجب أن تكون بين 0 و 100');
-                return;
-            }
 
             if (!name) {
                 alert('يرجى إدخال اسم الوكيل');
@@ -6233,13 +6314,13 @@ function updateAgentSummary() {
                 delete agentReports[oldName];
             }
 
-            agentsList[index] = { name, subName: subName || '', phone, email, percentage };
+            agentsList[index] = { name, subName: subName || '', phone, email };
             localStorage.setItem('agentsList', JSON.stringify(agentsList));
             refreshAgentsList();
             updateAgentSummary();
             closeAgentModal();
-            showSuccessMessage(`تم تحديث بيانات الوكيل بنجاح (نسبة ${percentage}%)`);
-            logActivity('تعديل وكيل', `تم تعديل بيانات الوكيل: ${name} (نسبة ${percentage}%)`);
+            showSuccessMessage('تم تحديث بيانات الوكيل بنجاح');
+            logActivity('تعديل وكيل', `تم تعديل بيانات الوكيل: ${name}`);
         }
 
         function deleteAgent(index) {
@@ -6431,27 +6512,24 @@ function updateAgentSummary() {
             
             const agent = agentsList.find(a => a.name === agentName);
             const agentId = agent?.email || agentName;
+            const agentSubName = agent?.subName || '';
 
             document.getElementById('customMessageAgentName').textContent = agentName;
-            
-            document.getElementById('offerBasic').checked = totalBasic > 0;
-            document.getElementById('offerAdvanced').checked = totalAdvanced > 0;
-            document.getElementById('offerTwoMonths').checked = totalTwoMonths > 0;
 
-            let defaultMessage = `السيد/ ${agentName} المحترم`;
-            if (agentId && agentId !== agentName) {
-                defaultMessage += ` – ${agentId}`;
+            let defaultMessage = `${agentName}`;
+            if (agentSubName) {
+                defaultMessage += `\n${agentSubName}`;
             }
             defaultMessage += `\n\nتحية طيبة وبعد،\n\nنود إعلامكم بالتقرير الخاص بالمبالغ المستحقة، وكما يلي:\n\n`;
             
             if (totalBasic > 0) {
-                defaultMessage += `اشتراك العرض المجاني: ${formatNumber(totalBasic)} دينار عراقي\n`;
+                defaultMessage += `اشتراك العرض المجاني: ${formatNumberEnglish(totalBasic)} دينار عراقي\n`;
             }
             if (totalAdvanced > 0) {
-                defaultMessage += `اشتراك العرض المخفَّض لثلاثة أشهر: ${formatNumber(totalAdvanced)} دينار عراقي\n`;
+                defaultMessage += `اشتراك العرض المخفَّض لثلاثة أشهر: ${formatNumberEnglish(totalAdvanced)} دينار عراقي\n`;
             }
             if (totalTwoMonths > 0) {
-                defaultMessage += `اشتراك العرض المخفَّض لشهرين: ${formatNumber(totalTwoMonths)} دينار عراقي\n`;
+                defaultMessage += `اشتراك العرض المخفَّض لشهرين: ${formatNumberEnglish(totalTwoMonths)} دينار عراقي\n`;
             }
             
             const selectedTotal = (totalBasic > 0 ? totalBasic : 0) + 
@@ -6459,7 +6537,7 @@ function updateAgentSummary() {
                                 (totalTwoMonths > 0 ? totalTwoMonths : 0);
             
             if (selectedTotal > 0) {
-                defaultMessage += `\nالإجمالي الكلي: ${formatNumber(selectedTotal)} دينار عراقي\n`;
+                defaultMessage += `\nالإجمالي الكلي: ${formatNumberEnglish(selectedTotal)} دينار عراقي\n`;
             }
             
             defaultMessage += `\nيرجى التفضل بالاطلاع على الملف المرفق للاطلاع على التفاصيل الكاملة.\n\nمع فائق الشكر والتقدير،`;
@@ -6468,8 +6546,6 @@ function updateAgentSummary() {
             
             document.getElementById('customMessageAgentName').setAttribute('data-agent', agentName);
             
-            updateMessagePreview(agentName);
-            
             document.getElementById('messageCustomizationModal').classList.add('show');
         }
 
@@ -6477,48 +6553,6 @@ function updateAgentSummary() {
             document.getElementById('messageCustomizationModal').classList.remove('show');
         }
 
-        function handleCheckboxChange() {
-            const agentName = document.getElementById('customMessageAgentName').getAttribute('data-agent');
-            if (agentName) {
-                updateMessagePreview(agentName);
-            }
-        }
-
-        function updateMessagePreview(agentName) {
-            if (!agentName) return;
-            
-            const reports = agentReports[agentName] || {};
-            const totalBasic = reports.basic?.total.amount || 0;
-            const totalAdvanced = reports.advanced?.total.profit || 0;
-            const totalTwoMonths = reports.twoMonths?.total.profit || 0;
-
-            const includeBasic = document.getElementById('offerBasic').checked && totalBasic > 0;
-            const includeAdvanced = document.getElementById('offerAdvanced').checked && totalAdvanced > 0;
-            const includeTwoMonths = document.getElementById('offerTwoMonths').checked && totalTwoMonths > 0;
-
-            let previewText = document.getElementById('customMessageText').value;
-
-            if (includeBasic && previewText.includes('{basic}')) {
-                previewText = previewText.replace('{basic}', formatNumber(totalBasic));
-            }
-            if (includeAdvanced && previewText.includes('{advanced}')) {
-                previewText = previewText.replace('{advanced}', formatNumber(totalAdvanced));
-            }
-            if (includeTwoMonths && previewText.includes('{twomonths}')) {
-                previewText = previewText.replace('{twomonths}', formatNumber(totalTwoMonths));
-            }
-
-            let total = 0;
-            if (includeBasic) total += totalBasic;
-            if (includeAdvanced) total += totalAdvanced;
-            if (includeTwoMonths) total += totalTwoMonths;
-
-            if (previewText.includes('{total}')) {
-                previewText = previewText.replace('{total}', formatNumber(total));
-            }
-
-            document.getElementById('messagePreview').textContent = previewText;
-        }
 
         function insertOfferInfo(type) {
             const textarea = document.getElementById('customMessageText');
@@ -6531,24 +6565,58 @@ function updateAgentSummary() {
             const reports = agentReports[agentName] || {};
 
             if (type === 'basic' && reports.basic) {
-                insertText = ` العرض المجاني: ${formatNumber(reports.basic.total.amount || 0)} دينار عراقي`;
+                insertText = ` العرض المجاني: ${formatNumberEnglish(reports.basic.total.amount || 0)} دينار عراقي`;
             } else if (type === 'advanced' && reports.advanced) {
-                insertText = ` مخفض 3 أشهر: ${formatNumber(reports.advanced.total.profit || 0)} دينار عراقي`;
+                insertText = ` مخفض 3 أشهر: ${formatNumberEnglish(reports.advanced.total.profit || 0)} دينار عراقي`;
             } else if (type === 'twomonths' && reports.twoMonths) {
-                insertText = ` مخفض شهرين: ${formatNumber(reports.twoMonths.total.profit || 0)} دينار عراقي`;
+                insertText = ` مخفض شهرين: ${formatNumberEnglish(reports.twoMonths.total.profit || 0)} دينار عراقي`;
             } else if (type === 'total') {
-                const totalBasic = document.getElementById('offerBasic').checked ? (reports.basic?.total.amount || 0) : 0;
-                const totalAdvanced = document.getElementById('offerAdvanced').checked ? (reports.advanced?.total.profit || 0) : 0;
-                const totalTwoMonths = document.getElementById('offerTwoMonths').checked ? (reports.twoMonths?.total.profit || 0) : 0;
+                const totalBasic = reports.basic?.total.amount || 0;
+                const totalAdvanced = reports.advanced?.total.profit || 0;
+                const totalTwoMonths = reports.twoMonths?.total.profit || 0;
                 const total = totalBasic + totalAdvanced + totalTwoMonths;
-                insertText = ` الإجمالي الكلي: ${formatNumber(total)} دينار عراقي`;
+                insertText = ` الإجمالي الكلي: ${formatNumberEnglish(total)} دينار عراقي`;
             }
 
             if (insertText) {
                 textarea.value = textBefore + insertText + '\n' + textAfter;
                 textarea.selectionStart = textarea.selectionEnd = cursorPos + insertText.length + 1;
-                handleCheckboxChange();
             }
+        }
+
+        function formatNumberEnglish(num) {
+            if (num === null || num === undefined || isNaN(num)) return '0';
+            return new Intl.NumberFormat('en-US').format(Math.floor(num));
+        }
+
+        function addOffersToMessage(message, agentName) {
+            const reports = agentReports[agentName] || {};
+            const totalBasic = reports.basic?.total.amount || 0;
+            const totalAdvanced = reports.advanced?.total.profit || 0;
+            const totalTwoMonths = reports.twoMonths?.total.profit || 0;
+
+            let finalMessage = message;
+            
+            // إضافة العروض تلقائياً إذا كانت موجودة
+            if (totalBasic > 0 && !finalMessage.includes('العرض المجاني')) {
+                finalMessage += `\n\nالعرض المجاني: ${formatNumberEnglish(totalBasic)} دينار عراقي`;
+            }
+            
+            if (totalAdvanced > 0 && !finalMessage.includes('مخفض 3 أشهر')) {
+                finalMessage += `\n\nمخفض 3 أشهر: ${formatNumberEnglish(totalAdvanced)} دينار عراقي`;
+            }
+            
+            if (totalTwoMonths > 0 && !finalMessage.includes('مخفض شهرين')) {
+                finalMessage += `\n\nمخفض شهرين: ${formatNumberEnglish(totalTwoMonths)} دينار عراقي`;
+            }
+
+            // إضافة الإجمالي
+            const total = totalBasic + totalAdvanced + totalTwoMonths;
+            if (total > 0 && !finalMessage.includes('الإجمالي')) {
+                finalMessage += `\n\nالإجمالي الكلي: ${formatNumberEnglish(total)} دينار عراقي`;
+            }
+
+            return finalMessage;
         }
 
         function sendCustomizedWhatsAppMessage() {
@@ -6560,14 +6628,17 @@ function updateAgentSummary() {
                 return;
             }
 
-            const message = document.getElementById('customMessageText').value.trim();
+            let message = document.getElementById('customMessageText').value.trim();
             
             if (!message) {
                 alert('يرجى كتابة رسالة قبل الإرسال');
                 return;
             }
 
-            const fileType = document.getElementById('fileTypeSelect').value;
+            // إضافة العروض تلقائياً
+            message = addOffersToMessage(message, agentName);
+
+            const fileType = 'excel';
             const fileInfo = getFileTypeInfo(fileType, agentName);
             const fileBlobPromise = getFileBlobPromise(agentName, fileType);
 
@@ -6596,14 +6667,17 @@ function updateAgentSummary() {
                 return;
             }
 
-            const message = document.getElementById('customMessageText').value.trim();
+            let message = document.getElementById('customMessageText').value.trim();
             
             if (!message) {
                 alert('يرجى كتابة رسالة قبل الإرسال');
                 return;
             }
 
-            const fileType = document.getElementById('fileTypeSelect').value;
+            // إضافة العروض تلقائياً
+            message = addOffersToMessage(message, agentName);
+
+            const fileType = 'excel';
             const fileInfo = getFileTypeInfo(fileType, agentName);
             const fileBlobPromise = getFileBlobPromise(agentName, fileType);
 
@@ -7377,40 +7451,11 @@ function updateAgentSummary() {
                 <strong>الوكيل:</strong> <span id="customMessageAgentName" data-agent=""></span>
             </p>
             
-            <div class="offer-options">
-                <h4> حدد العروض المراد إضافتها:</h4>
-                <div class="offer-checkbox-group">
-                    <div class="offer-checkbox-item">
-                        <input type="checkbox" id="offerBasic" checked onchange="handleCheckboxChange()">
-                        <label for="offerBasic"> العرض المجاني</label>
-                    </div>
-                    <div class="offer-checkbox-item">
-                        <input type="checkbox" id="offerAdvanced" checked onchange="handleCheckboxChange()">
-                        <label for="offerAdvanced"> مخفض 3 أشهر</label>
-                    </div>
-                    <div class="offer-checkbox-item">
-                        <input type="checkbox" id="offerTwoMonths" checked onchange="handleCheckboxChange()">
-                        <label for="offerTwoMonths"> مخفض شهرين</label>
-                    </div>
-                </div>
-                <div class="info-buttons">
-                    <button class="info-btn" onclick="insertOfferInfo('basic')">+ إضافة مجاني</button>
-                    <button class="info-btn" onclick="insertOfferInfo('advanced')">+ إضافة 3 أشهر</button>
-                    <button class="info-btn" onclick="insertOfferInfo('twomonths')">+ إضافة شهرين</button>
-                    <button class="info-btn" onclick="insertOfferInfo('total')">+ إضافة الإجمالي</button>
-                </div>
-            </div>
-
             <div class="form-group">
                 <label>✍️ نص الرسالة:</label>
-                <textarea id="customMessageText" class="message-textarea" oninput="handleCheckboxChange()" placeholder="اكتب رسالتك هنا..."></textarea>
+                <textarea id="customMessageText" class="message-textarea" placeholder="اكتب رسالتك هنا..."></textarea>
                 <p style="margin-top: 5px; font-size: 0.85rem; color: #666;">
                 </p>
-            </div>
-
-            <div class="form-group">
-                <span class="preview-label"> معاينة الرسالة:</span>
-                <div id="messagePreview" class="message-preview"></div>
             </div>
 
             <div style="display: flex; gap: 10px; margin-top: 20px;">
@@ -7421,35 +7466,35 @@ function updateAgentSummary() {
     </div>
 </div>
 
-<div id="popupOverlay" class="popup-overlay"></div>
+<div id="popupOverlay" class="popup-overlay" onclick="closeAuthorInfo()"></div>
 <div id="authorInfoPopup" class="author-info-popup">
-    <button class="popup-close" onclick="closeAuthorInfo()">×</button>
+    <button class="popup-close" onclick="closeAuthorInfo()" title="إغلاق">×</button>
     <div class="popup-header">
-        <h2></h2>
+        <h2>معلومات التواصل</h2>
     </div>
     <div class="popup-content">
         <div class="info-item">
-            <button class="info-action" onclick="copyToClipboard('Ameer Helwas', 'الاسم')"> نسخ</button>
+            <button class="info-action" onclick="copyToClipboard('Ameer Helwas', 'الاسم')" title="نسخ الاسم">نسخ</button>
             <span class="info-value">Ameer Helwas</span>
             <span class="info-text">الاسم:</span>
             <span class="info-icon">👨‍💻</span>
         </div>
         <div class="info-item">
-            <button class="info-action" onclick="copyToClipboard('ameeralgaraawi@hotmail.com', 'البريد')"> نسخ</button>
+            <button class="info-action" onclick="copyToClipboard('ameeralgaraawi@hotmail.com', 'البريد')" title="نسخ البريد الإلكتروني">نسخ</button>
             <span class="info-value">ameeralgaraawi@hotmail.com</span>
             <span class="info-text">البريد الإلكتروني:</span>
-            <span class="info-icon"></span>
+            <span class="info-icon">📧</span>
         </div>
         <div class="info-item">
-            <button class="info-action" onclick="copyToClipboard('07701024143', 'الهاتف')"> نسخ</button>
+            <button class="info-action" onclick="copyToClipboard('07701024143', 'الهاتف')" title="نسخ رقم الهاتف">نسخ</button>
             <span class="info-value">07701024143</span>
             <span class="info-text">الهاتف:</span>
-            <span class="info-icon"></span>
+            <span class="info-icon">📱</span>
         </div>
         <div class="info-item">
             <span class="info-value">IRAQCELL</span>
             <span class="info-text">الشركة:</span>
-            <span class="info-icon"></span>
+            <span class="info-icon">🏢</span>
         </div>
     </div>
 </div>
