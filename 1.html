@@ -1422,7 +1422,6 @@
             display: inline-block;
             width: auto;
             max-width: calc(100% - 20px);
-            transition: all 0.25s ease;
             box-shadow: 0 1px 4px rgba(44, 95, 141, 0.1);
             cursor: pointer;
         }
@@ -1430,7 +1429,6 @@
         .sidebar-header .author-name:hover {
             background: linear-gradient(135deg, rgba(44, 95, 141, 0.15) 0%, rgba(44, 95, 141, 0.2) 100%);
             border-color: rgba(44, 95, 141, 0.5);
-            transform: translateY(-1px);
             box-shadow: 0 3px 8px rgba(44, 95, 141, 0.2);
             color: #1e4a6b;
         }
@@ -1462,17 +1460,6 @@
             display: block;
         }
 
-        @keyframes popupFadeIn {
-            from {
-                opacity: 0;
-                transform: translate(-50%, -50%) scale(0.85);
-            }
-            to {
-                opacity: 1;
-                transform: translate(-50%, -50%) scale(1);
-            }
-        }
-
         .popup-overlay {
             display: none;
             position: fixed;
@@ -1483,7 +1470,6 @@
             background: rgba(0, 0, 0, 0.6);
             z-index: 10000;
             backdrop-filter: blur(6px);
-            transition: opacity 0.3s ease;
         }
 
         .popup-overlay.show {
@@ -1507,7 +1493,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s ease;
             z-index: 10;
             line-height: 1;
         }
@@ -1515,7 +1500,6 @@
         .popup-close:hover {
             background: #801c32;
             color: white;
-            transform: rotate(90deg) scale(1.1);
             box-shadow: 0 4px 12px rgba(128, 28, 50, 0.4);
         }
 
@@ -1580,7 +1564,6 @@
             background: var(--bg-secondary);
             border-radius: 16px;
             border: 2px solid var(--border-light);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             flex-direction: row-reverse;
             position: relative;
             overflow: hidden;
@@ -1594,8 +1577,6 @@
             width: 4px;
             height: 100%;
             background: linear-gradient(180deg, #801c32 0%, #a52d45 100%);
-            transform: scaleY(0);
-            transition: transform 0.3s ease;
         }
 
         [data-theme="dark"] .info-item::before {
@@ -1605,12 +1586,7 @@
         .info-item:hover {
             background: var(--bg-tertiary);
             border-color: var(--primary-color);
-            transform: translateX(-8px) translateY(-2px);
             box-shadow: 0 8px 20px var(--shadow-md);
-        }
-
-        .info-item:hover::before {
-            transform: scaleY(1);
         }
 
         .info-icon {
@@ -1623,7 +1599,6 @@
             background: linear-gradient(135deg, rgba(128, 28, 50, 0.1) 0%, rgba(128, 28, 50, 0.15) 100%);
             border-radius: 12px;
             flex-shrink: 0;
-            transition: all 0.3s ease;
         }
 
         [data-theme="dark"] .info-icon {
@@ -1631,7 +1606,6 @@
         }
 
         .info-item:hover .info-icon {
-            transform: scale(1.1) rotate(5deg);
             background: linear-gradient(135deg, rgba(128, 28, 50, 0.2) 0%, rgba(128, 28, 50, 0.3) 100%);
         }
 
@@ -1660,7 +1634,6 @@
             text-align: left;
             direction: ltr;
             white-space: nowrap;
-            transition: color 0.3s ease;
         }
 
         [data-theme="dark"] .info-value {
@@ -1683,7 +1656,6 @@
             border-radius: 10px;
             cursor: pointer;
             font-size: 0.85rem;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             font-weight: 700;
             white-space: nowrap;
             flex-shrink: 0;
@@ -1697,35 +1669,12 @@
             box-shadow: 0 2px 8px rgba(255, 71, 87, 0.3);
         }
 
-        .info-action::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: translate(-50%, -50%);
-            transition: width 0.5s ease, height 0.5s ease;
-        }
-
         .info-action:hover {
-            transform: translateY(-2px) scale(1.05);
             box-shadow: 0 4px 16px rgba(128, 28, 50, 0.4);
         }
 
         [data-theme="dark"] .info-action:hover {
             box-shadow: 0 4px 16px rgba(255, 71, 87, 0.4);
-        }
-
-        .info-action:hover::before {
-            width: 300px;
-            height: 300px;
-        }
-
-        .info-action:active {
-            transform: translateY(0) scale(1);
         }
 
         .settings-container {
