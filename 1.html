@@ -85,8 +85,102 @@
         [data-theme="dark"] .text-primary,
         [data-theme="dark"] body,
         [data-theme="dark"] .main-content {
-            color: var(--text-primary);
+            color: #ffffff;
             font-weight: 400;
+        }
+        
+        [data-theme="dark"] p,
+        [data-theme="dark"] span,
+        [data-theme="dark"] div,
+        [data-theme="dark"] label,
+        [data-theme="dark"] td,
+        [data-theme="dark"] th {
+            color: #ffffff !important;
+        }
+        
+        [data-theme="dark"] .section,
+        [data-theme="dark"] .section-title,
+        [data-theme="dark"] .section h3,
+        [data-theme="dark"] .section h4,
+        [data-theme="dark"] .section p {
+            color: #ffffff !important;
+        }
+        
+        [data-theme="dark"] .agent-card-improved,
+        [data-theme="dark"] .agent-card-improved * {
+            color: #ffffff !important;
+        }
+        
+        [data-theme="dark"] .settings-section,
+        [data-theme="dark"] .settings-section * {
+            color: #ffffff !important;
+        }
+        
+        [data-theme="dark"] .info-item-improved,
+        [data-theme="dark"] .info-item-improved * {
+            color: #ffffff !important;
+        }
+        
+        [data-theme="dark"] .info-label,
+        [data-theme="dark"] .info-value,
+        [data-theme="dark"] .info-label-empty {
+            color: #ffffff !important;
+        }
+        
+        [data-theme="dark"] .modal-content,
+        [data-theme="dark"] .modal-content * {
+            color: #ffffff !important;
+        }
+        
+        [data-theme="dark"] input,
+        [data-theme="dark"] textarea,
+        [data-theme="dark"] select {
+            color: #ffffff !important;
+            background-color: #3a3a3a !important;
+        }
+        
+        [data-theme="dark"] button {
+            color: #ffffff !important;
+        }
+        
+        [data-theme="dark"] .btn {
+            color: #ffffff !important;
+        }
+        
+        [data-theme="dark"] .btn-danger {
+            background-color: #dc3545 !important;
+            color: #ffffff !important;
+        }
+        
+        [data-theme="dark"] .btn-success {
+            background-color: #28a745 !important;
+            color: #ffffff !important;
+        }
+        
+        [data-theme="dark"] .btn-primary {
+            background-color: #007bff !important;
+            color: #ffffff !important;
+        }
+        
+        [data-theme="dark"] .btn-info {
+            background-color: #17a2b8 !important;
+            color: #ffffff !important;
+        }
+        
+        [data-theme="dark"] .btn-warning {
+            background-color: #ffc107 !important;
+            color: #000000 !important;
+        }
+        
+        [data-theme="dark"] table,
+        [data-theme="dark"] table td,
+        [data-theme="dark"] table th {
+            color: #ffffff !important;
+        }
+        
+        [data-theme="dark"] #percentageTable td,
+        [data-theme="dark"] #percentageTable th {
+            color: #ffffff !important;
         }
 
         * {
@@ -97,6 +191,12 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             text-rendering: optimizeLegibility;
+            transition: none !important;
+            animation: none !important;
+        }
+        
+        *:hover {
+            transform: none !important;
         }
 
         html, body {
@@ -596,23 +696,12 @@
 
         .tab-content {
             display: none;
-            animation: fadeIn 0.5s ease;
             width: 100%;
             max-width: 100%;
             overflow-x: hidden;
             box-sizing: border-box;
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
 
         .tab-content.active {
             display: block;
@@ -647,6 +736,39 @@
             width: 100%;
             max-width: 100%;
             box-sizing: border-box;
+            transition: none !important;
+            animation: none !important;
+        }
+        
+        #percentageResults.section::before {
+            display: none !important;
+        }
+        
+        #percentageResults.section:hover {
+            transform: none !important;
+        }
+        
+        #agentPercentageTab .section {
+            transition: none !important;
+            animation: none !important;
+        }
+        
+        #agentPercentageTab .section::before {
+            display: none !important;
+        }
+        
+        #agentPercentageTab .section:hover {
+            transform: none !important;
+        }
+        
+        #percentageTableContainer * {
+            transition: none !important;
+            animation: none !important;
+        }
+        
+        #percentageTable * {
+            transition: none !important;
+            animation: none !important;
         }
 
         #percentageTableContainer {
@@ -729,17 +851,12 @@
         }
 
         .section:hover::before {
-            animation: shine 1.5s ease-in-out;
-            opacity: 1;
+            display: none;
         }
 
-        @keyframes shine {
-            0% { transform: rotate(45deg) translateX(-100%) translateY(-100%); }
-            100% { transform: rotate(45deg) translateX(100%) translateY(100%); }
-        }
 
         .section:hover {
-            transform: translateY(-8px) scale(1.01);
+            transform: none;
             box-shadow: 
                 0 20px 50px var(--shadow-md),
                 0 10px 30px var(--shadow-sm);
@@ -1063,7 +1180,6 @@
             height: 200%;
             background: linear-gradient(45deg, transparent, rgba(128, 28, 50, 0.05), transparent);
             transform: rotate(45deg);
-            animation: float 8s ease-in-out infinite;
         }
 
         .agent-info h3 {
@@ -1113,17 +1229,12 @@
             border-radius: 50%;
             width: 70px;
             height: 70px;
-            animation: spin 1s linear infinite;
             margin: 0 auto 25px;
             box-shadow: 
                 0 0 30px var(--shadow-md),
                 0 6px 20px var(--shadow-sm);
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
 
         .loading p {
             color: var(--primary-color);
@@ -1161,21 +1272,10 @@
             box-shadow: 
                 0 10px 30px var(--shadow-md),
                 0 5px 15px var(--shadow-sm);
-            animation: fadeInUp 0.5s ease;
             letter-spacing: 0.5px;
             transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
 
         @media (max-width: 768px) {
             .sidebar {
@@ -1220,35 +1320,8 @@
             }
         }
 
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
 
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
 
-        .section:nth-child(odd) {
-            animation: slideInLeft 0.6s ease-out;
-        }
-
-        .section:nth-child(even) {
-            animation: slideInRight 0.6s ease-out;
-        }
 
         .date-time-bar {
             width: 100%;
@@ -1377,7 +1450,6 @@
             min-width: 480px;
             max-width: 600px;
             width: 90%;
-            animation: popupFadeIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
             overflow: hidden;
         }
 
@@ -1416,13 +1488,8 @@
 
         .popup-overlay.show {
             display: block;
-            animation: overlayFadeIn 0.3s ease;
         }
 
-        @keyframes overlayFadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
 
         .popup-close {
             position: absolute;
@@ -2299,13 +2366,8 @@
             width: 200%;
             height: 200%;
             background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-            animation: pulse 3s ease-in-out infinite;
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.1); opacity: 0.8; }
-        }
 
         .total-label {
             font-size: 0.75rem;
@@ -2425,12 +2487,6 @@
             background: var(--nav-hover);
         }
 
-        #whatsappQRCode canvas {
-            border: 3px solid #801c32;
-            border-radius: 10px;
-            padding: 10px;
-            background: white;
-        }
 
         .message-customization {
             max-width: 700px;
@@ -2562,7 +2618,20 @@
 
         .info-btn:hover {
             background: #1e4a6b;
-            transform: translateY(-2px);
+            transform: none;
+        }
+        
+        *,
+        *::before,
+        *::after {
+            transition: none !important;
+            animation: none !important;
+        }
+        
+        *:hover,
+        *:focus,
+        *:active {
+            transform: none !important;
         }
     </style>
 </head>
@@ -2941,25 +3010,6 @@
                     <h3 class="section-title"> الإعدادات</h3>
                     <div class="settings-container">
                         <div class="settings-section">
-                            <h4> إعدادات واتساب</h4>
-                            <div id="whatsappStatus" style="margin-bottom: 0; padding: 16px; background: rgba(128, 28, 50, 0.05); border-radius: 8px; border: 1px solid rgba(128, 28, 50, 0.1);">
-                                <p style="margin-bottom: 12px; font-size: 0.85rem; color: #1a1a1a; line-height: 1.6; font-weight: 600;">
-                                    <strong style="color: #801c32;">ملاحظة:</strong> أدخل رقم هاتفك المرتبط بـ WhatsApp لاستخدام إرسال الرسائل المباشر
-                                </p>
-                                <p style="margin-bottom: 12px; font-size: 0.9rem;">
-                                    <strong style="color: #333;">حالة الاتصال:</strong> 
-                                    <span id="whatsappConnectionStatus" style="color: #e53e3e; font-weight: 600;">غير متصل</span>
-                                </p>
-                                <div id="whatsappQRCode" style="text-align: center; margin: 15px 0;"></div>
-                                <button class="btn btn-primary" onclick="connectWhatsApp()" style="width: 100%; margin-top: 0;"> إعداد WhatsApp</button>
-                                <button class="btn btn-danger" onclick="disconnectWhatsApp()" style="width: 100%; margin-top: 10px;"> إلغاء الإعداد</button>
-                                <p style="margin-top: 12px; font-size: 0.8rem; color: #1a1a1a; text-align: center; line-height: 1.5; font-weight: 600;">
-                                    سيتم فتح واتساب مباشرة لإرسال الرسائل دون الحاجة لتسجيل الدخول
-                                </p>
-                            </div>
-                        </div>
-                        
-                        <div class="settings-section">
                             <h4> إعدادات الأسعار</h4>
                             <div class="settings-group">
                                 <label>سعر Bronze:</label>
@@ -3087,8 +3137,6 @@
 
 let agentReports = {};
         let agentsList = JSON.parse(localStorage.getItem('agentsList') || '[]');
-        let whatsappConnected = false;
-        let whatsappPhone = '';
         let currentUser = '';
         let basicData = null;
         let advancedData = null;
@@ -3206,33 +3254,6 @@ let agentReports = {};
             }
             
             return '';
-        }
-
-        function getSubscriptionFullName(category, agentName, type = 'basic') {
-            let agent = null;
-            
-            if (agentName) {
-                agent = agentsList.find(a => a.name === agentName);
-            }
-            
-            if (agent && agent.subscriptionNames) {
-                const subNames = agent.subscriptionNames;
-                switch(category) {
-                    case 'B': return subNames.bronze || 'Iraqcell_Bronze_Profile_NEW';
-                    case 'S': return subNames.silver || 'Iraqcell_Silver_Profile_NEW';
-                    case 'G': return subNames.gold || 'Iraqcell_Gold_Profile_NEW';
-                    case 'P': return subNames.platinum || 'Iraqcell_Platinum_Profile_NEW';
-                    default: return '';
-                }
-            }
-            
-            switch(category) {
-                case 'B': return 'Iraqcell_Bronze_Profile_NEW';
-                case 'S': return 'Iraqcell_Silver_Profile_NEW';
-                case 'G': return 'Iraqcell_Gold_Profile_NEW';
-                case 'P': return 'Iraqcell_Platinum_Profile_NEW';
-                default: return '';
-            }
         }
 
         function getSubscriptionPrice(subscriptionName, category, type = 'basic', priceType = 'basic') {
@@ -3517,7 +3538,6 @@ let agentReports = {};
             
             const agentPercentageAmount = iqPPercent + iqGPercent + iqSPercent + iqBPercent;
             
-            // الحصول على معلومات الوكيل من قائمة الوكلاء
             const agent = agentsList.find(a => a.name === agentName);
             const agentPhone = agent?.phone || '';
             const agentEmail = agent?.email || '';
@@ -3739,7 +3759,6 @@ let agentReports = {};
         }
 
         function saveAgentPercentage(agentName, percentage, iqT, iqP, iqG, iqS, iqB, agentPercentageAmount) {
-            // الحصول على معلومات الوكيل من قائمة الوكلاء
             const agent = agentsList.find(a => a.name === agentName);
             const agentPhone = agent?.phone || '';
             const agentEmail = agent?.email || '';
@@ -3776,7 +3795,6 @@ let agentReports = {};
                     (agentPercentages[agentName].deductions || 0) - 
                     (agentPercentages[agentName].penalties || 0);
                 
-                // تحديث معلومات الاتصال إذا كانت متوفرة
                 if (agentPhone) {
                     agentPercentages[agentName].phone = agentPhone;
                 }
@@ -3787,7 +3805,6 @@ let agentReports = {};
         }
 
         function saveAgentPercentageWithCounts(agentName, percentage, iqT, iqP, iqG, iqS, iqB, agentPercentageAmount, totalCount, countP, countG, countS, countB) {
-            // الحصول على معلومات الوكيل من قائمة الوكلاء
             const agent = agentsList.find(a => a.name === agentName);
             const agentPhone = agent?.phone || '';
             const agentEmail = agent?.email || '';
@@ -3829,7 +3846,6 @@ let agentReports = {};
                     (agentPercentages[agentName].deductions || 0) - 
                     (agentPercentages[agentName].penalties || 0);
                 
-                // تحديث معلومات الاتصال إذا كانت متوفرة
                 if (agentPhone) {
                     agentPercentages[agentName].phone = agentPhone;
                 }
@@ -3915,7 +3931,6 @@ let agentReports = {};
                 totalAgentPercentage += data.agentPercentageAmount || 0;
                 totalNetPercentage += data.netPercentage || 0;
                 
-                // الحصول على رقم الهاتف من بيانات النسبة أو من قائمة الوكلاء
                 const agent = agentsList.find(a => a.name === agentName);
                 const agentPhone = data.phone || agent?.phone || '';
                 
@@ -3965,7 +3980,7 @@ let agentReports = {};
                         ${formatNumber(data.netPercentage || 0)}
                     </td>
                     <td style="padding: 6px 4px; text-align: center; border: 1px solid #ddd;">
-                        <button class="btn btn-success" onclick="sendPercentageReport('${agentName}')" style="padding: 4px 8px; font-size: 0.7rem; margin-left: 3px;">إرسال</button>
+                        <button class="btn btn-success" onclick="showPercentageSendOptions('${agentName}')" style="padding: 4px 8px; font-size: 0.7rem; margin-left: 3px;">إرسال</button>
                         <button class="btn btn-info" onclick="downloadPercentagePDF('${agentName}')" style="padding: 4px 8px; font-size: 0.7rem; margin-left: 3px; background-color: #dc3545; border-color: #dc3545;">PDF</button>
                         <button class="btn btn-danger" onclick="deletePercentage('${agentName}')" style="padding: 4px 8px; font-size: 0.7rem;">حذف</button>
                     </td>
@@ -4380,33 +4395,72 @@ let agentReports = {};
             }
         }
         
-        // تحديث رقم هاتف الوكيل في بيانات النسبة
         function updateAgentPhone(agentName, phone) {
             if (!agentPercentages[agentName]) return;
             
-            // حفظ رقم الهاتف في بيانات النسبة
             agentPercentages[agentName].phone = phone || '';
             
-            // تحديث رقم الهاتف في قائمة الوكلاء أيضاً إذا كان موجوداً
             const agent = agentsList.find(a => a.name === agentName);
             if (agent && phone) {
                 agent.phone = phone;
                 localStorage.setItem('agentsList', JSON.stringify(agentsList));
             }
             
-            // حفظ بيانات النسبة
             localStorage.setItem('agentPercentages', JSON.stringify(agentPercentages));
             
             logActivity('تحديث رقم هاتف وكيل', `تم تحديث رقم الهاتف للوكيل ${agentName}: ${phone}`);
             showSuccessMessage(`تم تحديث رقم الهاتف للوكيل: ${agentName}`);
         }
         
-        // إرسال تقرير نسبة الوكيل
-        function sendPercentageReport(agentName) {
-            // الحصول على معلومات الوكيل من قائمة الوكلاء أولاً
+        function showPercentageSendOptions(agentName) {
             let agent = agentsList.find(a => a.name === agentName);
             
-            // إذا لم يكن موجوداً في قائمة الوكلاء، نحاول الحصول على معلوماته من بيانات النسبة
+            if (!agent) {
+                const percentageData = agentPercentages[agentName];
+                if (percentageData && (percentageData.phone || percentageData.email)) {
+                    agent = {
+                        name: agentName,
+                        phone: percentageData.phone || '',
+                        email: percentageData.email || ''
+                    };
+                } else {
+                    alert('الوكيل غير موجود في القائمة. يرجى إضافة الوكيل في تبويب "إدارة الوكلاء" وإضافة معلومات الاتصال.');
+                    return;
+                }
+            }
+            
+            const phone = agentPercentages[agentName]?.phone || agent?.phone;
+            const email = agentPercentages[agentName]?.email || agent?.email;
+            
+            if (!phone && !email) {
+                alert('لم يتم تحديد رقم هاتف أو بريد إلكتروني للوكيل. يرجى إضافة معلومات الاتصال في تبويب "إدارة الوكلاء"');
+                return;
+            }
+            
+            document.getElementById('percentageSendAgentName').textContent = agentName;
+            document.getElementById('percentageSendOptionsModal').setAttribute('data-agent-name', agentName);
+            document.getElementById('percentageSendOptionsModal').classList.add('show');
+        }
+        
+        function closePercentageSendOptions() {
+            document.getElementById('percentageSendOptionsModal').classList.remove('show');
+        }
+        
+        function sendPercentageReportViaWhatsApp() {
+            const agentName = document.getElementById('percentageSendOptionsModal').getAttribute('data-agent-name');
+            closePercentageSendOptions();
+            sendPercentageReport(agentName, 'whatsapp');
+        }
+        
+        function sendPercentageReportViaEmail() {
+            const agentName = document.getElementById('percentageSendOptionsModal').getAttribute('data-agent-name');
+            closePercentageSendOptions();
+            sendPercentageReport(agentName, 'email');
+        }
+        
+        function sendPercentageReport(agentName, method = 'whatsapp') {
+            let agent = agentsList.find(a => a.name === agentName);
+            
             if (!agent) {
                 const percentageData = agentPercentages[agentName];
                 if (percentageData && (percentageData.phone || percentageData.email)) {
@@ -4421,7 +4475,6 @@ let agentReports = {};
                 }
             }
             
-            // تحديث معلومات الاتصال في بيانات النسبة من قائمة الوكلاء
             if (agent && agentPercentages[agentName]) {
                 if (agent.phone) {
                     agentPercentages[agentName].phone = agent.phone;
@@ -4432,13 +4485,8 @@ let agentReports = {};
                 localStorage.setItem('agentPercentages', JSON.stringify(agentPercentages));
             }
             
-            // استخدام رقم الهاتف من بيانات النسبة أو من قائمة الوكلاء
             const phone = agentPercentages[agentName]?.phone || agent?.phone;
-            
-            if (!phone) {
-                alert('لم يتم تحديد رقم هاتف للوكيل. يرجى إضافة رقم الهاتف في تبويب "إدارة الوكلاء"');
-                return;
-            }
+            const email = agentPercentages[agentName]?.email || agent?.email;
             
             const data = agentPercentages[agentName];
             if (!data) {
@@ -4446,13 +4494,21 @@ let agentReports = {};
                 return;
             }
             
-            // إنشاء رسالة WhatsApp
+            if (method === 'whatsapp' && !phone) {
+                alert('لم يتم تحديد رقم هاتف للوكيل. يرجى إضافة رقم الهاتف في تبويب "إدارة الوكلاء"');
+                return;
+            }
+            
+            if (method === 'email' && !email) {
+                alert('لم يتم تحديد بريد إلكتروني للوكيل. يرجى إضافة البريد الإلكتروني في تبويب "إدارة الوكلاء"');
+                return;
+            }
+            
             let message = `*${agentName}*\n\n`;
             message += `تحية طيبة وبعد،\n\n`;
             message += `نود إعلامكم بالتقرير الخاص بنسبة الوكيل، وكما يلي:\n\n`;
             message += `━━━━━━━━━━━━━━━━━━━━\n`;
             
-            // إضافة تفاصيل الاشتراكات
             const percentage = data.percentage || 15;
             const rate = percentage / 100;
             const iqPPercent = data.iqPPercent !== undefined ? data.iqPPercent : ((data.iqP || 0) * rate);
@@ -4460,8 +4516,6 @@ let agentReports = {};
             const iqSPercent = data.iqSPercent !== undefined ? data.iqSPercent : ((data.iqS || 0) * rate);
             const iqBPercent = data.iqBPercent !== undefined ? data.iqBPercent : ((data.iqB || 0) * rate);
             
-            // تم حذف جملة النسبة المئوية وتفاصيل الاشتراكات - التفاصيل موجودة في ملف Excel
-            // عرض النسبة الصافية فقط في الرسالة
             
             message += `*النسبة الصافية: ${formatNumberEnglish(data.netPercentage || 0)} دينار عراقي*\n`;
             
@@ -4480,26 +4534,32 @@ let agentReports = {};
             message += `مع فائق الشكر والتقدير،\n`;
             message += `*شركة عراق سيل للإتصالات*`;
             
-            // إنشاء ملف Excel
             generatePercentageExcelReport(agentName).then((excelBlob) => {
-                const formattedPhone = formatPhoneForWhatsApp(phone);
+                const filename = `تقرير_نسبة_${agentName}_${formatDateForFilename(new Date())}.xlsx`;
+                downloadFile(excelBlob, filename);
                 
-                // تحميل الملف
-                downloadFile(excelBlob, `تقرير_نسبة_${agentName}_${formatDateForFilename(new Date())}.xlsx`);
-                
-                // فتح WhatsApp
-                const whatsappUrl = `https://wa.me/${formattedPhone}?text=${encodeURIComponent(message)}`;
-                window.open(whatsappUrl, '_blank');
-                
-                logActivity('إرسال تقرير نسبة وكيل', `تم إرسال تقرير نسبة الوكيل: ${agentName}`);
-                showSuccessMessage(`تم إرسال تقرير نسبة الوكيل: ${agentName}`);
+                if (method === 'whatsapp') {
+                    const formattedPhone = formatPhoneForWhatsApp(phone);
+                    const whatsappUrl = `https://wa.me/${formattedPhone}?text=${encodeURIComponent(message)}`;
+                    window.open(whatsappUrl, '_blank');
+                    
+                    logActivity('إرسال تقرير نسبة وكيل عبر WhatsApp', `تم إرسال تقرير نسبة الوكيل: ${agentName}`);
+                    showSuccessMessage(`تم إرسال تقرير نسبة الوكيل عبر WhatsApp: ${agentName}`);
+                } else if (method === 'email') {
+                    const subject = encodeURIComponent(`تقرير نسبة الوكيل - ${agentName}`);
+                    const body = encodeURIComponent(message.replace(/\*/g, ''));
+                    const mailtoUrl = `mailto:${email}?subject=${subject}&body=${body}`;
+                    window.open(mailtoUrl, '_blank');
+                    
+                    logActivity('إرسال تقرير نسبة وكيل عبر البريد الإلكتروني', `تم إرسال تقرير نسبة الوكيل: ${agentName}`);
+                    showSuccessMessage(`تم فتح البريد الإلكتروني لإرسال تقرير نسبة الوكيل: ${agentName}`);
+                }
             }).catch((error) => {
                 console.error('Error generating Excel:', error);
                 alert('حدث خطأ أثناء إنشاء ملف Excel. يرجى المحاولة مرة أخرى.');
             });
         }
         
-        // إنشاء ملف Excel لتقرير نسبة الوكيل
         function generatePercentageExcelReport(agentName) {
             return new Promise(async (resolve, reject) => {
                 try {
@@ -4511,7 +4571,6 @@ let agentReports = {};
                     
                     const agent = agentsList.find(a => a.name === agentName);
                     
-                    // استخدام ExcelJS للتنسيق الاحترافي
                     const ExcelJS = window.ExcelJS;
                     if (!ExcelJS) {
                         reject(new Error('ExcelJS غير متوفر'));
@@ -4521,7 +4580,6 @@ let agentReports = {};
                     const workbook = new ExcelJS.Workbook();
                     const worksheet = workbook.addWorksheet('تقرير نسبة الوكيل');
                     
-                    // تحديد عرض الأعمدة
                     worksheet.columns = [
                         { width: 30, key: 'type' },
                         { width: 20, key: 'count' },
@@ -4531,7 +4589,6 @@ let agentReports = {};
                     
                     let currentRow = 1;
                     
-                    // العنوان الرئيسي
                     const titleRow = worksheet.getRow(currentRow);
                     titleRow.getCell(1).value = 'تقرير نسبة الوكيل';
                     titleRow.getCell(1).font = { bold: true, size: 18, color: { argb: 'FF801C32' } };
@@ -4540,7 +4597,6 @@ let agentReports = {};
                     titleRow.height = 30;
                     currentRow++;
                     
-                    // معلومات الوكيل
                     currentRow++;
                     worksheet.getRow(currentRow).getCell(1).value = `اسم الوكيل: ${agentName}`;
                     worksheet.getRow(currentRow).getCell(1).font = { bold: true, size: 12 };
@@ -4558,13 +4614,10 @@ let agentReports = {};
                     }
                     currentRow++;
                     
-                    // معلومات النسبة (تم حذف عرض النسبة المئوية بناءً على طلب المستخدم)
                     const percentage = data.percentage || 15;
                     const rate = percentage / 100;
-                    // تم حذف سطر النسبة المئوية من ملف Excel
                     currentRow++;
                     
-                    // جدول الاشتراكات
                     const sectionRow = worksheet.getRow(currentRow);
                     sectionRow.getCell(1).value = 'تفاصيل الاشتراكات';
                     sectionRow.getCell(1).font = { bold: true, size: 14, color: { argb: 'FF801C32' } };
@@ -4584,7 +4637,6 @@ let agentReports = {};
                     sectionRow.height = 25;
                     currentRow++;
                     
-                    // رأس الجدول
                     const headerRow = worksheet.getRow(currentRow);
                     const headers = ['نوع الاشتراك', 'عدد الاشتراكات', 'المبلغ (د.ع)', 'نسبة الوكيل (د.ع)'];
                     headers.forEach((header, idx) => {
@@ -4607,7 +4659,6 @@ let agentReports = {};
                     headerRow.height = 25;
                     currentRow++;
                     
-                    // بيانات الاشتراكات
                     const categories = [
                         { key: 'platinum', name: 'Platinum', count: data.countP || 0, amount: data.iqP || 0 },
                         { key: 'gold', name: 'Gold', count: data.countG || 0, amount: data.iqG || 0 },
@@ -4630,7 +4681,6 @@ let agentReports = {};
                         dataRow.getCell(3).value = formatNumberEnglish(cat.amount);
                         dataRow.getCell(4).value = formatNumberEnglish(Math.round(iqPPercent));
                         
-                        // تنسيق الخلايا
                         for (let col = 1; col <= 4; col++) {
                             const cell = dataRow.getCell(col);
                             cell.font = { size: 11 };
@@ -4654,7 +4704,6 @@ let agentReports = {};
                         currentRow++;
                     });
                     
-                    // صف المجموع
                     const totalDataRow = worksheet.getRow(currentRow);
                     const totalCount = (data.countP || 0) + (data.countG || 0) + (data.countS || 0) + (data.countB || 0);
                     const totalAmount = (data.iqP || 0) + (data.iqG || 0) + (data.iqS || 0) + (data.iqB || 0);
@@ -4668,7 +4717,6 @@ let agentReports = {};
                     totalDataRow.getCell(3).value = formatNumberEnglish(totalAmount);
                     totalDataRow.getCell(4).value = formatNumberEnglish(totalPercent);
                     
-                    // تنسيق صف المجموع
                     for (let col = 1; col <= 4; col++) {
                         const cell = totalDataRow.getCell(col);
                         cell.font = { bold: true, size: 12 };
@@ -4691,7 +4739,6 @@ let agentReports = {};
                     currentRow++;
                     currentRow++;
                     
-                    // ملخص النسبة
                     const summaryRow = worksheet.getRow(currentRow);
                     summaryRow.getCell(1).value = 'نسبة الوكيل';
                     summaryRow.getCell(4).value = formatNumberEnglish(data.agentPercentageAmount || 0);
@@ -4720,7 +4767,6 @@ let agentReports = {};
                         currentRow++;
                     }
                     
-                    // النسبة الصافية
                     const netRow = worksheet.getRow(currentRow);
                     netRow.getCell(1).value = 'النسبة الصافية';
                     netRow.getCell(4).value = formatNumberEnglish(data.netPercentage || 0);
@@ -4751,7 +4797,6 @@ let agentReports = {};
                     };
                     netRow.height = 30;
                     
-                    // إنشاء الملف
                     const buffer = await workbook.xlsx.writeBuffer();
                     const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
                     
@@ -4762,7 +4807,6 @@ let agentReports = {};
             });
         }
 
-        // تحميل تقرير نسبة الوكيل بصيغة PDF
         function downloadPercentagePDF(agentName) {
             generatePercentagePDFReport(agentName).then((pdfBlob) => {
                 const safeName = agentName.replace(/[^a-zA-Z0-9_]/g, '_');
@@ -4776,7 +4820,6 @@ let agentReports = {};
             });
         }
 
-        // إنشاء ملف PDF لتقرير نسبة الوكيل
         function generatePercentagePDFReport(agentName) {
             return new Promise(async (resolve, reject) => {
                 try {
@@ -4797,16 +4840,14 @@ let agentReports = {};
                     const pageHeight = doc.internal.pageSize.getHeight();
                     let yPos = 15;
 
-                    // العنوان الرئيسي
                     doc.setFontSize(18);
-                    doc.setTextColor(128, 28, 50); // #801C32
+                    doc.setTextColor(128, 28, 50);
                     doc.setFont('helvetica', 'bold');
                     const titleText = 'Agent Percentage Report';
                     const titleWidth = doc.getTextWidth(titleText);
                     doc.text(titleText, (pageWidth - titleWidth) / 2, yPos);
                     yPos += 15;
 
-                    // معلومات الوكيل
                     const agent = agentsList.find(a => a.name === agentName);
                     doc.setFontSize(12);
                     doc.setTextColor(0, 0, 0);
@@ -4828,7 +4869,6 @@ let agentReports = {};
 
                     yPos += 5;
 
-                    // جدول الاشتراكات
                     const percentage = data.percentage || 15;
                     const rate = percentage / 100;
                     const iqPPercent = data.iqPPercent !== undefined ? data.iqPPercent : ((data.iqP || 0) * rate);
@@ -4860,7 +4900,7 @@ let agentReports = {};
                         body: tableData,
                         theme: 'striped',
                         headStyles: {
-                            fillColor: [128, 28, 50], // #801C32
+                            fillColor: [128, 28, 50],
                             textColor: [255, 255, 255],
                             fontStyle: 'bold',
                             fontSize: 12,
@@ -4877,9 +4917,8 @@ let agentReports = {};
                             3: { halign: 'center' }
                         },
                         didParseCell: function(data) {
-                            // تنسيق صف المجموع
                             if (data.row.index === tableData.length - 1) {
-                                data.cell.styles.fillColor = [232, 240, 245]; // #E8F0F5
+                                data.cell.styles.fillColor = [232, 240, 245];
                                 data.cell.styles.fontStyle = 'bold';
                                 data.cell.styles.fontSize = 12;
                             }
@@ -4889,7 +4928,6 @@ let agentReports = {};
 
                     yPos = doc.lastAutoTable.finalY + 15;
 
-                    // ملخص النسبة
                     doc.setFontSize(12);
                     doc.setFont('helvetica', 'bold');
                     doc.text(`Agent Percentage: ${formatNumberEnglish(data.agentPercentageAmount || 0)} IQD`, 20, yPos);
@@ -4906,13 +4944,11 @@ let agentReports = {};
                         yPos += 10;
                     }
 
-                    // النسبة الصافية
                     doc.setFontSize(14);
                     doc.setFont('helvetica', 'bold');
-                    doc.setTextColor(128, 28, 50); // #801C32
+                    doc.setTextColor(128, 28, 50);
                     doc.text(`Net Percentage: ${formatNumberEnglish(data.netPercentage || 0)} IQD`, 20, yPos);
 
-                    // إنشاء blob
                     const pdfBlob = doc.output('blob');
                     resolve(pdfBlob);
                 } catch (error) {
@@ -5080,13 +5116,11 @@ let agentReports = {};
                 updateAgentsListForPercentage();
             }
             
-            // استعادة البيانات المحفوظة بعد تحميل الصفحة
             setTimeout(() => {
                 restoreSavedData();
             }, 500);
         });
         
-        // حفظ البيانات قبل إعادة تحميل الصفحة
         window.addEventListener('beforeunload', function() {
             try {
                 if (basicData) saveDataToStorage('basicData', basicData);
@@ -5118,17 +5152,6 @@ let agentReports = {};
                     document.getElementById('loginError').classList.remove('hidden');
                 }
             });
-        }
-
-        function logout() {
-            currentUser = '';
-            document.getElementById('loginScreen').style.display = 'flex';
-            document.getElementById('dashboard').style.display = 'none';
-            document.getElementById('username').value = '';
-            document.getElementById('password').value = '';
-            resetBasicResults();
-            resetAdvancedResults();
-            resetTwoMonthsResults();
         }
 
         function updateCurrentDate() {
@@ -5303,19 +5326,16 @@ let agentReports = {};
             return result;
         }
 
-        // وظائف حفظ واستعادة البيانات
         function saveDataToStorage(key, data) {
             try {
-                // حفظ البيانات في localStorage مع ضغط إذا كانت كبيرة
                 const dataString = JSON.stringify(data);
-                if (dataString.length > 5000000) { // 5MB limit
+                if (dataString.length > 5000000) {
                     console.warn(`Data too large for ${key}, skipping save`);
                     return;
                 }
                 localStorage.setItem(key, dataString);
             } catch (error) {
                 console.error(`Error saving ${key} to storage:`, error);
-                // إذا فشل الحفظ بسبب حجم البيانات، احذف المفاتيح القديمة
                 try {
                     localStorage.removeItem(key);
                     localStorage.setItem(key, JSON.stringify(data));
@@ -5337,10 +5357,8 @@ let agentReports = {};
             return defaultValue;
         }
 
-        // استعادة جميع البيانات المحفوظة
         function restoreSavedData() {
             try {
-                // استعادة البيانات الخام
                 const savedBasicData = loadDataFromStorage('basicData');
                 if (savedBasicData && savedBasicData.length > 0) {
                     basicData = savedBasicData;
@@ -5362,7 +5380,6 @@ let agentReports = {};
                     document.getElementById('twoMonthsFileName').classList.remove('hidden');
                 }
 
-                // استعادة التفاصيل
                 const savedBasicDetails = loadDataFromStorage('basicDetails', []);
                 if (savedBasicDetails.length > 0) {
                     basicDetails = savedBasicDetails;
@@ -5378,7 +5395,6 @@ let agentReports = {};
                     twoMonthsDetails = savedTwoMonthsDetails;
                 }
 
-                // استعادة نتائج التحليل
                 const savedBasicResults = loadDataFromStorage('basicResults');
                 if (savedBasicResults && savedBasicResults.total && savedBasicResults.total.count > 0) {
                     displayBasicResults(savedBasicResults);
@@ -5394,7 +5410,6 @@ let agentReports = {};
                     displayTwoMonthsResults(savedTwoMonthsResults);
                 }
 
-                // استعادة تقارير الوكلاء
                 const savedAgentReports = loadDataFromStorage('agentReports', {});
                 if (savedAgentReports && Object.keys(savedAgentReports).length > 0) {
                     agentReports = savedAgentReports;
@@ -5533,7 +5548,6 @@ let agentReports = {};
             }
             agentReports[results.agentName].basic = results;
             
-            // حفظ البيانات في localStorage
             saveDataToStorage('agentReports', agentReports);
             saveDataToStorage('basicDetails', basicDetails);
             saveDataToStorage('basicResults', results);
@@ -5771,7 +5785,6 @@ let agentReports = {};
             }
             agentReports[results.agentName].advanced = results;
             
-            // حفظ البيانات في localStorage
             saveDataToStorage('agentReports', agentReports);
             saveDataToStorage('advancedDetails', advancedDetails);
             saveDataToStorage('advancedResults', results);
@@ -6031,7 +6044,6 @@ let agentReports = {};
             }
             agentReports[results.agentName].twoMonths = results;
             
-            // حفظ البيانات في localStorage
             saveDataToStorage('agentReports', agentReports);
             saveDataToStorage('twoMonthsDetails', twoMonthsDetails);
             saveDataToStorage('twoMonthsResults', results);
@@ -6109,7 +6121,6 @@ let agentReports = {};
             document.getElementById('basicFileInput').value = '';
             basicData = null;
             basicDetails = [];
-            // حذف البيانات المحفوظة
             localStorage.removeItem('basicData');
             localStorage.removeItem('basicDetails');
             localStorage.removeItem('basicResults');
@@ -6121,7 +6132,6 @@ let agentReports = {};
             document.getElementById('advancedFileInput').value = '';
             advancedData = null;
             advancedDetails = [];
-            // حذف البيانات المحفوظة
             localStorage.removeItem('advancedData');
             localStorage.removeItem('advancedDetails');
             localStorage.removeItem('advancedResults');
@@ -6133,7 +6143,6 @@ let agentReports = {};
             document.getElementById('twoMonthsFileInput').value = '';
             twoMonthsData = null;
             twoMonthsDetails = [];
-            // حذف البيانات المحفوظة
             localStorage.removeItem('twoMonthsData');
             localStorage.removeItem('twoMonthsDetails');
             localStorage.removeItem('twoMonthsResults');
@@ -6251,25 +6260,6 @@ alert('تم حفظ تقرير التفعيلات بنجاح!');
             return date.toISOString().split('T')[0];
         }
 
-        function formatNumberOld(num) {
-            if (num === null || num === undefined || isNaN(num)) return '0';
-            
-            const numStr = String(Math.floor(num));
-            
-            const arabicToEnglish = {
-                '٠': '0', '١': '1', '٢': '2', '٣': '3', '٤': '4',
-                '٥': '5', '٦': '6', '٧': '7', '٨': '8', '٩': '9'
-            };
-            
-            let result = '';
-            for (let i = 0; i < numStr.length; i++) {
-                const char = numStr[i];
-                result += arabicToEnglish[char] || char;
-            }
-            
-            return result.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-        }
-
         function getReportInfo(agentName) {
             const reports = agentReports[agentName] || {};
             const agent = agentsList.find(a => a.name === agentName);
@@ -6365,14 +6355,7 @@ alert('تم حفظ تقرير التفعيلات بنجاح!');
         }
 
         function getFileBlobPromise(agentName, fileType) {
-            switch(fileType) {
-                case 'excel':
                     return generateExcelReportBlob(agentName);
-                case 'word':
-                    return generateWordReportBlob(agentName);
-                default:
-                    return generatePDFReportBlob(agentName);
-            }
         }
 
         function getFileTypeInfo(fileType, agentName) {
@@ -6397,26 +6380,6 @@ alert('تم حفظ تقرير التفعيلات بنجاح!');
                 cleanPhone = '964' + cleanPhone;
             }
             return cleanPhone;
-        }
-
-        function printReport(resultId) {
-            if (document.getElementById(resultId).classList.contains('hidden')) {
-                alert('لا توجد نتائج للطباعة. يرجى تحليل البيانات أولاً.');
-                return;
-            }
-            window.print();
-        }
-
-        function printBasicReport() {
-            printReport('basicResults');
-        }
-
-        function printAdvancedReport() {
-            printReport('advancedResults');
-        }
-
-        function printTwoMonthsReport() {
-            printReport('twoMonthsResults');
         }
 
         function exportBasicData() {
@@ -7084,10 +7047,26 @@ function updateAgentSummary() {
 
         function loadSettings() {
             const saved = JSON.parse(localStorage.getItem('appSettings') || '{}');
-            if (saved.bronze) document.getElementById('priceBronze').value = saved.bronze;
-            if (saved.silver) document.getElementById('priceSilver').value = saved.silver;
-            if (saved.gold) document.getElementById('priceGold').value = saved.gold;
-            if (saved.platinum) document.getElementById('pricePlatinum').value = saved.platinum;
+            if (saved.bronze) {
+                document.getElementById('priceBronze').value = saved.bronze;
+                subscriptionPrices.basic['Iraqcell_Bronze_Profile_NEW'] = saved.bronze;
+                subscriptionPrices.basic['Iraqcell_Bronze_Profile'] = saved.bronze;
+            }
+            if (saved.silver) {
+                document.getElementById('priceSilver').value = saved.silver;
+                subscriptionPrices.basic['Iraqcell_Silver_Profile_NEW'] = saved.silver;
+                subscriptionPrices.basic['Iraqcell_Silver_Profile'] = saved.silver;
+            }
+            if (saved.gold) {
+                document.getElementById('priceGold').value = saved.gold;
+                subscriptionPrices.basic['Iraqcell_Gold_Profile_NEW'] = saved.gold;
+                subscriptionPrices.basic['Iraqcell_Gold_Profile'] = saved.gold;
+            }
+            if (saved.platinum) {
+                document.getElementById('pricePlatinum').value = saved.platinum;
+                subscriptionPrices.basic['Iraqcell_Platinum_Profile_NEW'] = saved.platinum;
+                subscriptionPrices.basic['Iraqcell_Platinum_Profile'] = saved.platinum;
+            }
             if (saved.notifications !== undefined) document.getElementById('enableNotifications').checked = saved.notifications;
         }
 
@@ -7098,17 +7077,21 @@ function updateAgentSummary() {
             const platinum = parseFloat(document.getElementById('pricePlatinum').value);
             
             subscriptionPrices.basic['Iraqcell_Bronze_Profile_NEW'] = bronze;
+            subscriptionPrices.basic['Iraqcell_Bronze_Profile'] = bronze;
             subscriptionPrices.basic['Iraqcell_Silver_Profile_NEW'] = silver;
+            subscriptionPrices.basic['Iraqcell_Silver_Profile'] = silver;
             subscriptionPrices.basic['Iraqcell_Gold_Profile_NEW'] = gold;
+            subscriptionPrices.basic['Iraqcell_Gold_Profile'] = gold;
             subscriptionPrices.basic['Iraqcell_Platinum_Profile_NEW'] = platinum;
+            subscriptionPrices.basic['Iraqcell_Platinum_Profile'] = platinum;
             
             const settings = {
                 bronze, silver, gold, platinum,
                 notifications: document.getElementById('enableNotifications').checked
             };
             localStorage.setItem('appSettings', JSON.stringify(settings));
-            logActivity('حفظ الإعدادات', 'تم تحديث إعدادات الأسعار');
-            showSuccessMessage('تم حفظ الإعدادات بنجاح!');
+            logActivity('حفظ الإعدادات', `تم تحديث إعدادات الأسعار: Bronze=${bronze}, Silver=${silver}, Gold=${gold}, Platinum=${platinum}`);
+            showSuccessMessage('تم حفظ الإعدادات بنجاح! سيتم استخدام الأسعار الجديدة عند تحليل البيانات الجديدة.');
         }
 
         function saveDefaultPercentage() {
@@ -7551,138 +7534,7 @@ function updateAgentSummary() {
             logActivity('حذف وكيل', `تم حذف الوكيل: ${agent.name}`);
         }
 
-        function importAgentsFromTable() {
-            const agentsFromTable = [
-                'حسنين صاحب عبد',
-                'حسين عادل حسن',
-                'سامر داخل سلمان',
-                'ضياء عبد الحسين',
-                'حسن حميد',
-                'حسين علي عبد الامير',
-                'حيدرهاني',
-                'زيد صالح',
-                'ضرغام باسم',
-                'عباس سعد حمزة',
-                'علاء صاحب عبد علي',
-                'عيسى حسين',
-                'غيث علاء زكي',
-                'فؤاد عايد',
-                'محمد ابراهيم',
-                'محمد صاحب جابر',
-                'محمد عباس محمد',
-                'منتظر ماجد',
-                'وليد علوي',
-                'حسنين صاحب',
-                'عراق سيل'
-            ];
 
-            let addedCount = 0;
-            let skippedCount = 0;
-
-            agentsFromTable.forEach(agentName => {
-                const exists = agentsList.some(a => a.name === agentName);
-                if (!exists) {
-                    agentsList.push({
-                        name: agentName,
-                        subName: '',
-                        phone: '',
-                        email: '',
-                        percentage: 16
-                    });
-                    addedCount++;
-                } else {
-                    skippedCount++;
-                }
-            });
-
-            localStorage.setItem('agentsList', JSON.stringify(agentsList));
-            refreshAgentsList();
-            
-            let message = `تم إضافة ${addedCount} وكيل جديد`;
-            if (skippedCount > 0) {
-                message += `، وتم تخطي ${skippedCount} وكيل موجود مسبقاً`;
-            }
-            
-            showSuccessMessage(message);
-            logActivity('استيراد الوكلاء', `تم استيراد ${addedCount} وكيل من الجدول`);
-        }
-
-        function connectWhatsApp() {
-            const phone = prompt('يرجى إدخال رقم الهاتف المرتبط بـ WhatsApp (مع رمز البلد، مثال: 9647712345678 أو 07701234567):');
-            if (!phone || phone.trim() === '') {
-                return;
-            }
-
-            const cleanPhone = phone.replace(/[^0-9]/g, '');
-            if (cleanPhone.length < 10) {
-                alert('رقم الهاتف غير صحيح. يرجى إدخال رقم صحيح');
-                return;
-            }
-
-            const formattedPhone = formatPhoneForWhatsApp(cleanPhone);
-
-            whatsappPhone = formattedPhone;
-            whatsappConnected = true;
-            
-            const statusElement = document.getElementById('whatsappConnectionStatus');
-            if (statusElement) {
-                statusElement.textContent = 'جاهز للإرسال';
-                statusElement.style.color = '#25D366';
-            }
-            
-            const qrContainer = document.getElementById('whatsappQRCode');
-            if (qrContainer) {
-                qrContainer.innerHTML = '';
-                
-                const whatsappLink = `https://wa.me/${formattedPhone}`;
-                
-                try {
-                    new QRCode(qrContainer, {
-                        text: whatsappLink,
-                        width: 200,
-                        height: 200,
-                        colorDark: '#000000',
-                        colorLight: '#ffffff',
-                        correctLevel: QRCode.CorrectLevel.H
-                    });
-
-                    qrContainer.innerHTML += `<p style="margin-top: 10px; text-align: center;"><a href="${whatsappLink}" target="_blank" style="color: #25D366; text-decoration: none; font-weight: bold;"> فتح WhatsApp</a></p>`;
-                } catch (error) {
-                    console.error('Error generating QR code:', error);
-                    qrContainer.innerHTML = `<p style="text-align: center;"><a href="${whatsappLink}" target="_blank" style="color: #25D366; text-decoration: none; font-weight: bold; font-size: 1.1rem;">فتح WhatsApp</a></p>`;
-                }
-            }
-
-            localStorage.setItem('whatsappPhone', formattedPhone);
-            localStorage.setItem('whatsappPhoneClean', cleanPhone);
-            localStorage.setItem('whatsappConnected', 'true');
-            
-            showSuccessMessage('تم إعداد WhatsApp بنجاح! يمكنك الآن إرسال الرسائل');
-            logActivity('ربط واتساب', `تم إعداد واتساب برقم: ${cleanPhone}`);
-        }
-
-        function disconnectWhatsApp() {
-            whatsappConnected = false;
-            whatsappPhone = '';
-            
-            const statusElement = document.getElementById('whatsappConnectionStatus');
-            if (statusElement) {
-                statusElement.textContent = 'غير متصل';
-                statusElement.style.color = '#e53e3e';
-            }
-            
-            const qrContainer = document.getElementById('whatsappQRCode');
-            if (qrContainer) {
-                qrContainer.innerHTML = '';
-            }
-            
-            localStorage.removeItem('whatsappPhone');
-            localStorage.removeItem('whatsappPhoneClean');
-            localStorage.removeItem('whatsappConnected');
-            
-            showSuccessMessage('تم قطع الاتصال بـ WhatsApp');
-            logActivity('قطع ربط WhatsApp', 'تم قطع الاتصال بـ WhatsApp');
-        }
 
         function sendWhatsAppReport(agentName) {
             const agent = agentsList.find(a => a.name === agentName);
@@ -7699,28 +7551,6 @@ function updateAgentSummary() {
             showMessageCustomizationModal(agentName);
         }
 
-        function downloadExcelReport(agentName) {
-            const reports = agentReports[agentName] || {};
-            const hasReports = (reports.basic?.total.amount || 0) > 0 || 
-                              (reports.advanced?.total.profit || 0) > 0 || 
-                              (reports.twoMonths?.total.profit || 0) > 0;
-            
-            if (!hasReports) {
-                alert('لا توجد تقارير للوكيل');
-                return;
-            }
-
-            generateExcelReportBlob(agentName).then((excelBlob) => {
-                const filename = getReportFilename(agentName, 'xlsx');
-                downloadFile(excelBlob, filename);
-                logActivity('تحميل Excel', `تم تحميل ملف Excel للوكيل: ${agentName}`);
-                showSuccessMessage(`تم تحميل ملف Excel للوكيل: ${agentName}`);
-            }).catch((error) => {
-                console.error('Error generating Excel:', error);
-                alert('حدث خطأ أثناء إنشاء ملف Excel. يرجى المحاولة مرة أخرى.');
-            });
-        }
-
         function showMessageCustomizationModal(agentName) {
             const reports = agentReports[agentName] || {};
             const agent = agentsList.find(a => a.name === agentName);
@@ -7734,19 +7564,16 @@ function updateAgentSummary() {
             }
             defaultMessage += `\n\nتحية طيبة وبعد،\n\nنود إعلامكم بالتقرير الخاص بالمبالغ المستحقة، وكما يلي:\n\n`;
             
-            // حساب الإجماليات لكل عرض
             const totalBasic = reports.basic?.total.amount || 0;
             const totalAdvanced = reports.advanced?.total.profit || 0;
             const totalTwoMonths = reports.twoMonths?.total.profit || 0;
             const selectedTotal = totalBasic + totalAdvanced + totalTwoMonths;
             
-            // حساب عدد العروض المتاحة
             const availableOffers = [];
             if (totalBasic > 0) availableOffers.push({ type: 'basic', amount: totalBasic });
             if (totalAdvanced > 0) availableOffers.push({ type: 'advanced', amount: totalAdvanced });
             if (totalTwoMonths > 0) availableOffers.push({ type: 'twoMonths', amount: totalTwoMonths });
             
-            // إذا كان هناك أكثر من عرض، نذكر كل واحد على حدة
             if (availableOffers.length > 1) {
                 defaultMessage += `━━━━━━━━━━━━━━━━━━━━\n`;
             
@@ -7763,7 +7590,6 @@ function updateAgentSummary() {
                 defaultMessage += `\n━━━━━━━━━━━━━━━━━━━━\n`;
                 defaultMessage += `*الإجمالي الكلي: ${formatNumberEnglish(selectedTotal)} دينار عراقي*\n`;
             }
-            // إذا كان هناك عرض واحد فقط، نذكره فقط
             else if (availableOffers.length === 1) {
                 const offer = availableOffers[0];
                 defaultMessage += `━━━━━━━━━━━━━━━━━━━━\n`;
@@ -7776,7 +7602,6 @@ function updateAgentSummary() {
                     defaultMessage += `*إجمالي العرض المخفض لشهرين: ${formatNumberEnglish(offer.amount)} دينار عراقي*\n`;
                 }
             }
-            // إذا لم يكن هناك أي عروض
             else if (selectedTotal > 0) {
                 defaultMessage += `━━━━━━━━━━━━━━━━━━━━\n`;
                 defaultMessage += `*الإجمالي الكلي: ${formatNumberEnglish(selectedTotal)} دينار عراقي*\n`;
@@ -7794,7 +7619,6 @@ function updateAgentSummary() {
             document.getElementById('messageCustomizationModal').classList.add('show');
         }
         
-        // دالة لإنشاء جدول الاشتراكات
         function generateSubscriptionTable(reportData, reportType) {
             let table = '';
             const categories = [
@@ -7897,7 +7721,6 @@ function updateAgentSummary() {
 
             let finalMessage = message;
             
-            // التحقق من وجود الجداول التفصيلية في الرسالة
             const hasDetailedTable = finalMessage.includes('━━━━━━━━━━━━━━━━━━━━') || 
                                      finalMessage.includes('عدد الاشتراكات:') ||
                                      finalMessage.includes('السعر:') ||
@@ -7926,12 +7749,10 @@ function updateAgentSummary() {
             const hasTotalInMessage = finalMessage.includes('الإجمالي الكلي') || 
                                      finalMessage.includes('الإجمالي:');
             
-            // إذا كانت الرسالة تحتوي على جداول تفصيلية، لا نضيف معلومات إضافية
             if (hasDetailedTable) {
                 return finalMessage;
             }
             
-            // إضافة معلومات بسيطة إذا لم تكن موجودة
             if (totalBasic > 0 && !hasBasicInMessage) {
                 finalMessage += `\n\n*العرض المجاني*\n`;
                 finalMessage += generateSubscriptionTable(reports.basic, 'basic');
@@ -8031,16 +7852,6 @@ function updateAgentSummary() {
             }).catch((error) => {
                 console.error('Error generating file:', error);
                 alert(`حدث خطأ أثناء إنشاء ملف ${fileInfo.typeName}. يرجى المحاولة مرة أخرى.`);
-            });
-        }
-
-        function generatePDFReport(agentName) {
-            return new Promise((resolve) => {
-                generatePDFReportBlob(agentName).then((blob) => {
-                    const filename = getReportFilename(agentName, 'pdf');
-                    downloadFile(blob, filename);
-                    setTimeout(resolve, 500);
-                });
             });
         }
 
@@ -8362,23 +8173,19 @@ function updateAgentSummary() {
                     const reportInfo = getReportInfo(agentName);
                     const { reportType, reportData, reportTitle, agent, dateFrom, dateTo } = reportInfo;
                     
-                    // جمع جميع التقارير المتاحة
                     const reports = agentReports[agentName] || {};
                     const hasBasic = reports.basic && reports.basic.total && reports.basic.total.count > 0;
                     const hasAdvanced = reports.advanced && reports.advanced.total && reports.advanced.total.count > 0;
                     const hasTwoMonths = reports.twoMonths && reports.twoMonths.total && reports.twoMonths.total.count > 0;
                     
-                    // استخدام ExcelJS للتنسيق الاحترافي
                     const ExcelJS = window.ExcelJS;
                     if (!ExcelJS) {
-                        // إذا لم يكن ExcelJS متوفراً، استخدم XLSX
                         return generateExcelReportBlobXLSX(agentName).then(resolve).catch(reject);
                     }
                     
                     const workbook = new ExcelJS.Workbook();
                     const worksheet = workbook.addWorksheet('تقرير الوكيل');
                     
-                    // تحديد عرض الأعمدة
                     worksheet.columns = [
                         { width: 35, key: 'type' },
                         { width: 20, key: 'count' },
@@ -8388,7 +8195,6 @@ function updateAgentSummary() {
                     
                     let currentRow = 1;
                     
-                    // العنوان الرئيسي
                     const titleRow = worksheet.getRow(currentRow);
                     titleRow.getCell(1).value = reportTitle || 'تقرير المبالغ المستحقة';
                     titleRow.getCell(1).font = { bold: true, size: 18, color: { argb: 'FF801C32' } };
@@ -8397,7 +8203,6 @@ function updateAgentSummary() {
                     titleRow.height = 30;
                     currentRow++;
                     
-                    // معلومات الوكيل
                     currentRow++;
                     worksheet.getRow(currentRow).getCell(1).value = `اسم الوكيل: ${agentName}`;
                     worksheet.getRow(currentRow).getCell(1).font = { bold: true, size: 12 };
@@ -8415,11 +8220,9 @@ function updateAgentSummary() {
                     }
                     currentRow++;
                     
-                    // دالة لإنشاء جدول منسق
                     const createTable = (title, data, startRow) => {
                         let row = startRow;
                         
-                        // عنوان القسم
                         const sectionRow = worksheet.getRow(row);
                         sectionRow.getCell(1).value = title;
                         sectionRow.getCell(1).font = { bold: true, size: 14, color: { argb: 'FF801C32' } };
@@ -8439,7 +8242,6 @@ function updateAgentSummary() {
                         sectionRow.height = 25;
                         row++;
                         
-                        // رأس الجدول
                         const headerRow = worksheet.getRow(row);
                         const headers = ['نوع الاشتراك', 'عدد الاشتراكات', 'السعر الواحد (د.ع)', 'المجموع (د.ع)'];
                         headers.forEach((header, idx) => {
@@ -8462,13 +8264,11 @@ function updateAgentSummary() {
                         headerRow.height = 25;
                         row++;
                         
-                        // بيانات الصفوف
                         data.forEach((item, index) => {
                             const dataRow = worksheet.getRow(row);
                             const isTotalRow = item.type === 'المجموع';
                             const isEven = index % 2 === 0;
                             
-                            // لون الخلفية للصفوف المتناوبة
                             const bgColor = isTotalRow ? 'FFE8F0F5' : (isEven ? 'FFFFFFFF' : 'FFF8F9FA');
                             
                             dataRow.getCell(1).value = item.type;
@@ -8476,7 +8276,6 @@ function updateAgentSummary() {
                             dataRow.getCell(3).value = item.price || '';
                             dataRow.getCell(4).value = item.total;
                             
-                            // تنسيق الخلايا
                             for (let col = 1; col <= 4; col++) {
                                 const cell = dataRow.getCell(col);
                                 cell.font = isTotalRow ? { bold: true, size: 12 } : { size: 11 };
@@ -8500,11 +8299,10 @@ function updateAgentSummary() {
                             row++;
                         });
                         
-                        row++; // سطر فارغ بعد الجدول
+                        row++;
                         return row;
                     };
                     
-                    // جدول العرض المجاني
                     if (hasBasic) {
                         const basicData = reports.basic;
                         const categories = [
@@ -8536,7 +8334,6 @@ function updateAgentSummary() {
                         currentRow = createTable('العرض المجاني', tableData, currentRow);
                     }
                     
-                    // جدول العرض المخفض لثلاثة أشهر
                     if (hasAdvanced) {
                         const advancedData = reports.advanced;
                         const categories = [
@@ -8569,7 +8366,6 @@ function updateAgentSummary() {
                         currentRow = createTable('العرض المخفض لثلاثة أشهر', tableData, currentRow);
                     }
                     
-                    // جدول العرض المخفض لشهرين
                     if (hasTwoMonths) {
                         const twoMonthsData = reports.twoMonths;
                         const categories = [
@@ -8602,7 +8398,6 @@ function updateAgentSummary() {
                         currentRow = createTable('العرض المخفض لشهرين', tableData, currentRow);
                     }
                     
-                    // الإجمالي الكلي
                     const totalBasic = reports.basic?.total.amount || 0;
                     const totalAdvanced = reports.advanced?.total.profit || 0;
                     const totalTwoMonths = reports.twoMonths?.total.profit || 0;
@@ -8687,20 +8482,17 @@ function updateAgentSummary() {
                         finalTotalRow.height = 30;
                     }
                     
-                    // إنشاء الملف
                     const buffer = await workbook.xlsx.writeBuffer();
                     const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
                     
                     resolve(blob);
                 } catch (error) {
                     console.error('Error generating Excel with ExcelJS:', error);
-                    // في حالة الخطأ، استخدم XLSX كبديل
                     generateExcelReportBlobXLSX(agentName).then(resolve).catch(reject);
                 }
             });
         }
         
-        // دالة بديلة باستخدام XLSX (للاحتياط)
         function generateExcelReportBlobXLSX(agentName) {
             return new Promise((resolve, reject) => {
                 try {
@@ -9001,41 +8793,6 @@ function updateAgentSummary() {
                 defaultPercentageInput.value = savedDefaultPercentage;
             }
             
-            const savedPhone = localStorage.getItem('whatsappPhone');
-            const savedConnected = localStorage.getItem('whatsappConnected');
-            
-            if (savedPhone && savedConnected === 'true') {
-                const formattedPhone = formatPhoneForWhatsApp(savedPhone);
-                whatsappPhone = formattedPhone;
-                whatsappConnected = true;
-                
-                const statusElement = document.getElementById('whatsappConnectionStatus');
-                if (statusElement) {
-                    statusElement.textContent = 'جاهز للإرسال';
-                    statusElement.style.color = '#25D366';
-                }
-                
-                const qrContainer = document.getElementById('whatsappQRCode');
-                if (qrContainer) {
-                    const whatsappLink = `https://wa.me/${formattedPhone}`;
-                    
-                    try {
-                        new QRCode(qrContainer, {
-                            text: whatsappLink,
-                            width: 200,
-                            height: 200,
-                            colorDark: '#000000',
-                            colorLight: '#ffffff',
-                            correctLevel: QRCode.CorrectLevel.H
-                        });
-                        
-                        qrContainer.innerHTML += `<p style="margin-top: 10px; text-align: center;"><a href="${whatsappLink}" target="_blank" style="color: #25D366; text-decoration: none; font-weight: bold;"> فتح WhatsApp</a></p>`;
-                    } catch (error) {
-                        console.error('Error generating QR code:', error);
-                        qrContainer.innerHTML = `<p style="text-align: center;"><a href="${whatsappLink}" target="_blank" style="color: #25D366; text-decoration: none; font-weight: bold; font-size: 1.1rem;">فتح WhatsApp</a></p>`;
-                    }
-                }
-            }
         });
 
 </script>
@@ -9113,6 +8870,31 @@ function updateAgentSummary() {
                 <button type="button" class="btn btn-success" style="flex: 1;" onclick="sendCustomizedWhatsAppMessage()"> إرسال عبر WhatsApp</button>
                 <button type="button" class="btn btn-danger" style="flex: 1;" onclick="closeMessageCustomizationModal()"> إلغاء</button>
             </div>
+        </div>
+    </div>
+</div>
+
+<div id="percentageSendOptionsModal" class="modal">
+    <div class="modal-content" style="max-width: 400px;">
+        <div class="modal-header">
+            <h3>اختر طريقة الإرسال</h3>
+            <button class="modal-close" onclick="closePercentageSendOptions()">&times;</button>
+        </div>
+        <div style="padding: 20px 0;">
+            <p style="margin-bottom: 20px; color: var(--text-primary); text-align: center; font-weight: 600;">
+                <strong>الوكيل:</strong> <span id="percentageSendAgentName"></span>
+            </p>
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+                <button class="btn btn-success" onclick="sendPercentageReportViaWhatsApp()" style="width: 100%; padding: 15px; font-size: 1rem;">
+                    إرسال عبر WhatsApp
+                </button>
+                <button class="btn btn-primary" onclick="sendPercentageReportViaEmail()" style="width: 100%; padding: 15px; font-size: 1rem;">
+                    إرسال عبر البريد الإلكتروني
+                </button>
+            </div>
+        </div>
+        <div style="display: flex; gap: 10px; margin-top: 20px;">
+            <button type="button" class="btn btn-danger" style="flex: 1;" onclick="closePercentageSendOptions()">إلغاء</button>
         </div>
     </div>
 </div>
