@@ -2903,6 +2903,7 @@
                             <thead>
                                 <tr style="background: #801c32; color: white;">
                                     <th rowspan="2" style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; vertical-align: middle; font-size: 0.75rem; font-weight: 600;">اسم الوكيل</th>
+                                    <th rowspan="2" style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; vertical-align: middle; font-size: 0.75rem; font-weight: 600;">رقم الهاتف</th>
                                     <th rowspan="2" style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; vertical-align: middle; font-size: 0.75rem; font-weight: 600;">النسبة (%)</th>
                                     <th colspan="5" style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; font-size: 0.75rem; font-weight: 600;">المبالغ</th>
                                     <th colspan="8" style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; font-size: 0.75rem; font-weight: 600;">عدد التفعيلات</th>
@@ -3516,6 +3517,11 @@ let agentReports = {};
             
             const agentPercentageAmount = iqPPercent + iqGPercent + iqSPercent + iqBPercent;
             
+            // الحصول على معلومات الوكيل من قائمة الوكلاء
+            const agent = agentsList.find(a => a.name === agentName);
+            const agentPhone = agent?.phone || '';
+            const agentEmail = agent?.email || '';
+            
             if (!agentPercentages[agentName]) {
                 agentPercentages[agentName] = {
                     percentage: percentageRate,
@@ -3536,7 +3542,9 @@ let agentReports = {};
                     countP: countP,
                     countG: countG,
                     countS: countS,
-                    countB: countB
+                    countB: countB,
+                    phone: agentPhone,
+                    email: agentEmail
                 };
             } else {
                 const existing = agentPercentages[agentName];
@@ -3559,7 +3567,9 @@ let agentReports = {};
                     countP: countP,
                     countG: countG,
                     countS: countS,
-                    countB: countB
+                    countB: countB,
+                    phone: agentPhone || existing.phone || '',
+                    email: agentEmail || existing.email || ''
                 };
             }
 
@@ -3729,6 +3739,11 @@ let agentReports = {};
         }
 
         function saveAgentPercentage(agentName, percentage, iqT, iqP, iqG, iqS, iqB, agentPercentageAmount) {
+            // الحصول على معلومات الوكيل من قائمة الوكلاء
+            const agent = agentsList.find(a => a.name === agentName);
+            const agentPhone = agent?.phone || '';
+            const agentEmail = agent?.email || '';
+            
             if (!agentPercentages[agentName]) {
                 agentPercentages[agentName] = {
                     percentage: percentage,
@@ -3745,7 +3760,9 @@ let agentReports = {};
                     countP: 0,
                     countG: 0,
                     countS: 0,
-                    countB: 0
+                    countB: 0,
+                    phone: agentPhone,
+                    email: agentEmail
                 };
             } else {
                 agentPercentages[agentName].percentage = percentage;
@@ -3758,10 +3775,23 @@ let agentReports = {};
                 agentPercentages[agentName].netPercentage = agentPercentageAmount - 
                     (agentPercentages[agentName].deductions || 0) - 
                     (agentPercentages[agentName].penalties || 0);
+                
+                // تحديث معلومات الاتصال إذا كانت متوفرة
+                if (agentPhone) {
+                    agentPercentages[agentName].phone = agentPhone;
+                }
+                if (agentEmail) {
+                    agentPercentages[agentName].email = agentEmail;
+                }
             }
         }
 
         function saveAgentPercentageWithCounts(agentName, percentage, iqT, iqP, iqG, iqS, iqB, agentPercentageAmount, totalCount, countP, countG, countS, countB) {
+            // الحصول على معلومات الوكيل من قائمة الوكلاء
+            const agent = agentsList.find(a => a.name === agentName);
+            const agentPhone = agent?.phone || '';
+            const agentEmail = agent?.email || '';
+            
             if (!agentPercentages[agentName]) {
                 agentPercentages[agentName] = {
                     percentage: percentage,
@@ -3778,7 +3808,9 @@ let agentReports = {};
                     countP: countP,
                     countG: countG,
                     countS: countS,
-                    countB: countB
+                    countB: countB,
+                    phone: agentPhone,
+                    email: agentEmail
                 };
             } else {
                 agentPercentages[agentName].percentage = percentage;
@@ -3796,6 +3828,14 @@ let agentReports = {};
                 agentPercentages[agentName].netPercentage = agentPercentageAmount - 
                     (agentPercentages[agentName].deductions || 0) - 
                     (agentPercentages[agentName].penalties || 0);
+                
+                // تحديث معلومات الاتصال إذا كانت متوفرة
+                if (agentPhone) {
+                    agentPercentages[agentName].phone = agentPhone;
+                }
+                if (agentEmail) {
+                    agentPercentages[agentName].email = agentEmail;
+                }
             }
         }
 
@@ -3875,8 +3915,21 @@ let agentReports = {};
                 totalAgentPercentage += data.agentPercentageAmount || 0;
                 totalNetPercentage += data.netPercentage || 0;
                 
+                // الحصول على رقم الهاتف من بيانات النسبة أو من قائمة الوكلاء
+                const agent = agentsList.find(a => a.name === agentName);
+                const agentPhone = data.phone || agent?.phone || '';
+                
                 row.innerHTML = `
                     <td style="padding: 6px 4px; text-align: center; border: 1px solid #ddd; font-weight: 600; font-size: 0.75rem;">${agentName}</td>
+                    <td style="padding: 6px 4px; text-align: center; border: 1px solid #ddd; position: relative; z-index: 10;">
+                        <input type="text" id="phone_${agentName.replace(/[^a-zA-Z0-9]/g, '_')}" value="${agentPhone}" 
+                               data-agent-name="${agentName}"
+                               data-field-type="phone"
+                               placeholder="رقم الهاتف"
+                               onchange="updateAgentPhone('${agentName}', this.value)"
+                               style="width: 120px; padding: 4px; text-align: center; direction: ltr; font-size: 0.7rem; position: relative; z-index: 10; pointer-events: auto; cursor: text; -webkit-user-select: text; -moz-user-select: text; user-select: text; border: 1px solid #ccc; border-radius: 4px;" 
+                               title="إضافة أو تعديل رقم الهاتف">
+                    </td>
                     <td style="padding: 6px 4px; text-align: center; border: 1px solid #ddd; font-size: 0.75rem;">${percentage}%</td>
                     <td style="padding: 6px 4px; text-align: center; border: 1px solid #ddd; direction: ltr; font-size: 0.7rem;">${formatNumber(data.iqT || 0)}</td>
                     <td style="padding: 6px 4px; text-align: center; border: 1px solid #ddd; direction: ltr; font-size: 0.7rem;">${formatNumber(data.iqP || 0)}</td>
@@ -3912,6 +3965,8 @@ let agentReports = {};
                         ${formatNumber(data.netPercentage || 0)}
                     </td>
                     <td style="padding: 6px 4px; text-align: center; border: 1px solid #ddd;">
+                        <button class="btn btn-success" onclick="sendPercentageReport('${agentName}')" style="padding: 4px 8px; font-size: 0.7rem; margin-left: 3px;">إرسال</button>
+                        <button class="btn btn-info" onclick="downloadPercentagePDF('${agentName}')" style="padding: 4px 8px; font-size: 0.7rem; margin-left: 3px; background-color: #dc3545; border-color: #dc3545;">PDF</button>
                         <button class="btn btn-danger" onclick="deletePercentage('${agentName}')" style="padding: 4px 8px; font-size: 0.7rem;">حذف</button>
                     </td>
                 `;
@@ -3925,6 +3980,7 @@ let agentReports = {};
             totalRow.style.fontWeight = 'bold';
             totalRow.innerHTML = `
                 <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; font-weight: bold; font-size: 0.8rem;">المجموع</td>
+                <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd;"></td>
                 <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd;"></td>
                 <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; font-size: 0.75rem;">${formatNumber(totalIQT)}</td>
                 <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; font-size: 0.75rem;">${formatNumber(totalIQP)}</td>
@@ -4322,6 +4378,547 @@ let agentReports = {};
                 renderPercentageTable();
                 logActivity('حذف نسبة وكيل', `تم حذف بيانات نسبة الوكيل: ${agentName}`);
             }
+        }
+        
+        // تحديث رقم هاتف الوكيل في بيانات النسبة
+        function updateAgentPhone(agentName, phone) {
+            if (!agentPercentages[agentName]) return;
+            
+            // حفظ رقم الهاتف في بيانات النسبة
+            agentPercentages[agentName].phone = phone || '';
+            
+            // تحديث رقم الهاتف في قائمة الوكلاء أيضاً إذا كان موجوداً
+            const agent = agentsList.find(a => a.name === agentName);
+            if (agent && phone) {
+                agent.phone = phone;
+                localStorage.setItem('agentsList', JSON.stringify(agentsList));
+            }
+            
+            // حفظ بيانات النسبة
+            localStorage.setItem('agentPercentages', JSON.stringify(agentPercentages));
+            
+            logActivity('تحديث رقم هاتف وكيل', `تم تحديث رقم الهاتف للوكيل ${agentName}: ${phone}`);
+            showSuccessMessage(`تم تحديث رقم الهاتف للوكيل: ${agentName}`);
+        }
+        
+        // إرسال تقرير نسبة الوكيل
+        function sendPercentageReport(agentName) {
+            // الحصول على معلومات الوكيل من قائمة الوكلاء أولاً
+            let agent = agentsList.find(a => a.name === agentName);
+            
+            // إذا لم يكن موجوداً في قائمة الوكلاء، نحاول الحصول على معلوماته من بيانات النسبة
+            if (!agent) {
+                const percentageData = agentPercentages[agentName];
+                if (percentageData && (percentageData.phone || percentageData.email)) {
+                    agent = {
+                        name: agentName,
+                        phone: percentageData.phone || '',
+                        email: percentageData.email || ''
+                    };
+                } else {
+                    alert('الوكيل غير موجود في القائمة. يرجى إضافة الوكيل في تبويب "إدارة الوكلاء" وإضافة رقم الهاتف.');
+                    return;
+                }
+            }
+            
+            // تحديث معلومات الاتصال في بيانات النسبة من قائمة الوكلاء
+            if (agent && agentPercentages[agentName]) {
+                if (agent.phone) {
+                    agentPercentages[agentName].phone = agent.phone;
+                }
+                if (agent.email) {
+                    agentPercentages[agentName].email = agent.email;
+                }
+                localStorage.setItem('agentPercentages', JSON.stringify(agentPercentages));
+            }
+            
+            // استخدام رقم الهاتف من بيانات النسبة أو من قائمة الوكلاء
+            const phone = agentPercentages[agentName]?.phone || agent?.phone;
+            
+            if (!phone) {
+                alert('لم يتم تحديد رقم هاتف للوكيل. يرجى إضافة رقم الهاتف في تبويب "إدارة الوكلاء"');
+                return;
+            }
+            
+            const data = agentPercentages[agentName];
+            if (!data) {
+                alert('لا توجد بيانات للوكيل');
+                return;
+            }
+            
+            // إنشاء رسالة WhatsApp
+            let message = `*${agentName}*\n\n`;
+            message += `تحية طيبة وبعد،\n\n`;
+            message += `نود إعلامكم بالتقرير الخاص بنسبة الوكيل، وكما يلي:\n\n`;
+            message += `━━━━━━━━━━━━━━━━━━━━\n`;
+            
+            // إضافة تفاصيل الاشتراكات
+            const percentage = data.percentage || 15;
+            const rate = percentage / 100;
+            const iqPPercent = data.iqPPercent !== undefined ? data.iqPPercent : ((data.iqP || 0) * rate);
+            const iqGPercent = data.iqGPercent !== undefined ? data.iqGPercent : ((data.iqG || 0) * rate);
+            const iqSPercent = data.iqSPercent !== undefined ? data.iqSPercent : ((data.iqS || 0) * rate);
+            const iqBPercent = data.iqBPercent !== undefined ? data.iqBPercent : ((data.iqB || 0) * rate);
+            
+            // تم حذف جملة النسبة المئوية وتفاصيل الاشتراكات - التفاصيل موجودة في ملف Excel
+            // عرض النسبة الصافية فقط في الرسالة
+            
+            message += `*النسبة الصافية: ${formatNumberEnglish(data.netPercentage || 0)} دينار عراقي*\n`;
+            
+            if ((data.deductions || 0) > 0) {
+                message += `*الاستقطاعات: ${formatNumberEnglish(data.deductions || 0)} دينار عراقي*\n`;
+            }
+            
+            if ((data.penalties || 0) > 0) {
+                message += `*الغرامات: ${formatNumberEnglish(data.penalties || 0)} دينار عراقي*\n`;
+            }
+            
+            message += `\n`;
+            
+            message += `\n━━━━━━━━━━━━━━━━━━━━\n`;
+            message += `يرجى التفضل بالاطلاع على الملف المرفق للاطلاع على التفاصيل الكاملة.\n\n`;
+            message += `مع فائق الشكر والتقدير،\n`;
+            message += `*شركة عراق سيل للإتصالات*`;
+            
+            // إنشاء ملف Excel
+            generatePercentageExcelReport(agentName).then((excelBlob) => {
+                const formattedPhone = formatPhoneForWhatsApp(phone);
+                
+                // تحميل الملف
+                downloadFile(excelBlob, `تقرير_نسبة_${agentName}_${formatDateForFilename(new Date())}.xlsx`);
+                
+                // فتح WhatsApp
+                const whatsappUrl = `https://wa.me/${formattedPhone}?text=${encodeURIComponent(message)}`;
+                window.open(whatsappUrl, '_blank');
+                
+                logActivity('إرسال تقرير نسبة وكيل', `تم إرسال تقرير نسبة الوكيل: ${agentName}`);
+                showSuccessMessage(`تم إرسال تقرير نسبة الوكيل: ${agentName}`);
+            }).catch((error) => {
+                console.error('Error generating Excel:', error);
+                alert('حدث خطأ أثناء إنشاء ملف Excel. يرجى المحاولة مرة أخرى.');
+            });
+        }
+        
+        // إنشاء ملف Excel لتقرير نسبة الوكيل
+        function generatePercentageExcelReport(agentName) {
+            return new Promise(async (resolve, reject) => {
+                try {
+                    const data = agentPercentages[agentName];
+                    if (!data) {
+                        reject(new Error('لا توجد بيانات للوكيل'));
+                        return;
+                    }
+                    
+                    const agent = agentsList.find(a => a.name === agentName);
+                    
+                    // استخدام ExcelJS للتنسيق الاحترافي
+                    const ExcelJS = window.ExcelJS;
+                    if (!ExcelJS) {
+                        reject(new Error('ExcelJS غير متوفر'));
+                        return;
+                    }
+                    
+                    const workbook = new ExcelJS.Workbook();
+                    const worksheet = workbook.addWorksheet('تقرير نسبة الوكيل');
+                    
+                    // تحديد عرض الأعمدة
+                    worksheet.columns = [
+                        { width: 30, key: 'type' },
+                        { width: 20, key: 'count' },
+                        { width: 20, key: 'amount' },
+                        { width: 20, key: 'percentage' }
+                    ];
+                    
+                    let currentRow = 1;
+                    
+                    // العنوان الرئيسي
+                    const titleRow = worksheet.getRow(currentRow);
+                    titleRow.getCell(1).value = 'تقرير نسبة الوكيل';
+                    titleRow.getCell(1).font = { bold: true, size: 18, color: { argb: 'FF801C32' } };
+                    titleRow.getCell(1).alignment = { horizontal: 'center', vertical: 'middle' };
+                    worksheet.mergeCells(currentRow, 1, currentRow, 4);
+                    titleRow.height = 30;
+                    currentRow++;
+                    
+                    // معلومات الوكيل
+                    currentRow++;
+                    worksheet.getRow(currentRow).getCell(1).value = `اسم الوكيل: ${agentName}`;
+                    worksheet.getRow(currentRow).getCell(1).font = { bold: true, size: 12 };
+                    currentRow++;
+                    
+                    if (agent?.email) {
+                        worksheet.getRow(currentRow).getCell(1).value = `البريد الإلكتروني: ${agent.email}`;
+                        worksheet.getRow(currentRow).getCell(1).font = { size: 11 };
+                        currentRow++;
+                    }
+                    if (agent?.phone) {
+                        worksheet.getRow(currentRow).getCell(1).value = `رقم الهاتف: ${agent.phone}`;
+                        worksheet.getRow(currentRow).getCell(1).font = { size: 11 };
+                        currentRow++;
+                    }
+                    currentRow++;
+                    
+                    // معلومات النسبة (تم حذف عرض النسبة المئوية بناءً على طلب المستخدم)
+                    const percentage = data.percentage || 15;
+                    const rate = percentage / 100;
+                    // تم حذف سطر النسبة المئوية من ملف Excel
+                    currentRow++;
+                    
+                    // جدول الاشتراكات
+                    const sectionRow = worksheet.getRow(currentRow);
+                    sectionRow.getCell(1).value = 'تفاصيل الاشتراكات';
+                    sectionRow.getCell(1).font = { bold: true, size: 14, color: { argb: 'FF801C32' } };
+                    sectionRow.getCell(1).fill = {
+                        type: 'pattern',
+                        pattern: 'solid',
+                        fgColor: { argb: 'FFF8F9FA' }
+                    };
+                    sectionRow.getCell(1).alignment = { horizontal: 'right', vertical: 'middle' };
+                    sectionRow.getCell(1).border = {
+                        top: { style: 'thin', color: { argb: 'FF801C32' } },
+                        bottom: { style: 'thin', color: { argb: 'FF801C32' } },
+                        left: { style: 'thin', color: { argb: 'FF801C32' } },
+                        right: { style: 'thin', color: { argb: 'FF801C32' } }
+                    };
+                    worksheet.mergeCells(currentRow, 1, currentRow, 4);
+                    sectionRow.height = 25;
+                    currentRow++;
+                    
+                    // رأس الجدول
+                    const headerRow = worksheet.getRow(currentRow);
+                    const headers = ['نوع الاشتراك', 'عدد الاشتراكات', 'المبلغ (د.ع)', 'نسبة الوكيل (د.ع)'];
+                    headers.forEach((header, idx) => {
+                        const cell = headerRow.getCell(idx + 1);
+                        cell.value = header;
+                        cell.font = { bold: true, size: 12, color: { argb: 'FFFFFFFF' } };
+                        cell.fill = {
+                            type: 'pattern',
+                            pattern: 'solid',
+                            fgColor: { argb: 'FF801C32' }
+                        };
+                        cell.alignment = { horizontal: 'center', vertical: 'middle', wrapText: true };
+                        cell.border = {
+                            top: { style: 'thin', color: { argb: 'FFFFFFFF' } },
+                            bottom: { style: 'thin', color: { argb: 'FFFFFFFF' } },
+                            left: { style: 'thin', color: { argb: 'FFFFFFFF' } },
+                            right: { style: 'thin', color: { argb: 'FFFFFFFF' } }
+                        };
+                    });
+                    headerRow.height = 25;
+                    currentRow++;
+                    
+                    // بيانات الاشتراكات
+                    const categories = [
+                        { key: 'platinum', name: 'Platinum', count: data.countP || 0, amount: data.iqP || 0 },
+                        { key: 'gold', name: 'Gold', count: data.countG || 0, amount: data.iqG || 0 },
+                        { key: 'silver', name: 'Silver', count: data.countS || 0, amount: data.iqS || 0 },
+                        { key: 'bronze', name: 'Bronze', count: data.countB || 0, amount: data.iqB || 0 }
+                    ];
+                    
+                    categories.forEach((cat, index) => {
+                        const iqPPercent = cat.key === 'platinum' ? (data.iqPPercent !== undefined ? data.iqPPercent : ((data.iqP || 0) * rate)) :
+                                          cat.key === 'gold' ? (data.iqGPercent !== undefined ? data.iqGPercent : ((data.iqG || 0) * rate)) :
+                                          cat.key === 'silver' ? (data.iqSPercent !== undefined ? data.iqSPercent : ((data.iqS || 0) * rate)) :
+                                          (data.iqBPercent !== undefined ? data.iqBPercent : ((data.iqB || 0) * rate));
+                        
+                        const dataRow = worksheet.getRow(currentRow);
+                        const isEven = index % 2 === 0;
+                        const bgColor = isEven ? 'FFFFFFFF' : 'FFF8F9FA';
+                        
+                        dataRow.getCell(1).value = cat.name;
+                        dataRow.getCell(2).value = formatNumberEnglish(cat.count);
+                        dataRow.getCell(3).value = formatNumberEnglish(cat.amount);
+                        dataRow.getCell(4).value = formatNumberEnglish(Math.round(iqPPercent));
+                        
+                        // تنسيق الخلايا
+                        for (let col = 1; col <= 4; col++) {
+                            const cell = dataRow.getCell(col);
+                            cell.font = { size: 11 };
+                            cell.fill = {
+                                type: 'pattern',
+                                pattern: 'solid',
+                                fgColor: { argb: bgColor }
+                            };
+                            cell.alignment = col === 1 ? 
+                                { horizontal: 'right', vertical: 'middle' } : 
+                                { horizontal: 'center', vertical: 'middle' };
+                            cell.border = {
+                                top: { style: 'thin', color: { argb: 'FFDDDDDD' } },
+                                bottom: { style: 'thin', color: { argb: 'FFDDDDDD' } },
+                                left: { style: 'thin', color: { argb: 'FFDDDDDD' } },
+                                right: { style: 'thin', color: { argb: 'FFDDDDDD' } }
+                            };
+                        }
+                        
+                        dataRow.height = 22;
+                        currentRow++;
+                    });
+                    
+                    // صف المجموع
+                    const totalDataRow = worksheet.getRow(currentRow);
+                    const totalCount = (data.countP || 0) + (data.countG || 0) + (data.countS || 0) + (data.countB || 0);
+                    const totalAmount = (data.iqP || 0) + (data.iqG || 0) + (data.iqS || 0) + (data.iqB || 0);
+                    const totalPercent = Math.round((data.iqPPercent !== undefined ? data.iqPPercent : ((data.iqP || 0) * rate)) +
+                                                   (data.iqGPercent !== undefined ? data.iqGPercent : ((data.iqG || 0) * rate)) +
+                                                   (data.iqSPercent !== undefined ? data.iqSPercent : ((data.iqS || 0) * rate)) +
+                                                   (data.iqBPercent !== undefined ? data.iqBPercent : ((data.iqB || 0) * rate)));
+                    
+                    totalDataRow.getCell(1).value = 'المجموع';
+                    totalDataRow.getCell(2).value = formatNumberEnglish(totalCount);
+                    totalDataRow.getCell(3).value = formatNumberEnglish(totalAmount);
+                    totalDataRow.getCell(4).value = formatNumberEnglish(totalPercent);
+                    
+                    // تنسيق صف المجموع
+                    for (let col = 1; col <= 4; col++) {
+                        const cell = totalDataRow.getCell(col);
+                        cell.font = { bold: true, size: 12 };
+                        cell.fill = {
+                            type: 'pattern',
+                            pattern: 'solid',
+                            fgColor: { argb: 'FFE8F0F5' }
+                        };
+                        cell.alignment = col === 1 ? 
+                            { horizontal: 'right', vertical: 'middle' } : 
+                            { horizontal: 'center', vertical: 'middle' };
+                        cell.border = {
+                            top: { style: 'medium', color: { argb: 'FF801C32' } },
+                            bottom: { style: 'medium', color: { argb: 'FF801C32' } },
+                            left: { style: 'medium', color: { argb: 'FF801C32' } },
+                            right: { style: 'medium', color: { argb: 'FF801C32' } }
+                        };
+                    }
+                    totalDataRow.height = 25;
+                    currentRow++;
+                    currentRow++;
+                    
+                    // ملخص النسبة
+                    const summaryRow = worksheet.getRow(currentRow);
+                    summaryRow.getCell(1).value = 'نسبة الوكيل';
+                    summaryRow.getCell(4).value = formatNumberEnglish(data.agentPercentageAmount || 0);
+                    summaryRow.getCell(1).font = { bold: true, size: 12 };
+                    summaryRow.getCell(4).font = { bold: true, size: 12 };
+                    summaryRow.getCell(4).alignment = { horizontal: 'center' };
+                    currentRow++;
+                    
+                    if ((data.deductions || 0) > 0) {
+                        const deductionRow = worksheet.getRow(currentRow);
+                        deductionRow.getCell(1).value = 'الاستقطاعات';
+                        deductionRow.getCell(4).value = formatNumberEnglish(data.deductions || 0);
+                        deductionRow.getCell(1).font = { bold: true, size: 12 };
+                        deductionRow.getCell(4).font = { bold: true, size: 12 };
+                        deductionRow.getCell(4).alignment = { horizontal: 'center' };
+                        currentRow++;
+                    }
+                    
+                    if ((data.penalties || 0) > 0) {
+                        const penaltyRow = worksheet.getRow(currentRow);
+                        penaltyRow.getCell(1).value = 'الغرامات';
+                        penaltyRow.getCell(4).value = formatNumberEnglish(data.penalties || 0);
+                        penaltyRow.getCell(1).font = { bold: true, size: 12 };
+                        penaltyRow.getCell(4).font = { bold: true, size: 12 };
+                        penaltyRow.getCell(4).alignment = { horizontal: 'center' };
+                        currentRow++;
+                    }
+                    
+                    // النسبة الصافية
+                    const netRow = worksheet.getRow(currentRow);
+                    netRow.getCell(1).value = 'النسبة الصافية';
+                    netRow.getCell(4).value = formatNumberEnglish(data.netPercentage || 0);
+                    netRow.getCell(1).font = { bold: true, size: 14, color: { argb: 'FF801C32' } };
+                    netRow.getCell(4).font = { bold: true, size: 14, color: { argb: 'FF801C32' } };
+                    netRow.getCell(4).alignment = { horizontal: 'center' };
+                    netRow.getCell(1).fill = {
+                        type: 'pattern',
+                        pattern: 'solid',
+                        fgColor: { argb: 'FFE8F0F5' }
+                    };
+                    netRow.getCell(4).fill = {
+                        type: 'pattern',
+                        pattern: 'solid',
+                        fgColor: { argb: 'FFE8F0F5' }
+                    };
+                    netRow.getCell(1).border = {
+                        top: { style: 'medium', color: { argb: 'FF801C32' } },
+                        bottom: { style: 'medium', color: { argb: 'FF801C32' } },
+                        left: { style: 'medium', color: { argb: 'FF801C32' } },
+                        right: { style: 'thin', color: { argb: 'FF801C32' } }
+                    };
+                    netRow.getCell(4).border = {
+                        top: { style: 'medium', color: { argb: 'FF801C32' } },
+                        bottom: { style: 'medium', color: { argb: 'FF801C32' } },
+                        left: { style: 'thin', color: { argb: 'FF801C32' } },
+                        right: { style: 'medium', color: { argb: 'FF801C32' } }
+                    };
+                    netRow.height = 30;
+                    
+                    // إنشاء الملف
+                    const buffer = await workbook.xlsx.writeBuffer();
+                    const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                    
+                    resolve(blob);
+                } catch (error) {
+                    reject(error);
+                }
+            });
+        }
+
+        // تحميل تقرير نسبة الوكيل بصيغة PDF
+        function downloadPercentagePDF(agentName) {
+            generatePercentagePDFReport(agentName).then((pdfBlob) => {
+                const safeName = agentName.replace(/[^a-zA-Z0-9_]/g, '_');
+                const filename = `تقرير_نسبة_${safeName}_${formatDateForFilename(new Date())}.pdf`;
+                downloadFile(pdfBlob, filename);
+                logActivity('تحميل تقرير نسبة PDF', `تم تحميل تقرير نسبة PDF للوكيل: ${agentName}`);
+                showSuccessMessage(`تم تحميل تقرير PDF للوكيل: ${agentName}`);
+            }).catch((error) => {
+                console.error('Error generating PDF:', error);
+                alert('حدث خطأ أثناء إنشاء ملف PDF. يرجى المحاولة مرة أخرى.');
+            });
+        }
+
+        // إنشاء ملف PDF لتقرير نسبة الوكيل
+        function generatePercentagePDFReport(agentName) {
+            return new Promise(async (resolve, reject) => {
+                try {
+                    const data = agentPercentages[agentName];
+                    if (!data) {
+                        reject(new Error('لا توجد بيانات للوكيل'));
+                        return;
+                    }
+
+                    const { jsPDF } = window.jspdf;
+                    if (!jsPDF) {
+                        reject(new Error('jsPDF غير متوفر'));
+                        return;
+                    }
+
+                    const doc = new jsPDF('portrait', 'mm', 'a4');
+                    const pageWidth = doc.internal.pageSize.getWidth();
+                    const pageHeight = doc.internal.pageSize.getHeight();
+                    let yPos = 15;
+
+                    // العنوان الرئيسي
+                    doc.setFontSize(18);
+                    doc.setTextColor(128, 28, 50); // #801C32
+                    doc.setFont('helvetica', 'bold');
+                    const titleText = 'Agent Percentage Report';
+                    const titleWidth = doc.getTextWidth(titleText);
+                    doc.text(titleText, (pageWidth - titleWidth) / 2, yPos);
+                    yPos += 15;
+
+                    // معلومات الوكيل
+                    const agent = agentsList.find(a => a.name === agentName);
+                    doc.setFontSize(12);
+                    doc.setTextColor(0, 0, 0);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text(`Agent Name: ${agentName}`, 20, yPos);
+                    yPos += 8;
+
+                    if (agent?.email) {
+                        doc.setFont('helvetica', 'normal');
+                        doc.setFontSize(11);
+                        doc.text(`Email: ${agent.email}`, 20, yPos);
+                        yPos += 7;
+                    }
+
+                    if (agent?.phone) {
+                        doc.text(`Phone Number: ${agent.phone}`, 20, yPos);
+                        yPos += 7;
+                    }
+
+                    yPos += 5;
+
+                    // جدول الاشتراكات
+                    const percentage = data.percentage || 15;
+                    const rate = percentage / 100;
+                    const iqPPercent = data.iqPPercent !== undefined ? data.iqPPercent : ((data.iqP || 0) * rate);
+                    const iqGPercent = data.iqGPercent !== undefined ? data.iqGPercent : ((data.iqG || 0) * rate);
+                    const iqSPercent = data.iqSPercent !== undefined ? data.iqSPercent : ((data.iqS || 0) * rate);
+                    const iqBPercent = data.iqBPercent !== undefined ? data.iqBPercent : ((data.iqB || 0) * rate);
+
+                    const tableData = [
+                        ['Platinum', formatNumberEnglish(data.countP || 0), formatNumberEnglish(data.iqP || 0), formatNumberEnglish(Math.round(iqPPercent))],
+                        ['Gold', formatNumberEnglish(data.countG || 0), formatNumberEnglish(data.iqG || 0), formatNumberEnglish(Math.round(iqGPercent))],
+                        ['Silver', formatNumberEnglish(data.countS || 0), formatNumberEnglish(data.iqS || 0), formatNumberEnglish(Math.round(iqSPercent))],
+                        ['Bronze', formatNumberEnglish(data.countB || 0), formatNumberEnglish(data.iqB || 0), formatNumberEnglish(Math.round(iqBPercent))],
+                    ];
+
+                    const totalCount = (data.countP || 0) + (data.countG || 0) + (data.countS || 0) + (data.countB || 0);
+                    const totalAmount = (data.iqP || 0) + (data.iqG || 0) + (data.iqS || 0) + (data.iqB || 0);
+                    const totalPercent = Math.round(iqPPercent + iqGPercent + iqSPercent + iqBPercent);
+
+                    tableData.push([
+                        'Total',
+                        formatNumberEnglish(totalCount),
+                        formatNumberEnglish(totalAmount),
+                        formatNumberEnglish(totalPercent)
+                    ]);
+
+                    doc.autoTable({
+                        startY: yPos,
+                        head: [['Subscription Type', 'Count', 'Amount (IQD)', 'Agent Percentage (IQD)']],
+                        body: tableData,
+                        theme: 'striped',
+                        headStyles: {
+                            fillColor: [128, 28, 50], // #801C32
+                            textColor: [255, 255, 255],
+                            fontStyle: 'bold',
+                            fontSize: 12,
+                            halign: 'center'
+                        },
+                        bodyStyles: {
+                            fontSize: 11,
+                            halign: 'center'
+                        },
+                        columnStyles: {
+                            0: { halign: 'left' },
+                            1: { halign: 'center' },
+                            2: { halign: 'center' },
+                            3: { halign: 'center' }
+                        },
+                        didParseCell: function(data) {
+                            // تنسيق صف المجموع
+                            if (data.row.index === tableData.length - 1) {
+                                data.cell.styles.fillColor = [232, 240, 245]; // #E8F0F5
+                                data.cell.styles.fontStyle = 'bold';
+                                data.cell.styles.fontSize = 12;
+                            }
+                        },
+                        margin: { left: 20, right: 20 }
+                    });
+
+                    yPos = doc.lastAutoTable.finalY + 15;
+
+                    // ملخص النسبة
+                    doc.setFontSize(12);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text(`Agent Percentage: ${formatNumberEnglish(data.agentPercentageAmount || 0)} IQD`, 20, yPos);
+                    yPos += 10;
+
+                    if ((data.deductions || 0) > 0) {
+                        doc.setFont('helvetica', 'normal');
+                        doc.text(`Deductions: ${formatNumberEnglish(data.deductions || 0)} IQD`, 20, yPos);
+                        yPos += 10;
+                    }
+
+                    if ((data.penalties || 0) > 0) {
+                        doc.text(`Penalties: ${formatNumberEnglish(data.penalties || 0)} IQD`, 20, yPos);
+                        yPos += 10;
+                    }
+
+                    // النسبة الصافية
+                    doc.setFontSize(14);
+                    doc.setFont('helvetica', 'bold');
+                    doc.setTextColor(128, 28, 50); // #801C32
+                    doc.text(`Net Percentage: ${formatNumberEnglish(data.netPercentage || 0)} IQD`, 20, yPos);
+
+                    // إنشاء blob
+                    const pdfBlob = doc.output('blob');
+                    resolve(pdfBlob);
+                } catch (error) {
+                    reject(error);
+                }
+            });
         }
 
         function resetPercentageData() {
@@ -7126,47 +7723,130 @@ function updateAgentSummary() {
 
         function showMessageCustomizationModal(agentName) {
             const reports = agentReports[agentName] || {};
-            const totalBasic = reports.basic?.total.amount || 0;
-            const totalAdvanced = reports.advanced?.total.profit || 0;
-            const totalTwoMonths = reports.twoMonths?.total.profit || 0;
-            
             const agent = agentsList.find(a => a.name === agentName);
-            const agentId = agent?.email || agentName;
             const agentSubName = agent?.subName || '';
 
             document.getElementById('customMessageAgentName').textContent = agentName;
             
-            let defaultMessage = `${agentName}`;
+            let defaultMessage = `*${agentName}*`;
             if (agentSubName) {
                 defaultMessage += `\n${agentSubName}`;
             }
             defaultMessage += `\n\nتحية طيبة وبعد،\n\nنود إعلامكم بالتقرير الخاص بالمبالغ المستحقة، وكما يلي:\n\n`;
             
+            // حساب الإجماليات لكل عرض
+            const totalBasic = reports.basic?.total.amount || 0;
+            const totalAdvanced = reports.advanced?.total.profit || 0;
+            const totalTwoMonths = reports.twoMonths?.total.profit || 0;
+            const selectedTotal = totalBasic + totalAdvanced + totalTwoMonths;
+            
+            // حساب عدد العروض المتاحة
+            const availableOffers = [];
+            if (totalBasic > 0) availableOffers.push({ type: 'basic', amount: totalBasic });
+            if (totalAdvanced > 0) availableOffers.push({ type: 'advanced', amount: totalAdvanced });
+            if (totalTwoMonths > 0) availableOffers.push({ type: 'twoMonths', amount: totalTwoMonths });
+            
+            // إذا كان هناك أكثر من عرض، نذكر كل واحد على حدة
+            if (availableOffers.length > 1) {
+                defaultMessage += `━━━━━━━━━━━━━━━━━━━━\n`;
+            
             if (totalBasic > 0) {
-                defaultMessage += `اشتراك العرض المجاني: ${formatNumberEnglish(totalBasic)} دينار عراقي\n`;
+                    defaultMessage += `*إجمالي العرض المجاني: ${formatNumberEnglish(totalBasic)} دينار عراقي*\n`;
             }
             if (totalAdvanced > 0) {
-                defaultMessage += `اشتراك العرض المخفَّض لثلاثة أشهر: ${formatNumberEnglish(totalAdvanced)} دينار عراقي\n`;
+                    defaultMessage += `*إجمالي العرض المخفض لثلاثة أشهر: ${formatNumberEnglish(totalAdvanced)} دينار عراقي*\n`;
             }
             if (totalTwoMonths > 0) {
-                defaultMessage += `اشتراك العرض المخفَّض لشهرين: ${formatNumberEnglish(totalTwoMonths)} دينار عراقي\n`;
+                    defaultMessage += `*إجمالي العرض المخفض لشهرين: ${formatNumberEnglish(totalTwoMonths)} دينار عراقي*\n`;
             }
             
-            const selectedTotal = (totalBasic > 0 ? totalBasic : 0) + 
-                                (totalAdvanced > 0 ? totalAdvanced : 0) + 
-                                (totalTwoMonths > 0 ? totalTwoMonths : 0);
-            
-            if (selectedTotal > 0) {
-                defaultMessage += `\nالإجمالي الكلي: ${formatNumberEnglish(selectedTotal)} دينار عراقي\n`;
+                defaultMessage += `\n━━━━━━━━━━━━━━━━━━━━\n`;
+                defaultMessage += `*الإجمالي الكلي: ${formatNumberEnglish(selectedTotal)} دينار عراقي*\n`;
+            }
+            // إذا كان هناك عرض واحد فقط، نذكره فقط
+            else if (availableOffers.length === 1) {
+                const offer = availableOffers[0];
+                defaultMessage += `━━━━━━━━━━━━━━━━━━━━\n`;
+                
+                if (offer.type === 'basic') {
+                    defaultMessage += `*إجمالي العرض المجاني: ${formatNumberEnglish(offer.amount)} دينار عراقي*\n`;
+                } else if (offer.type === 'advanced') {
+                    defaultMessage += `*إجمالي العرض المخفض لثلاثة أشهر: ${formatNumberEnglish(offer.amount)} دينار عراقي*\n`;
+                } else if (offer.type === 'twoMonths') {
+                    defaultMessage += `*إجمالي العرض المخفض لشهرين: ${formatNumberEnglish(offer.amount)} دينار عراقي*\n`;
+                }
+            }
+            // إذا لم يكن هناك أي عروض
+            else if (selectedTotal > 0) {
+                defaultMessage += `━━━━━━━━━━━━━━━━━━━━\n`;
+                defaultMessage += `*الإجمالي الكلي: ${formatNumberEnglish(selectedTotal)} دينار عراقي*\n`;
             }
             
-            defaultMessage += `\nيرجى التفضل بالاطلاع على الملف المرفق للاطلاع على التفاصيل الكاملة.\n\nمع فائق الشكر والتقدير،`;
+            defaultMessage += `\n━━━━━━━━━━━━━━━━━━━━\n`;
+            defaultMessage += `يرجى التفضل بالاطلاع على الملف المرفق للاطلاع على التفاصيل الكاملة.\n\n`;
+            defaultMessage += `مع فائق الشكر والتقدير،\n`;
+            defaultMessage += `*شركة عراق سيل للإتصالات*`;
 
             document.getElementById('customMessageText').value = defaultMessage;
             
             document.getElementById('customMessageAgentName').setAttribute('data-agent', agentName);
             
             document.getElementById('messageCustomizationModal').classList.add('show');
+        }
+        
+        // دالة لإنشاء جدول الاشتراكات
+        function generateSubscriptionTable(reportData, reportType) {
+            let table = '';
+            const categories = [
+                { key: 'platinum', name: 'Platinum', emoji: '💎', arabicName: 'بلاتينيوم' },
+                { key: 'gold', name: 'Gold', emoji: '🥇', arabicName: 'كولد' },
+                { key: 'silver', name: 'Silver', emoji: '🥈', arabicName: 'سلفر' },
+                { key: 'bronze', name: 'Bronze', emoji: '🥉', arabicName: 'برونز' }
+            ];
+            
+            let hasData = false;
+            categories.forEach(cat => {
+                const category = reportData[cat.key];
+                if (category && category.count > 0) {
+                    hasData = true;
+                    let amount = 0;
+                    let price = 0;
+                    
+                    if (reportType === 'basic') {
+                        amount = category.amount || 0;
+                        price = category.count > 0 ? Math.round(amount / category.count) : 0;
+                    } else {
+                        amount = (category.officialAmount || 0) - (category.promoAmount || 0);
+                        price = category.count > 0 ? Math.round(amount / category.count) : 0;
+                    }
+                    
+                    table += `*${cat.arabicName} (${cat.name})*\n`;
+                    table += `   عدد الاشتراكات: ${formatNumberEnglish(category.count)}\n`;
+                    table += `   السعر الواحد: ${formatNumberEnglish(price)} د.ع\n`;
+                    table += `   المجموع: ${formatNumberEnglish(amount)} د.ع\n\n`;
+                }
+            });
+            
+            if (hasData) {
+                const totalCount = (reportData.platinum?.count || 0) + 
+                                 (reportData.gold?.count || 0) + 
+                                 (reportData.silver?.count || 0) + 
+                                 (reportData.bronze?.count || 0);
+                
+                let totalAmount = 0;
+                if (reportType === 'basic') {
+                    totalAmount = reportData.total?.amount || 0;
+                } else {
+                    totalAmount = reportData.total?.profit || 0;
+                }
+                
+                table += `━━━━━━━━━━━━━━━━━━━━\n`;
+                table += `*المجموع*\n`;
+                table += `   عدد الاشتراكات: ${formatNumberEnglish(totalCount)}\n`;
+                table += `   الإجمالي: ${formatNumberEnglish(totalAmount)} د.ع\n`;
+            }
+            
+            return table;
         }
 
         function closeMessageCustomizationModal() {
@@ -7217,6 +7897,12 @@ function updateAgentSummary() {
 
             let finalMessage = message;
             
+            // التحقق من وجود الجداول التفصيلية في الرسالة
+            const hasDetailedTable = finalMessage.includes('━━━━━━━━━━━━━━━━━━━━') || 
+                                     finalMessage.includes('عدد الاشتراكات:') ||
+                                     finalMessage.includes('السعر:') ||
+                                     finalMessage.includes('المجموع:');
+            
             const hasBasicInMessage = finalMessage.includes('العرض المجاني') || 
                                      finalMessage.includes('اشتراك العرض المجاني') ||
                                      finalMessage.includes('المجاني:') ||
@@ -7240,21 +7926,31 @@ function updateAgentSummary() {
             const hasTotalInMessage = finalMessage.includes('الإجمالي الكلي') || 
                                      finalMessage.includes('الإجمالي:');
             
+            // إذا كانت الرسالة تحتوي على جداول تفصيلية، لا نضيف معلومات إضافية
+            if (hasDetailedTable) {
+                return finalMessage;
+            }
+            
+            // إضافة معلومات بسيطة إذا لم تكن موجودة
             if (totalBasic > 0 && !hasBasicInMessage) {
-                finalMessage += `\n\nالعرض المجاني: ${formatNumberEnglish(totalBasic)} دينار عراقي`;
+                finalMessage += `\n\n*العرض المجاني*\n`;
+                finalMessage += generateSubscriptionTable(reports.basic, 'basic');
             }
             
             if (totalAdvanced > 0 && !hasAdvancedInMessage) {
-                finalMessage += `\n\nمخفض 3 أشهر: ${formatNumberEnglish(totalAdvanced)} دينار عراقي`;
+                finalMessage += `\n\n*العرض المخفض لثلاثة أشهر*\n`;
+                finalMessage += generateSubscriptionTable(reports.advanced, 'advanced');
             }
             
             if (totalTwoMonths > 0 && !hasTwoMonthsInMessage) {
-                finalMessage += `\n\nمخفض شهرين: ${formatNumberEnglish(totalTwoMonths)} دينار عراقي`;
+                finalMessage += `\n\n*العرض المخفض لشهرين*\n`;
+                finalMessage += generateSubscriptionTable(reports.twoMonths, 'twoMonths');
             }
 
                 const total = totalBasic + totalAdvanced + totalTwoMonths;
             if (total > 0 && !hasTotalInMessage) {
-                finalMessage += `\n\nالإجمالي الكلي: ${formatNumberEnglish(total)} دينار عراقي`;
+                finalMessage += `\n━━━━━━━━━━━━━━━━━━━━\n`;
+                finalMessage += `*الإجمالي الكلي: ${formatNumberEnglish(total)} دينار عراقي*\n`;
             }
 
             return finalMessage;
@@ -7661,100 +8357,392 @@ function updateAgentSummary() {
         }
 
         function generateExcelReportBlob(agentName) {
+            return new Promise(async (resolve, reject) => {
+                try {
+                    const reportInfo = getReportInfo(agentName);
+                    const { reportType, reportData, reportTitle, agent, dateFrom, dateTo } = reportInfo;
+                    
+                    // جمع جميع التقارير المتاحة
+                    const reports = agentReports[agentName] || {};
+                    const hasBasic = reports.basic && reports.basic.total && reports.basic.total.count > 0;
+                    const hasAdvanced = reports.advanced && reports.advanced.total && reports.advanced.total.count > 0;
+                    const hasTwoMonths = reports.twoMonths && reports.twoMonths.total && reports.twoMonths.total.count > 0;
+                    
+                    // استخدام ExcelJS للتنسيق الاحترافي
+                    const ExcelJS = window.ExcelJS;
+                    if (!ExcelJS) {
+                        // إذا لم يكن ExcelJS متوفراً، استخدم XLSX
+                        return generateExcelReportBlobXLSX(agentName).then(resolve).catch(reject);
+                    }
+                    
+                    const workbook = new ExcelJS.Workbook();
+                    const worksheet = workbook.addWorksheet('تقرير الوكيل');
+                    
+                    // تحديد عرض الأعمدة
+                    worksheet.columns = [
+                        { width: 35, key: 'type' },
+                        { width: 20, key: 'count' },
+                        { width: 20, key: 'price' },
+                        { width: 20, key: 'total' }
+                    ];
+                    
+                    let currentRow = 1;
+                    
+                    // العنوان الرئيسي
+                    const titleRow = worksheet.getRow(currentRow);
+                    titleRow.getCell(1).value = reportTitle || 'تقرير المبالغ المستحقة';
+                    titleRow.getCell(1).font = { bold: true, size: 18, color: { argb: 'FF801C32' } };
+                    titleRow.getCell(1).alignment = { horizontal: 'center', vertical: 'middle' };
+                    worksheet.mergeCells(currentRow, 1, currentRow, 4);
+                    titleRow.height = 30;
+                    currentRow++;
+                    
+                    // معلومات الوكيل
+                    currentRow++;
+                    worksheet.getRow(currentRow).getCell(1).value = `اسم الوكيل: ${agentName}`;
+                    worksheet.getRow(currentRow).getCell(1).font = { bold: true, size: 12 };
+                    currentRow++;
+                    
+                    if (agent?.email) {
+                        worksheet.getRow(currentRow).getCell(1).value = `البريد الإلكتروني: ${agent.email}`;
+                        worksheet.getRow(currentRow).getCell(1).font = { size: 11 };
+                        currentRow++;
+                    }
+                    if (agent?.phone) {
+                        worksheet.getRow(currentRow).getCell(1).value = `رقم الهاتف: ${agent.phone}`;
+                        worksheet.getRow(currentRow).getCell(1).font = { size: 11 };
+                        currentRow++;
+                    }
+                    currentRow++;
+                    
+                    // دالة لإنشاء جدول منسق
+                    const createTable = (title, data, startRow) => {
+                        let row = startRow;
+                        
+                        // عنوان القسم
+                        const sectionRow = worksheet.getRow(row);
+                        sectionRow.getCell(1).value = title;
+                        sectionRow.getCell(1).font = { bold: true, size: 14, color: { argb: 'FF801C32' } };
+                        sectionRow.getCell(1).fill = {
+                            type: 'pattern',
+                            pattern: 'solid',
+                            fgColor: { argb: 'FFF8F9FA' }
+                        };
+                        sectionRow.getCell(1).alignment = { horizontal: 'right', vertical: 'middle' };
+                        sectionRow.getCell(1).border = {
+                            top: { style: 'thin', color: { argb: 'FF801C32' } },
+                            bottom: { style: 'thin', color: { argb: 'FF801C32' } },
+                            left: { style: 'thin', color: { argb: 'FF801C32' } },
+                            right: { style: 'thin', color: { argb: 'FF801C32' } }
+                        };
+                        worksheet.mergeCells(row, 1, row, 4);
+                        sectionRow.height = 25;
+                        row++;
+                        
+                        // رأس الجدول
+                        const headerRow = worksheet.getRow(row);
+                        const headers = ['نوع الاشتراك', 'عدد الاشتراكات', 'السعر الواحد (د.ع)', 'المجموع (د.ع)'];
+                        headers.forEach((header, idx) => {
+                            const cell = headerRow.getCell(idx + 1);
+                            cell.value = header;
+                            cell.font = { bold: true, size: 12, color: { argb: 'FFFFFFFF' } };
+                            cell.fill = {
+                                type: 'pattern',
+                                pattern: 'solid',
+                                fgColor: { argb: 'FF801C32' }
+                            };
+                            cell.alignment = { horizontal: 'center', vertical: 'middle', wrapText: true };
+                            cell.border = {
+                                top: { style: 'thin', color: { argb: 'FFFFFFFF' } },
+                                bottom: { style: 'thin', color: { argb: 'FFFFFFFF' } },
+                                left: { style: 'thin', color: { argb: 'FFFFFFFF' } },
+                                right: { style: 'thin', color: { argb: 'FFFFFFFF' } }
+                            };
+                        });
+                        headerRow.height = 25;
+                        row++;
+                        
+                        // بيانات الصفوف
+                        data.forEach((item, index) => {
+                            const dataRow = worksheet.getRow(row);
+                            const isTotalRow = item.type === 'المجموع';
+                            const isEven = index % 2 === 0;
+                            
+                            // لون الخلفية للصفوف المتناوبة
+                            const bgColor = isTotalRow ? 'FFE8F0F5' : (isEven ? 'FFFFFFFF' : 'FFF8F9FA');
+                            
+                            dataRow.getCell(1).value = item.type;
+                            dataRow.getCell(2).value = item.count;
+                            dataRow.getCell(3).value = item.price || '';
+                            dataRow.getCell(4).value = item.total;
+                            
+                            // تنسيق الخلايا
+                            for (let col = 1; col <= 4; col++) {
+                                const cell = dataRow.getCell(col);
+                                cell.font = isTotalRow ? { bold: true, size: 12 } : { size: 11 };
+                                cell.fill = {
+                                    type: 'pattern',
+                                    pattern: 'solid',
+                                    fgColor: { argb: bgColor }
+                                };
+                                cell.alignment = col === 1 ? 
+                                    { horizontal: 'right', vertical: 'middle' } : 
+                                    { horizontal: 'center', vertical: 'middle' };
+                                cell.border = {
+                                    top: { style: 'thin', color: { argb: 'FFDDDDDD' } },
+                                    bottom: { style: 'thin', color: { argb: 'FFDDDDDD' } },
+                                    left: { style: 'thin', color: { argb: 'FFDDDDDD' } },
+                                    right: { style: 'thin', color: { argb: 'FFDDDDDD' } }
+                                };
+                            }
+                            
+                            dataRow.height = 22;
+                            row++;
+                        });
+                        
+                        row++; // سطر فارغ بعد الجدول
+                        return row;
+                    };
+                    
+                    // جدول العرض المجاني
+                    if (hasBasic) {
+                        const basicData = reports.basic;
+                        const categories = [
+                            { key: 'platinum', name: 'Platinum' },
+                            { key: 'gold', name: 'Gold' },
+                            { key: 'silver', name: 'Silver' },
+                            { key: 'bronze', name: 'Bronze' }
+                        ];
+                    
+                        const tableData = [];
+                        categories.forEach(cat => {
+                            const category = basicData[cat.key] || { count: 0, amount: 0 };
+                            const price = category.count > 0 ? Math.round((category.amount || 0) / category.count) : 0;
+                            tableData.push({
+                                type: cat.name,
+                                count: formatNumberEnglish(category.count || 0),
+                                price: formatNumberEnglish(price),
+                                total: formatNumberEnglish(category.amount || 0)
+                            });
+                        });
+                        
+                        tableData.push({
+                            type: 'المجموع',
+                            count: formatNumberEnglish(basicData.total?.count || 0),
+                            price: '',
+                            total: formatNumberEnglish(basicData.total?.amount || 0)
+                        });
+                        
+                        currentRow = createTable('العرض المجاني', tableData, currentRow);
+                    }
+                    
+                    // جدول العرض المخفض لثلاثة أشهر
+                    if (hasAdvanced) {
+                        const advancedData = reports.advanced;
+                        const categories = [
+                            { key: 'platinum', name: 'Platinum' },
+                            { key: 'gold', name: 'Gold' },
+                            { key: 'silver', name: 'Silver' },
+                            { key: 'bronze', name: 'Bronze' }
+                        ];
+                        
+                        const tableData = [];
+                        categories.forEach(cat => {
+                            const category = advancedData[cat.key] || { count: 0, officialAmount: 0, promoAmount: 0 };
+                            const amount = (category.officialAmount || 0) - (category.promoAmount || 0);
+                            const price = category.count > 0 ? Math.round(amount / category.count) : 0;
+                            tableData.push({
+                                type: cat.name,
+                                count: formatNumberEnglish(category.count || 0),
+                                price: formatNumberEnglish(price),
+                                total: formatNumberEnglish(amount)
+                            });
+                        });
+                        
+                        tableData.push({
+                            type: 'المجموع',
+                            count: formatNumberEnglish(advancedData.total?.count || 0),
+                            price: '',
+                            total: formatNumberEnglish(advancedData.total?.profit || 0)
+                        });
+                        
+                        currentRow = createTable('العرض المخفض لثلاثة أشهر', tableData, currentRow);
+                    }
+                    
+                    // جدول العرض المخفض لشهرين
+                    if (hasTwoMonths) {
+                        const twoMonthsData = reports.twoMonths;
+                        const categories = [
+                            { key: 'platinum', name: 'Platinum' },
+                            { key: 'gold', name: 'Gold' },
+                            { key: 'silver', name: 'Silver' },
+                            { key: 'bronze', name: 'Bronze' }
+                        ];
+                        
+                        const tableData = [];
+                        categories.forEach(cat => {
+                            const category = twoMonthsData[cat.key] || { count: 0, officialAmount: 0, promoAmount: 0 };
+                            const amount = (category.officialAmount || 0) - (category.promoAmount || 0);
+                            const price = category.count > 0 ? Math.round(amount / category.count) : 0;
+                            tableData.push({
+                                type: cat.name,
+                                count: formatNumberEnglish(category.count || 0),
+                                price: formatNumberEnglish(price),
+                                total: formatNumberEnglish(amount)
+                            });
+                        });
+                        
+                        tableData.push({
+                            type: 'المجموع',
+                            count: formatNumberEnglish(twoMonthsData.total?.count || 0),
+                            price: '',
+                            total: formatNumberEnglish(twoMonthsData.total?.profit || 0)
+                        });
+                        
+                        currentRow = createTable('العرض المخفض لشهرين', tableData, currentRow);
+                    }
+                    
+                    // الإجمالي الكلي
+                    const totalBasic = reports.basic?.total.amount || 0;
+                    const totalAdvanced = reports.advanced?.total.profit || 0;
+                    const totalTwoMonths = reports.twoMonths?.total.profit || 0;
+                    const selectedTotal = totalBasic + totalAdvanced + totalTwoMonths;
+                    
+                    if (selectedTotal > 0) {
+                        currentRow++;
+                        const totalSectionRow = worksheet.getRow(currentRow);
+                        totalSectionRow.getCell(1).value = 'الإجمالي الكلي';
+                        totalSectionRow.getCell(1).font = { bold: true, size: 14, color: { argb: 'FF801C32' } };
+                        totalSectionRow.getCell(1).fill = {
+                            type: 'pattern',
+                            pattern: 'solid',
+                            fgColor: { argb: 'FFF8F9FA' }
+                        };
+                        totalSectionRow.getCell(1).border = {
+                            top: { style: 'medium', color: { argb: 'FF801C32' } },
+                            bottom: { style: 'medium', color: { argb: 'FF801C32' } },
+                            left: { style: 'medium', color: { argb: 'FF801C32' } },
+                            right: { style: 'medium', color: { argb: 'FF801C32' } }
+                        };
+                        worksheet.mergeCells(currentRow, 1, currentRow, 4);
+                        totalSectionRow.height = 25;
+                        currentRow++;
+                        
+                        if (hasBasic) {
+                            const row = worksheet.getRow(currentRow);
+                            row.getCell(1).value = 'العرض المجاني:';
+                            row.getCell(4).value = formatNumberEnglish(totalBasic) + ' د.ع';
+                            row.getCell(1).font = { bold: true, size: 11 };
+                            row.getCell(4).font = { bold: true, size: 11 };
+                            row.getCell(4).alignment = { horizontal: 'center' };
+                            currentRow++;
+                        }
+                        if (hasAdvanced) {
+                            const row = worksheet.getRow(currentRow);
+                            row.getCell(1).value = 'العرض المخفض لثلاثة أشهر:';
+                            row.getCell(4).value = formatNumberEnglish(totalAdvanced) + ' د.ع';
+                            row.getCell(1).font = { bold: true, size: 11 };
+                            row.getCell(4).font = { bold: true, size: 11 };
+                            row.getCell(4).alignment = { horizontal: 'center' };
+                            currentRow++;
+                        }
+                        if (hasTwoMonths) {
+                            const row = worksheet.getRow(currentRow);
+                            row.getCell(1).value = 'العرض المخفض لشهرين:';
+                            row.getCell(4).value = formatNumberEnglish(totalTwoMonths) + ' د.ع';
+                            row.getCell(1).font = { bold: true, size: 11 };
+                            row.getCell(4).font = { bold: true, size: 11 };
+                            row.getCell(4).alignment = { horizontal: 'center' };
+                            currentRow++;
+                        }
+                        
+                        const finalTotalRow = worksheet.getRow(currentRow);
+                        finalTotalRow.getCell(1).value = 'الإجمالي الكلي:';
+                        finalTotalRow.getCell(4).value = formatNumberEnglish(selectedTotal) + ' دينار عراقي';
+                        finalTotalRow.getCell(1).font = { bold: true, size: 14, color: { argb: 'FF801C32' } };
+                        finalTotalRow.getCell(4).font = { bold: true, size: 14, color: { argb: 'FF801C32' } };
+                        finalTotalRow.getCell(4).alignment = { horizontal: 'center' };
+                        finalTotalRow.getCell(1).fill = {
+                            type: 'pattern',
+                            pattern: 'solid',
+                            fgColor: { argb: 'FFE8F0F5' }
+                        };
+                        finalTotalRow.getCell(4).fill = {
+                            type: 'pattern',
+                            pattern: 'solid',
+                            fgColor: { argb: 'FFE8F0F5' }
+                        };
+                        finalTotalRow.getCell(1).border = {
+                            top: { style: 'medium', color: { argb: 'FF801C32' } },
+                            bottom: { style: 'medium', color: { argb: 'FF801C32' } },
+                            left: { style: 'medium', color: { argb: 'FF801C32' } },
+                            right: { style: 'thin', color: { argb: 'FF801C32' } }
+                        };
+                        finalTotalRow.getCell(4).border = {
+                            top: { style: 'medium', color: { argb: 'FF801C32' } },
+                            bottom: { style: 'medium', color: { argb: 'FF801C32' } },
+                            left: { style: 'thin', color: { argb: 'FF801C32' } },
+                            right: { style: 'medium', color: { argb: 'FF801C32' } }
+                        };
+                        finalTotalRow.height = 30;
+                    }
+                    
+                    // إنشاء الملف
+                    const buffer = await workbook.xlsx.writeBuffer();
+                    const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                    
+                    resolve(blob);
+                } catch (error) {
+                    console.error('Error generating Excel with ExcelJS:', error);
+                    // في حالة الخطأ، استخدم XLSX كبديل
+                    generateExcelReportBlobXLSX(agentName).then(resolve).catch(reject);
+                }
+            });
+        }
+        
+        // دالة بديلة باستخدام XLSX (للاحتياط)
+        function generateExcelReportBlobXLSX(agentName) {
             return new Promise((resolve, reject) => {
                 try {
                     const reportInfo = getReportInfo(agentName);
                     const { reportType, reportData, reportTitle, agent, dateFrom, dateTo } = reportInfo;
-                    const { platinumCount, platinumPrice, goldCount, goldPrice, 
-                            silverCount, silverPrice, bronzeCount, bronzePrice, 
-                            totalSubs, totalAmount } = calculateCategoryPricesAndCounts(reportData, reportType);
+                    
+                    const reports = agentReports[agentName] || {};
+                    const hasBasic = reports.basic && reports.basic.total && reports.basic.total.count > 0;
+                    const hasAdvanced = reports.advanced && reports.advanced.total && reports.advanced.total.count > 0;
+                    const hasTwoMonths = reports.twoMonths && reports.twoMonths.total && reports.twoMonths.total.count > 0;
                     
                     const wsData = [];
+                    wsData.push([reportTitle || 'تقرير المبالغ المستحقة']);
+                    wsData.push([`اسم الوكيل: ${agentName}`]);
                     
-                    wsData.push([reportTitle]);
-                    wsData.push([]);
-                    
-                    wsData.push([
-                        '#', 
-                        'Agent Name',
-                        'Platinum', '', 'Gold', '', 'Silver', '', 'Bronze', '',
-                        'Total Subscriptions',
-                        'Total Amount',
-                        'Date'
-                    ]);
-                    
-                    wsData.push([
-                        '', '',
-                        'Price', 'Count',
-                        'Price', 'Count',
-                        'Price', 'Count',
-                        'Price', 'Count',
-                        '', '',
-                        'From', 'To'
-                    ]);
-                    
-                    const agentNameText = agentName + (agent?.email ? ' / ' + agent.email : '');
-                    wsData.push([
-                        1,
-                        agentNameText,
-                        formatNumber(platinumPrice), platinumCount,
-                        formatNumber(goldPrice), goldCount,
-                        formatNumber(silverPrice), silverCount,
-                        formatNumber(bronzePrice), bronzeCount,
-                        totalSubs,
-                        formatNumber(totalAmount),
-                        dateFrom, dateTo
-                    ]);
-                    
-                    wsData.push([
-                        'Total',
-                        '',
-                        '', platinumCount,
-                        '', goldCount,
-                        '', silverCount,
-                        '', bronzeCount,
-                        totalSubs,
-                        formatNumber(totalAmount),
-                        '', ''
-                    ]);
+                    if (hasBasic) {
+                        wsData.push(['العرض المجاني']);
+                        wsData.push(['نوع الاشتراك', 'عدد الاشتراكات', 'السعر الواحد (د.ع)', 'المجموع (د.ع)']);
+                        const basicData = reports.basic;
+                        ['platinum', 'gold', 'silver', 'bronze'].forEach(key => {
+                            const cat = basicData[key];
+                            if (cat && cat.count > 0) {
+                                const price = Math.round((cat.amount || 0) / cat.count);
+                                wsData.push([
+                                    key === 'platinum' ? 'بلاتينيوم (Platinum)' : 
+                                    key === 'gold' ? 'كولد (Gold)' : 
+                                    key === 'silver' ? 'سلفر (Silver)' : 'برونز (Bronze)',
+                                    formatNumberEnglish(cat.count),
+                                    formatNumberEnglish(price),
+                                    formatNumberEnglish(cat.amount || 0)
+                                ]);
+                            }
+                        });
+                        wsData.push(['المجموع', formatNumberEnglish(basicData.total?.count || 0), '', formatNumberEnglish(basicData.total?.amount || 0)]);
+                    }
                     
                     const wb = XLSX.utils.book_new();
                     const ws = XLSX.utils.aoa_to_sheet(wsData);
-                    
-                    ws['!cols'] = [
-                        { wch: 8 },
-                        { wch: 35 },
-                        { wch: 12 },
-                        { wch: 12 },
-                        { wch: 12 },
-                        { wch: 12 },
-                        { wch: 12 },
-                        { wch: 12 },
-                        { wch: 12 },
-                        { wch: 12 },
-                        { wch: 15 },
-                        { wch: 18 },
-                        { wch: 12 },
-                        { wch: 12 }
-                    ];
-                    
-                    ws['!merges'] = [
-                        { s: { r: 0, c: 0 }, e: { r: 0, c: 13 } }
-                    ];
-                    
-                    const titleCell = ws[XLSX.utils.encode_cell({ r: 0, c: 0 })];
-                    if (titleCell) {
-                        titleCell.s = {
-                            font: { bold: true, sz: 14 },
-                            alignment: { horizontal: 'center', vertical: 'center' }
-                        };
-                    }
-                    
+                    ws['!cols'] = [{ wch: 30 }, { wch: 18 }, { wch: 18 }, { wch: 18 }];
                     XLSX.utils.book_append_sheet(wb, ws, 'تقرير الوكيل');
-                    
                     const excelBlob = XLSX.write(wb, { type: 'array', bookType: 'xlsx' });
                     const blob = new Blob([excelBlob], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-                    
                     resolve(blob);
                 } catch (error) {
                     reject(error);
