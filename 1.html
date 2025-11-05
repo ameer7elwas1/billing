@@ -2664,9 +2664,6 @@
                         <button class="btn btn-success" onclick="saveBasicReport()">
  حفظ التقرير
                         </button>
-                        <button class="btn btn-primary" onclick="printBasicReport()">
- طباعة التقرير
-                        </button>
                         <button class="btn btn-warning" onclick="exportBasicData()">
  تصدير البيانات
                         </button>
@@ -2721,9 +2718,6 @@
                         <button class="btn btn-success" onclick="saveAdvancedReport()">
  حفظ التقرير
                         </button>
-                        <button class="btn btn-primary" onclick="printAdvancedReport()">
- طباعة التقرير
-                        </button>
                         <button class="btn btn-warning" onclick="exportAdvancedData()">
  تصدير للوكيل
                         </button>
@@ -2777,9 +2771,6 @@
                     <div style="text-align: center; margin-top: 20px;">
                         <button class="btn btn-success" onclick="saveTwoMonthsReport()">
  حفظ التقرير
-                        </button>
-                        <button class="btn btn-primary" onclick="printTwoMonthsReport()">
- طباعة التقرير
                         </button>
                         <button class="btn btn-warning" onclick="exportTwoMonthsData()">
  تصدير للوكيل
@@ -2843,9 +2834,6 @@
                     <button class="btn btn-success" onclick="exportSummaryToExcel()">
  تصدير Excel للملخص
                     </button>
-                    <button class="btn btn-warning" onclick="printSummaryReport()">
- طباعة الملخص
-                    </button>
                 </div>
 
                 <div id="summaryResults" class="section">
@@ -2871,7 +2859,6 @@
                 <div class="section">
                     <h3 class="section-title"> نسبة الوكلاء</h3>
                     <p style="color: #1a1a1a; margin-bottom: 20px; font-size: 1rem; font-weight: 600;">
-                        اختر الوكيل وارفع ملف Excel الخاص به لاحتساب نسبة الوكيل بناءً على الأسعار المخزنة في النظام
                     </p>
                     
                     <div style="margin-bottom: 20px; padding: 20px; background: rgba(128, 28, 50, 0.05); border-radius: 12px;">
@@ -4495,6 +4482,26 @@ let agentReports = {};
                 select.addEventListener('change', onAgentSelectedForPercentage);
                 updateAgentsListForPercentage();
             }
+            
+            // استعادة البيانات المحفوظة بعد تحميل الصفحة
+            setTimeout(() => {
+                restoreSavedData();
+            }, 500);
+        });
+        
+        // حفظ البيانات قبل إعادة تحميل الصفحة
+        window.addEventListener('beforeunload', function() {
+            try {
+                if (basicData) saveDataToStorage('basicData', basicData);
+                if (advancedData) saveDataToStorage('advancedData', advancedData);
+                if (twoMonthsData) saveDataToStorage('twoMonthsData', twoMonthsData);
+                if (basicDetails && basicDetails.length > 0) saveDataToStorage('basicDetails', basicDetails);
+                if (advancedDetails && advancedDetails.length > 0) saveDataToStorage('advancedDetails', advancedDetails);
+                if (twoMonthsDetails && twoMonthsDetails.length > 0) saveDataToStorage('twoMonthsDetails', twoMonthsDetails);
+                if (agentReports && Object.keys(agentReports).length > 0) saveDataToStorage('agentReports', agentReports);
+            } catch (error) {
+                console.error('خطأ في حفظ البيانات قبل إعادة التحميل:', error);
+            }
         });
 
         function setupLoginForm() {
@@ -4627,10 +4634,13 @@ let agentReports = {};
                                 const processedData = convertArrayToObjects(results.data);
                                 if (type === 'basic') {
                                     basicData = processedData;
+                                    saveDataToStorage('basicData', basicData);
                                 } else if (type === 'advanced') {
                                     advancedData = processedData;
+                                    saveDataToStorage('advancedData', advancedData);
                                 } else {
                                     twoMonthsData = processedData;
+                                    saveDataToStorage('twoMonthsData', twoMonthsData);
                                 }
                                 showSuccessMessage(`تم تحميل ملف CSV بنجاح - ${results.data.length} صف`);
                             }
@@ -4652,10 +4662,13 @@ let agentReports = {};
                         
                         if (type === 'basic') {
                             basicData = processedData;
+                            saveDataToStorage('basicData', basicData);
                         } else if (type === 'advanced') {
                             advancedData = processedData;
+                            saveDataToStorage('advancedData', advancedData);
                         } else {
                             twoMonthsData = processedData;
+                            saveDataToStorage('twoMonthsData', twoMonthsData);
                         }
                         
                         showSuccessMessage(`تم تحميل ملف Excel بنجاح - ${jsonData.length} صف`);
@@ -4691,6 +4704,109 @@ let agentReports = {};
             }
             
             return result;
+        }
+
+        // وظائف حفظ واستعادة البيانات
+        function saveDataToStorage(key, data) {
+            try {
+                // حفظ البيانات في localStorage مع ضغط إذا كانت كبيرة
+                const dataString = JSON.stringify(data);
+                if (dataString.length > 5000000) { // 5MB limit
+                    console.warn(`Data too large for ${key}, skipping save`);
+                    return;
+                }
+                localStorage.setItem(key, dataString);
+            } catch (error) {
+                console.error(`Error saving ${key} to storage:`, error);
+                // إذا فشل الحفظ بسبب حجم البيانات، احذف المفاتيح القديمة
+                try {
+                    localStorage.removeItem(key);
+                    localStorage.setItem(key, JSON.stringify(data));
+                } catch (e) {
+                    console.error(`Failed to save ${key}:`, e);
+                }
+            }
+        }
+
+        function loadDataFromStorage(key, defaultValue = null) {
+            try {
+                const saved = localStorage.getItem(key);
+                if (saved) {
+                    return JSON.parse(saved);
+                }
+            } catch (error) {
+                console.error(`Error loading ${key} from storage:`, error);
+            }
+            return defaultValue;
+        }
+
+        // استعادة جميع البيانات المحفوظة
+        function restoreSavedData() {
+            try {
+                // استعادة البيانات الخام
+                const savedBasicData = loadDataFromStorage('basicData');
+                if (savedBasicData && savedBasicData.length > 0) {
+                    basicData = savedBasicData;
+                    document.getElementById('basicFileName').textContent = 'تم استعادة البيانات المحفوظة';
+                    document.getElementById('basicFileName').classList.remove('hidden');
+                }
+
+                const savedAdvancedData = loadDataFromStorage('advancedData');
+                if (savedAdvancedData && savedAdvancedData.length > 0) {
+                    advancedData = savedAdvancedData;
+                    document.getElementById('advancedFileName').textContent = 'تم استعادة البيانات المحفوظة';
+                    document.getElementById('advancedFileName').classList.remove('hidden');
+                }
+
+                const savedTwoMonthsData = loadDataFromStorage('twoMonthsData');
+                if (savedTwoMonthsData && savedTwoMonthsData.length > 0) {
+                    twoMonthsData = savedTwoMonthsData;
+                    document.getElementById('twoMonthsFileName').textContent = 'تم استعادة البيانات المحفوظة';
+                    document.getElementById('twoMonthsFileName').classList.remove('hidden');
+                }
+
+                // استعادة التفاصيل
+                const savedBasicDetails = loadDataFromStorage('basicDetails', []);
+                if (savedBasicDetails.length > 0) {
+                    basicDetails = savedBasicDetails;
+                }
+
+                const savedAdvancedDetails = loadDataFromStorage('advancedDetails', []);
+                if (savedAdvancedDetails.length > 0) {
+                    advancedDetails = savedAdvancedDetails;
+                }
+
+                const savedTwoMonthsDetails = loadDataFromStorage('twoMonthsDetails', []);
+                if (savedTwoMonthsDetails.length > 0) {
+                    twoMonthsDetails = savedTwoMonthsDetails;
+                }
+
+                // استعادة نتائج التحليل
+                const savedBasicResults = loadDataFromStorage('basicResults');
+                if (savedBasicResults && savedBasicResults.total && savedBasicResults.total.count > 0) {
+                    displayBasicResults(savedBasicResults);
+                }
+
+                const savedAdvancedResults = loadDataFromStorage('advancedResults');
+                if (savedAdvancedResults && savedAdvancedResults.total && savedAdvancedResults.total.count > 0) {
+                    displayAdvancedResults(savedAdvancedResults);
+                }
+
+                const savedTwoMonthsResults = loadDataFromStorage('twoMonthsResults');
+                if (savedTwoMonthsResults && savedTwoMonthsResults.total && savedTwoMonthsResults.total.count > 0) {
+                    displayTwoMonthsResults(savedTwoMonthsResults);
+                }
+
+                // استعادة تقارير الوكلاء
+                const savedAgentReports = loadDataFromStorage('agentReports', {});
+                if (savedAgentReports && Object.keys(savedAgentReports).length > 0) {
+                    agentReports = savedAgentReports;
+                }
+
+                console.log('تم استعادة جميع البيانات المحفوظة بنجاح');
+            } catch (error) {
+                console.error('خطأ في استعادة البيانات المحفوظة:', error);
+            }
         }
 
         function showSuccessMessage(message) {
@@ -4819,6 +4935,11 @@ let agentReports = {};
                 agentReports[results.agentName] = {};
             }
             agentReports[results.agentName].basic = results;
+            
+            // حفظ البيانات في localStorage
+            saveDataToStorage('agentReports', agentReports);
+            saveDataToStorage('basicDetails', basicDetails);
+            saveDataToStorage('basicResults', results);
 
             const agentInfo = document.getElementById('basicAgentInfo');
             agentInfo.innerHTML = `
@@ -5052,6 +5173,11 @@ let agentReports = {};
                 agentReports[results.agentName] = {};
             }
             agentReports[results.agentName].advanced = results;
+            
+            // حفظ البيانات في localStorage
+            saveDataToStorage('agentReports', agentReports);
+            saveDataToStorage('advancedDetails', advancedDetails);
+            saveDataToStorage('advancedResults', results);
 
             const agentInfo = document.getElementById('advancedAgentInfo');
             agentInfo.innerHTML = `
@@ -5307,6 +5433,11 @@ let agentReports = {};
                 agentReports[results.agentName] = {};
             }
             agentReports[results.agentName].twoMonths = results;
+            
+            // حفظ البيانات في localStorage
+            saveDataToStorage('agentReports', agentReports);
+            saveDataToStorage('twoMonthsDetails', twoMonthsDetails);
+            saveDataToStorage('twoMonthsResults', results);
 
             const agentInfo = document.getElementById('twoMonthsAgentInfo');
             agentInfo.innerHTML = `
@@ -5380,6 +5511,11 @@ let agentReports = {};
             document.getElementById('basicFileName').classList.add('hidden');
             document.getElementById('basicFileInput').value = '';
             basicData = null;
+            basicDetails = [];
+            // حذف البيانات المحفوظة
+            localStorage.removeItem('basicData');
+            localStorage.removeItem('basicDetails');
+            localStorage.removeItem('basicResults');
         }
 
         function resetAdvancedResults() {
@@ -5387,6 +5523,11 @@ let agentReports = {};
             document.getElementById('advancedFileName').classList.add('hidden');
             document.getElementById('advancedFileInput').value = '';
             advancedData = null;
+            advancedDetails = [];
+            // حذف البيانات المحفوظة
+            localStorage.removeItem('advancedData');
+            localStorage.removeItem('advancedDetails');
+            localStorage.removeItem('advancedResults');
         }
 
         function resetTwoMonthsResults() {
@@ -5394,6 +5535,11 @@ let agentReports = {};
             document.getElementById('twoMonthsFileName').classList.add('hidden');
             document.getElementById('twoMonthsFileInput').value = '';
             twoMonthsData = null;
+            twoMonthsDetails = [];
+            // حذف البيانات المحفوظة
+            localStorage.removeItem('twoMonthsData');
+            localStorage.removeItem('twoMonthsDetails');
+            localStorage.removeItem('twoMonthsResults');
         }
 
         function saveBasicReport() {
