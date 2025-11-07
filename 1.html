@@ -3,30 +3,66 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>قيد التطوير</title>
+  <title>قيد التطوير 🐒</title>
   <style>
-    html,body{height:100%;margin:0}
-    body{
+    html,body{
+      height:100%;
+      margin:0;
+      background:linear-gradient(135deg,#1a1f2b,#0d1320);
+      font-family:"Noto Sans Arabic","Segoe UI",sans-serif;
+      color:#fff;
       display:flex;
       align-items:center;
       justify-content:center;
-      background:#071022;
-      color:#fff;
-      font-family: "Noto Sans Arabic", "Segoe UI", Tahoma, Arial, sans-serif;
-      padding:20px;
+      flex-direction:column;
+      overflow:hidden;
     }
-    .msg{
-      font-size:20px;
-      line-height:1.4;
-      background:rgba(255,255,255,0.03);
-      padding:18px 22px;
-      border-radius:10px;
-      box-shadow:0 8px 30px rgba(2,6,23,0.6);
+
+    h1{
+      font-size:22px;
       text-align:center;
+      background:rgba(255,255,255,0.05);
+      padding:18px 26px;
+      border-radius:14px;
+      box-shadow:0 6px 25px rgba(0,0,0,0.4);
+    }
+
+    /* القرد */
+    .monkey{
+      font-size:60px;
+      position:absolute;
+      top:25%;
+      animation:swing 3s ease-in-out infinite alternate;
+      transform-origin:top center;
+    }
+
+    @keyframes swing {
+      0%{ transform:rotate(15deg) translateY(0); }
+      100%{ transform:rotate(-15deg) translateY(4px); }
+    }
+
+    .rope{
+      width:2px;
+      height:120px;
+      background:#ccc;
+      position:absolute;
+      top:0;
+      left:50%;
+      transform:translateX(-50%);
+    }
+
+    footer{
+      position:fixed;
+      bottom:15px;
+      font-size:13px;
+      color:#aaa;
     }
   </style>
 </head>
 <body>
-  <div class="msg">اكرصها شوية بين ما اكمل وارفع التحديث</div>
+  <div class="rope"></div>
+  <div class="monkey">🐒</div>
+  <h1>اكرصها شوية بين ما اكمل وارفع التحديث 😅</h1>
+  <footer>الصفحة قيد التطوير... ترقبوا التحديث القادم 🚧</footer>
 </body>
 </html>
