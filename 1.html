@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>القسم المالي </title>
+    <title>شركة عراق سيل </title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700;800;900&display=swap">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -4257,6 +4257,7 @@ let agentReports = {};
                 const agent = agentsList.find(a => a.name === agentName);
                 const totalActivations = (data.countB || 0) + (data.countS || 0) + (data.countG || 0) + (data.countP || 0);
                 const totalAgentPercentageAmount = Math.round(iqBPercent) + Math.round(iqSPercent) + Math.round(iqGPercent) + Math.round(iqPPercent);
+                const netAgentPercentage = totalAgentPercentageAmount - (data.deductions || 0) - (data.penalties || 0);
                 totalAgentPercentage += totalAgentPercentageAmount;
                 
                 row.innerHTML = `
@@ -4275,7 +4276,7 @@ let agentReports = {};
                     <td style="padding: 6px 4px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: 600; color: #2C5F8D; font-size: 0.7rem;">${formatNumber(Math.round(iqSPercent))}</td>
                     <td style="padding: 6px 4px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: 600; color: #2C5F8D; font-size: 0.7rem;">${formatNumber(Math.round(iqGPercent))}</td>
                     <td style="padding: 6px 4px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: 600; color: #2C5F8D; font-size: 0.7rem;">${formatNumber(Math.round(iqPPercent))}</td>
-                    <td style="padding: 6px 4px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; color: #801c32; font-size: 0.85rem;">${formatNumber(totalAgentPercentageAmount)}</td>
+                    <td style="padding: 6px 4px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; color: #801c32; font-size: 0.85rem;">${formatNumber(netAgentPercentage)}</td>
                     <td style="padding: 6px 4px; text-align: center; border: 1px solid #ddd; position: relative; z-index: 10;">
                         <input type="number" id="deduction_${agentName.replace(/[^a-zA-Z0-9]/g, '_')}" value="${data.deductions || 0}" 
                                data-agent-name="${agentName}"
@@ -4304,6 +4305,16 @@ let agentReports = {};
             totalRow.style.fontWeight = 'bold';
             const totalActivationsSum = totalCountB + totalCountS + totalCountG + totalCountP;
             const totalAgentPercentageSum = Math.round(totalIQBPercent) + Math.round(totalIQSPercent) + Math.round(totalIQGPercent) + Math.round(totalIQPPercent);
+            
+            let totalDeductions = 0;
+            let totalPenalties = 0;
+            agents.forEach(agentName => {
+                const data = agentPercentages[agentName];
+                totalDeductions += data.deductions || 0;
+                totalPenalties += data.penalties || 0;
+            });
+            const netTotalAgentPercentage = totalAgentPercentageSum - totalDeductions - totalPenalties;
+            
             totalRow.innerHTML = `
                 <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; font-weight: bold; font-size: 0.8rem;">المجموع</td>
                 <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; font-size: 0.75rem;">${totalCountB}</td>
@@ -4320,9 +4331,9 @@ let agentReports = {};
                 <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; color: #2C5F8D; font-size: 0.75rem;">${formatNumber(Math.round(totalIQSPercent))}</td>
                 <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; color: #2C5F8D; font-size: 0.75rem;">${formatNumber(Math.round(totalIQGPercent))}</td>
                 <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; color: #2C5F8D; font-size: 0.75rem;">${formatNumber(Math.round(totalIQPPercent))}</td>
-                <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; color: #801c32; font-size: 0.9rem;">${formatNumber(totalAgentPercentageSum)}</td>
-                <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd;"></td>
-                <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd;"></td>
+                <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; color: #801c32; font-size: 0.9rem;">${formatNumber(netTotalAgentPercentage)}</td>
+                <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; font-size: 0.75rem;">${formatNumber(totalDeductions)}</td>
+                <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; font-size: 0.75rem;">${formatNumber(totalPenalties)}</td>
                 <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd;"></td>
             `;
             tbody.appendChild(totalRow);
@@ -4400,17 +4411,8 @@ let agentReports = {};
                             if (colNumber === 1) {
                                 bgColor = 'FF801C32';
                                 textColor = 'FFFFFFFF';
-                            } else if (colNumber === 2) {
-                                bgColor = 'FFFF9800';
-                                textColor = 'FFFFFFFF';
-                            } else if (colNumber === 3) {
-                                bgColor = 'FFD3D3D3';
-                                textColor = 'FF000000';
-                            } else if (colNumber === 4) {
-                                bgColor = 'FFFFEB3B';
-                                textColor = 'FF000000';
-                            } else if (colNumber === 5) {
-                                bgColor = 'FF9E9E9E';
+                            } else if (colNumber >= 2 && colNumber <= 5) {
+                                bgColor = 'FFFFFFFF';
                                 textColor = 'FF000000';
                             } else if (colNumber === 6) {
                                 bgColor = 'FFFFFFFF';
@@ -4475,6 +4477,7 @@ let agentReports = {};
                     const iqBPercent = data.iqBPercent !== undefined ? data.iqBPercent : ((data.iqB || 0) * rate);
                     const totalActivations = (data.countB || 0) + (data.countS || 0) + (data.countG || 0) + (data.countP || 0);
                     const totalAgentPercentageAmount = Math.round(iqBPercent) + Math.round(iqSPercent) + Math.round(iqGPercent) + Math.round(iqPPercent);
+                    const netAgentPercentage = totalAgentPercentageAmount - (data.deductions || 0) - (data.penalties || 0);
                     
                     const row = worksheet.addRow([
                         agentName,
@@ -4492,7 +4495,7 @@ let agentReports = {};
                         Math.round(iqSPercent),
                         Math.round(iqGPercent),
                         Math.round(iqPPercent),
-                        totalAgentPercentageAmount,
+                        netAgentPercentage,
                         data.deductions || 0,
                         data.penalties || 0
                     ]);
@@ -4512,22 +4515,6 @@ let agentReports = {};
                         if (colNumber === 1) {
                             cellBgColor = 'FF801C32';
                             fontColor = 'FFFFFFFF';
-                            isBold = true;
-                        } else if (colNumber === 2) {
-                            cellBgColor = 'FFFF9800';
-                            fontColor = 'FFFFFFFF';
-                            isBold = true;
-                        } else if (colNumber === 3) {
-                            cellBgColor = 'FFD3D3D3';
-                            fontColor = 'FF000000';
-                            isBold = true;
-                        } else if (colNumber === 4) {
-                            cellBgColor = 'FFFFEB3B';
-                            fontColor = 'FF000000';
-                            isBold = true;
-                        } else if (colNumber === 5) {
-                            cellBgColor = 'FF9E9E9E';
-                            fontColor = 'FF000000';
                             isBold = true;
                         } else if (colNumber >= 12 && colNumber <= 15) {
                             fontColor = 'FF2C5F8D';
@@ -4583,6 +4570,7 @@ let agentReports = {};
                     totalDeductions += data.deductions || 0;
                     totalPenalties += data.penalties || 0;
                 });
+                const netTotalAgentPercentage = totalAgentPercentageSum - totalDeductions - totalPenalties;
                 
                 const totalRow = worksheet.addRow([
                     'المجموع',
@@ -4600,7 +4588,7 @@ let agentReports = {};
                     Math.round(totalIQSPercent),
                     Math.round(totalIQGPercent),
                     Math.round(totalIQPPercent),
-                    totalAgentPercentageSum,
+                    netTotalAgentPercentage,
                     totalDeductions,
                     totalPenalties
                 ]);
@@ -4675,22 +4663,24 @@ let agentReports = {};
             if (!agentPercentages[agentName]) return;
             const deduction = parseFloat(value) || 0;
             agentPercentages[agentName].deductions = deduction;
-            agentPercentages[agentName].netPercentage = agentPercentages[agentName].agentPercentageAmount - 
-                deduction - (agentPercentages[agentName].penalties || 0);
-            if (skipRender) {
-                const inputId = `deduction_${agentName.replace(/[^a-zA-Z0-9]/g, '_')}`;
-                const input = document.getElementById(inputId);
-                if (input) {
-                    const row = input.closest('tr');
-                    if (row) {
-                        const cells = row.querySelectorAll('td');
-                        const netPercentageCell = cells[cells.length - 2];
-                        if (netPercentageCell) {
-                            netPercentageCell.textContent = formatNumber(agentPercentages[agentName].netPercentage || 0);
-                        }
-                    }
-                }
+            
+            // حساب agentPercentageAmount من النسب الفردية إذا لم يكن موجوداً
+            const data = agentPercentages[agentName];
+            const percentage = data.percentage || 15;
+            const rate = percentage / 100;
+            const iqPPercent = data.iqPPercent !== undefined ? data.iqPPercent : ((data.iqP || 0) * rate);
+            const iqGPercent = data.iqGPercent !== undefined ? data.iqGPercent : ((data.iqG || 0) * rate);
+            const iqSPercent = data.iqSPercent !== undefined ? data.iqSPercent : ((data.iqS || 0) * rate);
+            const iqBPercent = data.iqBPercent !== undefined ? data.iqBPercent : ((data.iqB || 0) * rate);
+            const agentPercentageAmount = data.agentPercentageAmount || (Math.round(iqBPercent) + Math.round(iqSPercent) + Math.round(iqGPercent) + Math.round(iqPPercent));
+            
+            // تحديث agentPercentageAmount في البيانات
+            if (!data.agentPercentageAmount) {
+                agentPercentages[agentName].agentPercentageAmount = agentPercentageAmount;
             }
+            
+            agentPercentages[agentName].netPercentage = agentPercentageAmount - 
+                deduction - (agentPercentages[agentName].penalties || 0);
             localStorage.setItem('agentPercentages', JSON.stringify(agentPercentages));
             if (supabaseClient && !skipRender) {
                 const savedMonthYear = localStorage.getItem('agentPercentages_monthYear') || getCurrentMonthYear();
@@ -4712,22 +4702,24 @@ let agentReports = {};
             if (!agentPercentages[agentName]) return;
             const penalty = parseFloat(value) || 0;
             agentPercentages[agentName].penalties = penalty;
-            agentPercentages[agentName].netPercentage = agentPercentages[agentName].agentPercentageAmount - 
-                (agentPercentages[agentName].deductions || 0) - penalty;
-            if (skipRender) {
-                const inputId = `penalty_${agentName.replace(/[^a-zA-Z0-9]/g, '_')}`;
-                const input = document.getElementById(inputId);
-                if (input) {
-                    const row = input.closest('tr');
-                    if (row) {
-                        const cells = row.querySelectorAll('td');
-                        const netPercentageCell = cells[cells.length - 2];
-                        if (netPercentageCell) {
-                            netPercentageCell.textContent = formatNumber(agentPercentages[agentName].netPercentage || 0);
-                        }
-                    }
-                }
+            
+            // حساب agentPercentageAmount من النسب الفردية إذا لم يكن موجوداً
+            const data = agentPercentages[agentName];
+            const percentage = data.percentage || 15;
+            const rate = percentage / 100;
+            const iqPPercent = data.iqPPercent !== undefined ? data.iqPPercent : ((data.iqP || 0) * rate);
+            const iqGPercent = data.iqGPercent !== undefined ? data.iqGPercent : ((data.iqG || 0) * rate);
+            const iqSPercent = data.iqSPercent !== undefined ? data.iqSPercent : ((data.iqS || 0) * rate);
+            const iqBPercent = data.iqBPercent !== undefined ? data.iqBPercent : ((data.iqB || 0) * rate);
+            const agentPercentageAmount = data.agentPercentageAmount || (Math.round(iqBPercent) + Math.round(iqSPercent) + Math.round(iqGPercent) + Math.round(iqPPercent));
+            
+            // تحديث agentPercentageAmount في البيانات
+            if (!data.agentPercentageAmount) {
+                agentPercentages[agentName].agentPercentageAmount = agentPercentageAmount;
             }
+            
+            agentPercentages[agentName].netPercentage = agentPercentageAmount - 
+                (agentPercentages[agentName].deductions || 0) - penalty;
             localStorage.setItem('agentPercentages', JSON.stringify(agentPercentages));
             if (supabaseClient && !skipRender) {
                 const savedMonthYear = localStorage.getItem('agentPercentages_monthYear') || getCurrentMonthYear();
@@ -5330,7 +5322,7 @@ let agentReports = {};
                 if (input && input.tagName === 'INPUT' && input.hasAttribute('data-agent-name') && input.hasAttribute('data-field-type')) {
                     const agentName = input.getAttribute('data-agent-name');
                     const fieldType = input.getAttribute('data-field-type');
-                    const value = input.value;
+                    const value = parseFloat(input.value) || 0;
                     if (fieldType === 'deduction') {
                         updateDeduction(agentName, value, true);
                     } else if (fieldType === 'penalty') {
