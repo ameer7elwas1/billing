@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> قسم الحسابات </title>
+    <title>قسم الحسابات </title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
@@ -3271,7 +3271,6 @@
                 <div class="section">
                     <h3 class="section-title"> إدارة الوكلاء</h3>
                     <div style="margin-bottom: 20px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
-                        <button class="btn btn-primary" onclick="showAddAgentModal()"> إضافة وكيل جديد</button>
                         <button class="btn btn-success" onclick="refreshAgentsList()"> تحديث القائمة</button>
                     </div>
                     <div class="agents-controls" style="margin-bottom: 20px; padding: 15px; background: rgba(128, 28, 50, 0.05); border-radius: 12px; display: flex; gap: 15px; flex-wrap: wrap; align-items: center; position: relative; z-index: 10;">
@@ -8186,7 +8185,6 @@ let agentReports = {};
                     }
                     html += `</div>`;
                 }
-                // إضافة زر حذف تفاصيل الوكيل للمدير فقط
                 if (currentUserRole === 'admin') {
                     html += `
                         <div style="margin-top: 30px; padding: 20px; background: rgba(220, 53, 69, 0.1); border-radius: 12px; border: 2px solid rgba(220, 53, 69, 0.3);">
@@ -10360,7 +10358,6 @@ let agentReports = {};
                 localStorage.removeItem('advancedData');
                 localStorage.removeItem('advancedDetails');
                 localStorage.removeItem('advancedResults');
-                // حذف من agentReports
                 Object.keys(agentReports).forEach(agent => {
                     if (agentReports[agent].advanced) {
                         delete agentReports[agent].advanced;
@@ -10381,7 +10378,6 @@ let agentReports = {};
                 localStorage.removeItem('twoMonthsData');
                 localStorage.removeItem('twoMonthsDetails');
                 localStorage.removeItem('twoMonthsResults');
-                // حذف من agentReports
                 Object.keys(agentReports).forEach(agent => {
                     if (agentReports[agent].twoMonths) {
                         delete agentReports[agent].twoMonths;
@@ -10878,7 +10874,6 @@ function updateAgentSummary() {
                 return totalB - totalA;
             });
             sortedAgents.forEach(([agentName, report]) => {
-                // التحقق من وجود basic مع total.amount > 0 قبل الاستخدام
                 let totalBasic = (report.basic && report.basic.total && report.basic.total.amount > 0) ? report.basic.total.amount : 0;
                 let totalAdvanced = (report.advanced && report.advanced.total && report.advanced.total.profit > 0) ? report.advanced.total.profit : 0;
                 let totalTwoMonths = (report.twoMonths && report.twoMonths.total && report.twoMonths.total.profit > 0) ? report.twoMonths.total.profit : 0;
@@ -10956,13 +10951,11 @@ function updateAgentSummary() {
             summaryHTML += `</div>`;
             document.getElementById('summaryContent').innerHTML = summaryHTML;
             
-            // حساب الإحصائيات الإضافية
             const totalOffers = totalBasicAll + totalAdvancedAll + totalTwoMonthsAll;
             const basicPercentage = totalOffers > 0 ? ((totalBasicAll / totalOffers) * 100).toFixed(1) : 0;
             const advancedPercentage = totalOffers > 0 ? ((totalAdvancedAll / totalOffers) * 100).toFixed(1) : 0;
             const twoMonthsPercentage = totalOffers > 0 ? ((totalTwoMonthsAll / totalOffers) * 100).toFixed(1) : 0;
             
-            // حساب عدد الوكلاء لكل نوع عرض
             let basicAgentsCount = 0, advancedAgentsCount = 0, twoMonthsAgentsCount = 0;
             sortedAgents.forEach(([agentName, report]) => {
                 if (report.basic && report.basic.total && report.basic.total.amount > 0) basicAgentsCount++;
@@ -11025,13 +11018,10 @@ function updateAgentSummary() {
             document.getElementById('summaryTotalsGrid').innerHTML = totalsHTML;
             document.getElementById('summaryTotals').style.display = 'block';
             
-            // إنشاء الرسوم البيانية
             createCharts(totalBasicAll, totalAdvancedAll, totalTwoMonthsAll, sortedAgents);
         }
         
-        // وظيفة إنشاء الرسوم البيانية
         function createCharts(totalBasic, totalAdvanced, totalTwoMonths, agentsData) {
-            // تدمير الرسوم البيانية السابقة إن وجدت
             if (window.offersChart && typeof window.offersChart.destroy === 'function') {
                 try {
                     window.offersChart.destroy();
@@ -11057,7 +11047,6 @@ function updateAgentSummary() {
                 window.subscriptionsChart = null;
             }
             
-            // رسم بياني لتوزيع العروض
             const offersCtx = document.getElementById('offersChart');
             if (offersCtx) {
                 const totalOffers = totalBasic + totalAdvanced + totalTwoMonths;
@@ -11123,7 +11112,6 @@ function updateAgentSummary() {
                 });
             }
             
-            // رسم بياني لأعلى الوكلاء أداءً (أعلى 10)
             const topAgentsCtx = document.getElementById('topAgentsChart');
             if (topAgentsCtx && agentsData.length > 0) {
                 const topAgents = agentsData.slice(0, 10).map(([agentName, report]) => {
@@ -11215,7 +11203,6 @@ function updateAgentSummary() {
                 });
             }
             
-            // رسم بياني لتوزيع أنواع الاشتراكات
             const subscriptionsCtx = document.getElementById('subscriptionsChart');
             if (subscriptionsCtx) {
                 let totalBronze = 0, totalSilver = 0, totalGold = 0, totalPlatinum = 0;
@@ -11242,30 +11229,33 @@ function updateAgentSummary() {
                     });
                 }
                 
-                // إظهار الرسم البياني حتى لو كانت القيم صفر
                 const totalSubscriptions = totalBronze + totalSilver + totalGold + totalPlatinum;
                 const chartData = totalSubscriptions > 0 
                     ? [totalBronze, totalSilver, totalGold, totalPlatinum]
-                    : [1, 1, 1, 1]; // قيم افتراضية للعرض
+                    : [1, 1, 1, 1];
+                
+                const labels = ['برونز (Bronze)', 'سلفر (Silver)', 'ذهبي (Gold)', 'بلاتينيوم (Platinum)'];
+                const backgroundColors = [
+                    'rgba(205, 127, 50, 0.8)',
+                    'rgba(192, 192, 192, 0.8)',
+                    'rgba(255, 215, 0, 0.8)',
+                    'rgba(231, 231, 231, 0.8)'
+                ];
+                const borderColors = [
+                    '#cd7f32',
+                    '#c0c0c0',
+                    '#ffd700',
+                    '#e7e7e7'
+                ];
                 
                 window.subscriptionsChart = new Chart(subscriptionsCtx, {
                     type: 'pie',
                     data: {
-                        labels: ['برونز (Bronze)', 'سلفر (Silver)', 'ذهبي (Gold)', 'بلاتينيوم (Platinum)'],
+                        labels: labels,
                         datasets: [{
                             data: chartData,
-                            backgroundColor: [
-                                'rgba(205, 127, 50, 0.8)',
-                                'rgba(192, 192, 192, 0.8)',
-                                'rgba(255, 215, 0, 0.8)',
-                                'rgba(231, 231, 231, 0.8)'
-                            ],
-                            borderColor: [
-                                '#cd7f32',
-                                '#c0c0c0',
-                                '#ffd700',
-                                '#e7e7e7'
-                            ],
+                            backgroundColor: backgroundColors,
+                            borderColor: borderColors,
                             borderWidth: 2
                         }]
                     },
@@ -11283,10 +11273,37 @@ function updateAgentSummary() {
                                         weight: '600'
                                     },
                                     usePointStyle: true,
-                                    pointStyle: 'circle'
+                                    pointStyle: 'circle',
+                                    generateLabels: function(chart) {
+                                        const values = [totalBronze, totalSilver, totalGold, totalPlatinum];
+                                        const total = totalSubscriptions > 0 ? totalSubscriptions : values.reduce((a, b) => a + b, 0);
+                                        return labels.map((label, i) => {
+                                            const value = values[i];
+                                            const percentage = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
+                                            return {
+                                                text: label + ': ' + formatNumberEnglish(value) + ' (' + percentage + '%)',
+                                                fillStyle: backgroundColors[i],
+                                                strokeStyle: borderColors[i],
+                                                lineWidth: 2,
+                                                hidden: false,
+                                                index: i
+                                            };
+                                        });
+                                    }
                                 }
                             },
                             tooltip: {
+                                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                                padding: 12,
+                                titleFont: {
+                                    size: 14,
+                                    family: 'Cairo',
+                                    weight: '700'
+                                },
+                                bodyFont: {
+                                    size: 13,
+                                    family: 'Cairo'
+                                },
                                 callbacks: {
                                     label: function(context) {
                                         if (totalSubscriptions === 0) {
@@ -11303,7 +11320,6 @@ function updateAgentSummary() {
                 });
             }
             
-            // إظهار قسم الرسوم البيانية
             document.getElementById('chartsSection').style.display = 'block';
         }
         function refreshSummary() {
@@ -11318,23 +11334,20 @@ function updateAgentSummary() {
             try {
                 const ExcelJS = window.ExcelJS;
                 if (!ExcelJS) {
-                    // استخدام XLSX كبديل
                     exportSummaryToExcelXLSX();
                     return;
                 }
                 const workbook = new ExcelJS.Workbook();
                 const worksheet = workbook.addWorksheet('ملخص شامل للوكلاء');
                 
-                // العنوان الرئيسي
                 const titleRow = worksheet.getRow(1);
                 titleRow.getCell(1).value = 'تقرير شامل لجميع الوكلاء - تفاصيل كاملة';
                 titleRow.getCell(1).font = { bold: true, size: 18, color: { argb: 'FF801C32' } };
                 titleRow.getCell(1).alignment = { horizontal: 'center', vertical: 'middle' };
-                const totalColumns = 45; // 1 (اسم) + 9 (عرض مجاني) + 17 (3 أشهر) + 17 (شهرين) + 1 (إجمالي)
+                const totalColumns = 45;
                 worksheet.mergeCells(1, 1, 1, totalColumns);
                 titleRow.height = 35;
                 
-                // تاريخ التقرير
                 const dateRow = worksheet.getRow(2);
                 const now = new Date();
                 const dateStr = `${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()} ${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')}`;
@@ -11344,7 +11357,6 @@ function updateAgentSummary() {
                 worksheet.mergeCells(2, 1, 2, totalColumns);
                 dateRow.height = 25;
                 
-                // رأس الجدول الرئيسي
                 let currentRow = 4;
                 const headers = [
                     'اسم الوكيل',
@@ -11386,7 +11398,6 @@ function updateAgentSummary() {
                 });
                 headerRow.height = 40;
                 
-                // بيانات الوكلاء
                 const sortedAgents = Object.entries(agentReports).sort((a, b) => {
                     let totalA = 0, totalB = 0;
                     if (a[1].basic && a[1].basic.total && a[1].basic.total.amount > 0) totalA += a[1].basic.total.amount;
@@ -11405,10 +11416,8 @@ function updateAgentSummary() {
                     const dataRow = worksheet.getRow(currentRow);
                     let col = 1;
                     
-                    // اسم الوكيل
                     dataRow.getCell(col++).value = agentName;
                     
-                    // العرض المجاني
                     const basic = report.basic || {};
                     const basicBronze = basic.bronze || { count: 0, amount: 0 };
                     const basicSilver = basic.silver || { count: 0, amount: 0 };
@@ -11427,7 +11436,6 @@ function updateAgentSummary() {
                     dataRow.getCell(col++).value = basicTotal.amount || 0;
                     grandTotalBasic += basicTotal.amount || 0;
                     
-                    // مخفض 3 أشهر
                     const advanced = report.advanced || {};
                     const advBronze = advanced.bronze || { count: 0, promoAmount: 0, officialAmount: 0 };
                     const advSilver = advanced.silver || { count: 0, promoAmount: 0, officialAmount: 0 };
@@ -11454,7 +11462,6 @@ function updateAgentSummary() {
                     dataRow.getCell(col++).value = advTotal.profit || 0;
                     grandTotalAdvanced += advTotal.profit || 0;
                     
-                    // مخفض شهرين
                     const twoMonths = report.twoMonths || {};
                     const tmBronze = twoMonths.bronze || { count: 0, promoAmount: 0, officialAmount: 0 };
                     const tmSilver = twoMonths.silver || { count: 0, promoAmount: 0, officialAmount: 0 };
@@ -11481,12 +11488,10 @@ function updateAgentSummary() {
                     dataRow.getCell(col++).value = tmTotal.profit || 0;
                     grandTotalTwoMonths += tmTotal.profit || 0;
                     
-                    // الإجمالي الكلي
                     const agentTotal = (basicTotal.amount || 0) + (advTotal.profit || 0) + (tmTotal.profit || 0);
                     dataRow.getCell(col++).value = agentTotal;
                     grandTotalAll += agentTotal;
                     
-                    // تنسيق الصف
                     const isEven = index % 2 === 0;
                     const bgColor = isEven ? 'FFFFFFFF' : 'FFF8F9FA';
                     for (let c = 1; c <= headers.length; c++) {
@@ -11511,15 +11516,14 @@ function updateAgentSummary() {
                     dataRow.height = 25;
                 });
                 
-                // صف الإجمالي
                 currentRow++;
                 const totalRow = worksheet.getRow(currentRow);
                 totalRow.getCell(1).value = 'الإجمالي الكلي';
                 totalRow.getCell(1).font = { bold: true, size: 12, color: { argb: 'FF801C32' } };
-                totalRow.getCell(10).value = grandTotalBasic; // عمود الإجمالي للعرض المجاني
-                totalRow.getCell(27).value = grandTotalAdvanced; // عمود الإجمالي لمخفض 3 أشهر
-                totalRow.getCell(44).value = grandTotalTwoMonths; // عمود الإجمالي لمخفض شهرين
-                totalRow.getCell(45).value = grandTotalAll; // عمود الإجمالي الكلي
+                totalRow.getCell(10).value = grandTotalBasic;
+                totalRow.getCell(27).value = grandTotalAdvanced;
+                totalRow.getCell(44).value = grandTotalTwoMonths;
+                totalRow.getCell(45).value = grandTotalAll;
                 
                 for (let c = 1; c <= headers.length; c++) {
                     const cell = totalRow.getCell(c);
@@ -11542,16 +11546,14 @@ function updateAgentSummary() {
                 }
                 totalRow.height = 30;
                 
-                // ضبط عرض الأعمدة
                 worksheet.columns.forEach((column, index) => {
                     if (index === 0) {
-                        column.width = 25; // اسم الوكيل
+                        column.width = 25;
                     } else {
                         column.width = 12;
                     }
                 });
                 
-                // حفظ الملف
                 workbook.xlsx.writeBuffer().then(buffer => {
                     const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
                     const url = URL.createObjectURL(blob);
@@ -11663,7 +11665,6 @@ function updateAgentSummary() {
             if (agentReports[agentName]) {
                 delete agentReports[agentName];
             }
-            // حذف بيانات النسبة
             if (agentPercentages[agentName]) {
                 delete agentPercentages[agentName];
                 localStorage.setItem('agentPercentages', JSON.stringify(agentPercentages));
@@ -11723,7 +11724,6 @@ function updateAgentSummary() {
             if (!confirm('هل أنت متأكد من حذف جميع التحليلات من تبويبات العروض والملخص؟\n\nسيتم حذف:\n- جميع تحليلات العرض المجاني\n- جميع تحليلات العرض المخفض 3 أشهر\n- جميع تحليلات العرض المخفض شهرين\n- جميع بيانات النسب\n\nيمكنك إجراء تحليلات جديدة بعد الحذف.')) {
                 return;
             }
-            // حذف البيانات من الذاكرة المحلية
             agentReports = {};
             basicData = null;
             advancedData = null;
@@ -11733,13 +11733,11 @@ function updateAgentSummary() {
             twoMonthsDetails = [];
             agentPercentages = {};
             
-            // إخفاء النتائج
             document.getElementById('basicResults')?.classList.add('hidden');
             document.getElementById('advancedResults')?.classList.add('hidden');
             document.getElementById('twoMonthsResults')?.classList.add('hidden');
             document.getElementById('percentageResults')?.classList.add('hidden');
             
-            // مسح localStorage
             localStorage.removeItem('basicData');
             localStorage.removeItem('advancedData');
             localStorage.removeItem('twoMonthsData');
@@ -11753,7 +11751,6 @@ function updateAgentSummary() {
             localStorage.removeItem('agentPercentages');
             localStorage.removeItem('agentPercentages_monthYear');
             
-            // مسح حقول الملفات
             document.getElementById('basicFileInput').value = '';
             document.getElementById('advancedFileInput').value = '';
             document.getElementById('twoMonthsFileInput').value = '';
@@ -11766,7 +11763,6 @@ function updateAgentSummary() {
             logActivity('حذف جميع التحليلات', 'تم حذف جميع التحليلات من تبويبات العروض والملخص');
         }
         
-        // وظيفة حذف تفاصيل وكيل من الأرشيف (للمدير فقط)
         async function deleteAgentFromArchive(agentName, monthYear) {
             if (currentUserRole !== 'admin') {
                 alert('ليس لديك صلاحية لحذف البيانات من الأرشيف. هذه الوظيفة متاحة للمدير فقط.');
@@ -11783,7 +11779,6 @@ function updateAgentSummary() {
                     return;
                 }
                 
-                // حذف من analysis_archives
                 const analysisTypes = ['basic', 'advanced', 'two_months'];
                 for (const analysisType of analysisTypes) {
                     try {
@@ -11795,12 +11790,10 @@ function updateAgentSummary() {
                             .maybeSingle();
                         
                         if (archive && archive.data) {
-                            // حذف agentReports
                             if (archive.data.agentReports && archive.data.agentReports[agentName]) {
                                 delete archive.data.agentReports[agentName];
                             }
                             
-                            // حذف التفاصيل (details) المتعلقة بهذا الوكيل
                             if (Array.isArray(archive.data.details)) {
                                 archive.data.details = archive.data.details.filter(detail => {
                                     const detailAgent = detail.agent || detail.Agent || detail.agentName || detail.AgentName || detail['اسم الوكيل'] || detail['الوكيل'];
@@ -11808,7 +11801,6 @@ function updateAgentSummary() {
                                 });
                             }
                             
-                            // حذف البيانات (data) المتعلقة بهذا الوكيل
                             if (Array.isArray(archive.data.data)) {
                                 archive.data.data = archive.data.data.filter(item => {
                                     const itemAgent = item.agent || item.Agent || item.agentName || item.AgentName || item['اسم الوكيل'] || item['الوكيل'];
@@ -11816,12 +11808,10 @@ function updateAgentSummary() {
                                 });
                             }
                             
-                            // حذف النتائج (results) المتعلقة بهذا الوكيل
                             if (archive.data.results && archive.data.results.agentName === agentName) {
                                 archive.data.results = null;
                             }
                             
-                            // حفظ الأرشيف المحدث
                             await saveToDatabase('analysis_archives', archive.data, { analysis_type: analysisType, monthYear: monthYear });
                         }
                     } catch (error) {
@@ -11829,7 +11819,6 @@ function updateAgentSummary() {
                     }
                 }
                 
-                // حذف من agent_percentages
                 try {
                     const { data: percentagesArchive } = await supabaseClient
                         .from('agent_percentages')
@@ -11848,7 +11837,6 @@ function updateAgentSummary() {
                 showSuccessMessage(`✅ تم حذف جميع تفاصيل الوكيل "${agentName}" من الأرشيف بنجاح`);
                 logActivity('حذف تفاصيل وكيل من الأرشيف', `تم حذف تفاصيل الوكيل "${agentName}" من الأرشيف للشهر ${monthYear}`);
                 
-                // إعادة تحميل الأرشيف
                 setTimeout(() => {
                     loadArchiveByAgent(monthYear);
                 }, 1000);
@@ -11862,11 +11850,9 @@ function updateAgentSummary() {
         document.addEventListener('DOMContentLoaded', function() {
             loadSettings();
             loadActivityLog();
-            // استعادة التبويب والموضع بعد تحميل الصفحة
             restoreTabAndScroll();
         });
         
-        // حفظ موضع التمرير عند التمرير لكل تبويب بشكل منفصل
         let scrollTimeout;
         window.addEventListener('scroll', function() {
             clearTimeout(scrollTimeout);
@@ -12073,7 +12059,6 @@ function updateAgentSummary() {
             }
             
             try {
-                // حفظ أسماء الوكلاء فقط (بدون النسب والبيانات الأخرى)
                 const agentsBackup = agentsList.map(agent => ({
                     name: agent.name,
                     subName: agent.subName || '',
@@ -12082,7 +12067,6 @@ function updateAgentSummary() {
                     percentage: agent.percentage || 16
                 }));
                 
-                // تصفير جميع البيانات
                 agentReports = {};
                 agentPercentages = {};
                 activityLog = [];
@@ -12093,13 +12077,10 @@ function updateAgentSummary() {
                 advancedDetails = [];
                 twoMonthsDetails = [];
                 
-                // مسح localStorage مع الاحتفاظ بأسماء الوكلاء فقط
                 localStorage.clear();
                 localStorage.setItem('agentsList', JSON.stringify(agentsBackup));
                 
-                // حذف من قاعدة البيانات - حذف جميع البيانات من جميع الأشهر
                 if (supabaseClient) {
-                    // حذف جميع التحليلات من جميع الأشهر
                     try {
                         const { error: analysisError } = await supabaseClient
                             .from('analysis_archives')
@@ -12114,7 +12095,6 @@ function updateAgentSummary() {
                         console.error('Error deleting analysis archives:', e);
                     }
                     
-                    // حذف جميع النسب من جميع الأشهر
                     try {
                         const { error: percentagesError } = await supabaseClient
                             .from('agent_percentages')
@@ -12129,7 +12109,6 @@ function updateAgentSummary() {
                         console.error('Error deleting agent percentages:', e);
                     }
                     
-                    // حذف جميع سجلات النشاط من جميع الأشهر
                     try {
                         const { error: activityError } = await supabaseClient
                             .from('activity_logs')
@@ -12144,7 +12123,6 @@ function updateAgentSummary() {
                         console.error('Error deleting activity logs:', e);
                     }
                     
-                    // تحديث قائمة الوكلاء في قاعدة البيانات (الاحتفاظ بالأسماء فقط)
                     try {
                         await saveAgentsToDatabase();
                         console.log('✅ تم تحديث قائمة الوكلاء في قاعدة البيانات');
@@ -12153,14 +12131,12 @@ function updateAgentSummary() {
                     }
                 }
                 
-                // تحديث الواجهة
                 refreshAgentsList();
                 updateAgentSummary();
                 renderPercentageTable();
                 
                 showSuccessMessage('✅ تم تصفير جميع البيانات من قاعدة البيانات بنجاح! تم الاحتفاظ بأسماء الوكلاء فقط.');
                 
-                // إعادة تحميل الصفحة بعد ثانيتين
                 setTimeout(() => {
                     location.reload();
                 }, 2000);
@@ -12178,13 +12154,11 @@ function updateAgentSummary() {
                 return;
             }
             
-            // تنظيف اسم الوكيل للمقارنة (إزالة المسافات الزائدة)
             const normalizedAgentName = agentName.trim();
             if (!normalizedAgentName) {
                 return;
             }
             
-            // التحقق من وجود الوكيل باستخدام مقارنة دقيقة (مع تجاهل المسافات الزائدة)
             const agentExists = agentsList.some(a => {
                 const normalizedExistingName = (a.name || '').trim();
                 return normalizedExistingName === normalizedAgentName;
@@ -12201,7 +12175,6 @@ function updateAgentSummary() {
                 agentsList.push(newAgent);
                 localStorage.setItem('agentsList', JSON.stringify(agentsList));
                 
-                // Always save to database immediately
                 if (supabaseClient) {
                 try {
                     const saved = await saveAgentsToDatabase();
@@ -12218,7 +12191,6 @@ function updateAgentSummary() {
                 logActivity('إضافة وكيل تلقائي', `تم إضافة الوكيل "${normalizedAgentName}" تلقائياً من ملف التحليل`);
                 showSuccessMessage(`تم إضافة الوكيل "${normalizedAgentName}" تلقائياً إلى قائمة الوكلاء`);
             } else {
-                // الوكيل موجود بالفعل - لا حاجة لإضافته
                 console.log(`✓ Agent "${normalizedAgentName}" already exists in the list`);
             }
         }
@@ -12492,7 +12464,7 @@ function updateAgentSummary() {
                 agentsListContainer.innerHTML = `
                     <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #999;">
                         <p style="font-size: 1.2rem; margin-bottom: 20px;">لا يوجد وكلاء مسجلون</p>
-                        <button class="btn btn-primary" onclick="showAddAgentModal()"> إضافة وكيل جديد</button>
+                        <p style="font-size: 0.9rem; color: #666;">سيتم إضافة الوكلاء تلقائياً عند تحليل الملفات</p>
                     </div>
                 `;
                 document.getElementById('agentsCount').textContent = '0';
@@ -12708,7 +12680,6 @@ function updateAgentSummary() {
                 alert('يرجى إدخال اسم الوكيل');
                 return;
             }
-            // التحقق من وجود الوكيل باستخدام مقارنة دقيقة (مع تجاهل المسافات الزائدة)
             const normalizedName = name.trim();
             const agentExists = agentsList.some(a => {
                 const normalizedExistingName = (a.name || '').trim();
@@ -12728,7 +12699,6 @@ function updateAgentSummary() {
             agentsList.push(agentData);
             localStorage.setItem('agentsList', JSON.stringify(agentsList));
             
-            // Always save to database immediately when adding agent manually
             if (supabaseClient) {
             try {
                 const saved = await saveAgentsToDatabase();
@@ -12794,7 +12764,6 @@ function updateAgentSummary() {
             agentsList[index] = agentData;
             localStorage.setItem('agentsList', JSON.stringify(agentsList));
             
-            // Always save to database immediately when updating agent info
             if (supabaseClient) {
             try {
                 const saved = await saveAgentsToDatabase();
@@ -12833,7 +12802,6 @@ function updateAgentSummary() {
                         .catch(err => console.error('Error saving percentages after deletion:', err));
                 }
             }
-            // Always save to database immediately when deleting agent
             if (supabaseClient) {
             try {
                 const saved = await saveAgentsToDatabase();
@@ -13747,7 +13715,6 @@ function updateAgentSummary() {
             
             const isShowing = popup.classList.contains('show');
             if (isShowing) {
-                // إغلاق الـ popup
                 popup.style.animation = 'popupFadeOut 0.15s ease-out forwards';
                 setTimeout(() => {
                     popup.classList.remove('show');
@@ -13757,7 +13724,6 @@ function updateAgentSummary() {
                     popup.style.pointerEvents = 'none';
                     popup.style.animation = '';
                     popup.style.transform = '';
-                    // إعادة تعيين hover state للـ sidebarUser
                     if (sidebarUser) {
                         sidebarUser.style.transform = 'scale(1)';
                         sidebarUser.style.boxShadow = '0 4px 12px rgba(128, 28, 50, 0.4)';
@@ -13775,58 +13741,46 @@ function updateAgentSummary() {
                     p.style.transform = '';
                 });
                 
-                // حساب موضع الـ popup
                 const rect = sidebarUser.getBoundingClientRect();
-                const popupWidth = 250; // min-width
-                const popupHeight = 200; // تقدير الارتفاع
+                const popupWidth = 250;
+                const popupHeight = 200;
                 
-                // حساب الموضع: على الجانب الأيسر من الـ sidebar (خارج القائمة)
                 const sidebar = document.getElementById('sidebar');
                 const sidebarRect = sidebar ? sidebar.getBoundingClientRect() : null;
                 const left = sidebarRect ? sidebarRect.left - popupWidth - 10 : rect.left - popupWidth - 10;
                 const top = rect.top;
                 
-                // التأكد من أن الـ popup لا يخرج من الشاشة
                 const windowWidth = window.innerWidth;
                 const windowHeight = window.innerHeight;
                 let finalLeft = left;
                 let finalTop = top;
                 
-                // التحقق من الجانب الأيسر
                 if (finalLeft < 10) {
-                    // إذا لم يكن هناك مساحة على اليسار، ضعه على اليمين
                     finalLeft = sidebarRect ? sidebarRect.right + 10 : rect.right + 10;
                 }
-                // التحقق من الجانب الأيمن
                 if (finalLeft + popupWidth > windowWidth - 10) {
                     finalLeft = windowWidth - popupWidth - 10;
                 }
-                // التحقق من الأسفل
                 if (finalTop + popupHeight > windowHeight - 10) {
                     finalTop = windowHeight - popupHeight - 10;
                 }
-                // التحقق من الأعلى
                 if (finalTop < 10) {
                     finalTop = 10;
                 }
                 
-                // تعيين الموضع والتحويل
                 popup.style.left = finalLeft + 'px';
                 popup.style.top = finalTop + 'px';
                 popup.style.transform = 'translateY(0)';
                 
-                // فتح الـ popup
                 popup.style.display = 'block';
                 popup.style.visibility = 'visible';
                 popup.style.pointerEvents = 'auto';
                 popup.style.transform = 'translateY(0)';
                 
-                // استخدام setTimeout بسيط لضمان تطبيق animation
                 setTimeout(() => {
                     popup.classList.add('show');
                 }, 10);
                 
-                // منع إعادة حساب الموضع عند hover
                 let isPopupOpen = true;
                 const preventRecalculation = () => {
                     if (isPopupOpen && popup.classList.contains('show')) {
@@ -13841,7 +13795,6 @@ function updateAgentSummary() {
                     }
                 };
                 
-                // إضافة event listeners لمنع الاهتزاز
                 popup.addEventListener('mouseenter', preventRecalculation);
                 popup.addEventListener('mousemove', preventRecalculation);
             }
@@ -13852,7 +13805,6 @@ function updateAgentSummary() {
             const popup = document.getElementById('userContactPopup');
             const sidebarUser = document.getElementById('sidebarUser');
             if (popup && sidebarUser && popup.classList.contains('show')) {
-                // التحقق من أن النقر ليس على الـ popup أو الـ sidebarUser
                 const clickedInsidePopup = popup.contains(event.target);
                 const clickedInsideSidebarUser = sidebarUser.contains(event.target);
                 
@@ -13931,13 +13883,10 @@ function updateAgentSummary() {
                 defaultPercentageInput.value = savedDefaultPercentage;
             }
             
-            // دعم تسجيل الدخول التلقائي من النظام الموحد
             autoLoginFromMaster();
         });
         
-        // وظيفة تسجيل الدخول التلقائي من النظام الموحد
         function autoLoginFromMaster() {
-            // التحقق من sessionStorage أولاً
             const autoUsername = sessionStorage.getItem('auto_login_username');
             const autoPassword = sessionStorage.getItem('auto_login_password');
             
@@ -13949,14 +13898,12 @@ function updateAgentSummary() {
                     loginUsername.value = autoUsername;
                     loginPassword.value = autoPassword;
                     
-                    // محاولة تسجيل الدخول تلقائياً بعد ملء الحقول
                     setTimeout(() => {
                         if (typeof handleLogin === 'function') {
                             handleLogin();
                         }
                     }, 500);
                     
-                    // مسح البيانات من sessionStorage بعد الاستخدام
                     sessionStorage.removeItem('auto_login_username');
                     sessionStorage.removeItem('auto_login_password');
                     sessionStorage.removeItem('auto_login_system');
@@ -13964,7 +13911,6 @@ function updateAgentSummary() {
             }
         }
         
-        // استقبال رسائل postMessage من النظام الموحد
         window.addEventListener('message', function(event) {
             if (event.data && event.data.type === 'AUTO_LOGIN') {
                 const loginUsername = document.getElementById('loginUsername');
@@ -13974,7 +13920,6 @@ function updateAgentSummary() {
                     loginUsername.value = event.data.username || '';
                     loginPassword.value = event.data.password || '';
                     
-                    // محاولة تسجيل الدخول تلقائياً
                     setTimeout(() => {
                         if (typeof handleLogin === 'function') {
                             handleLogin();
