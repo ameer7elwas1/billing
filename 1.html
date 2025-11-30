@@ -1012,10 +1012,10 @@
             will-change: transform, opacity;
         }
         .user-contact-popup.show {
-            display: block;
-            opacity: 1;
-            visibility: visible;
-            pointer-events: auto;
+            display: block !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            pointer-events: auto !important;
             animation: popupFadeIn 0.15s ease-out forwards;
         }
         @keyframes popupFadeIn {
@@ -1070,7 +1070,7 @@
             text-decoration: underline;
         }
         .user-contact-icon {
-            font-size: 1.2rem;
+            font-size: 1.0rem;
             width: 24px;
             text-align: center;
             flex-shrink: 0;
@@ -2996,7 +2996,7 @@
                     </div>
                     <h1>قسم الحسابات</h1>
                     <div class="sidebar-user-info" style="display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 0;">
-                        <div id="sidebarUser" class="sidebar-user-name" style="background: linear-gradient(135deg, #801c32, #a52d45); color: white; padding: 14px 18px; border-radius: 12px; font-weight: 700; font-size: 1rem; box-shadow: 0 4px 12px rgba(128, 28, 50, 0.4); text-align: center; letter-spacing: 0.5px; border: 2px solid rgba(255, 255, 255, 0.3); position: relative; cursor: pointer; user-select: none; -webkit-user-select: none; transition: all 0.3s ease; width: 100%; box-sizing: border-box;" onclick="toggleUserContactPopup(event)" onmouseenter="if(!document.getElementById('userContactPopup').classList.contains('show')) { this.style.transform='scale(1.02)'; this.style.boxShadow='0 6px 16px rgba(128, 28, 50, 0.5)'; }" onmouseleave="if(!document.getElementById('userContactPopup').classList.contains('show')) { this.style.transform='scale(1)'; this.style.boxShadow='0 4px 12px rgba(128, 28, 50, 0.4)'; }">
+                        <div id="sidebarUser" class="sidebar-user-name" style="background: linear-gradient(135deg, #801c32, #a52d45); color: white; padding: 14px 18px; border-radius: 12px; font-weight: 700; font-size: 1rem; box-shadow: 0 4px 12px rgba(128, 28, 50, 0.4); text-align: center; letter-spacing: 0.5px; border: 2px solid rgba(255, 255, 255, 0.3); position: relative; cursor: pointer; user-select: none; -webkit-user-select: none; transition: all 0.3s ease; width: 100%; box-sizing: border-box;" onclick="toggleUserContactPopup(event)">
                             <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
                                 <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
                                     <span style="font-size: 1.3rem;"></span>
@@ -3004,7 +3004,7 @@
                                 </div>
                                 <div style="font-size: 0.75rem; opacity: 0.9; font-weight: 500;"></div>
                             </div>
-                            <div id="userContactPopup" class="user-contact-popup" onmouseenter="event.stopPropagation();" onmouseleave="event.stopPropagation();" onclick="event.stopPropagation();">
+                            <div id="userContactPopup" class="user-contact-popup">
                                 <div class="user-contact-item">
                                     <span class="user-contact-icon">
                                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -3296,24 +3296,23 @@
                 </div>
             </div>
             <div id="summaryTab" class="tab-content active">
-                <div class="section" style="background: linear-gradient(135deg, rgba(128, 28, 50, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%); border-radius: 20px; padding: 30px; margin-bottom: 30px; border: 2px solid var(--border-light); box-shadow: 0 8px 24px rgba(0,0,0,0.08);">
+                <div class="section" style="background: linear-gradient(135deg, rgba(128, 28, 50, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%); border-radius: 16px; padding: 20px; margin-bottom: 20px; border: 2px solid var(--border-light); box-shadow: 0 6px 18px rgba(0,0,0,0.08);">
                     <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 25px; flex-wrap: wrap; gap: 20px;">
                         <div style="flex: 1;">
-                            <h3 class="section-title" style="margin: 0 0 10px 0; font-size: 2rem; color: var(--primary-color); font-weight: 900; text-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                                 لوحة التحكم الرئيسية
+                            <h3 class="section-title" style="margin: 0 0 10px 0; font-size: 1.5rem; color: var(--primary-color); font-weight: 900; text-shadow: 0 2px 4px rgba(0,0,0,0.1);">
                             </h3>
                             <p style="color: var(--text-secondary); font-size: 1rem; font-weight: 500; margin: 0;">
                                
                             </p>
                         </div>
-                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                            <button class="btn btn-primary" onclick="refreshSummary()" style="padding: 12px 24px; font-weight: 700; font-size: 0.95rem; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,123,255,0.3);">
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                            <button class="btn btn-primary" onclick="refreshSummary()" style="padding: 10px 18px; font-weight: 700; font-size: 0.85rem; border-radius: 8px; box-shadow: 0 3px 10px rgba(0,123,255,0.3);">
                                  تحديث
                             </button>
-                            <button class="btn btn-success" onclick="exportSummaryToExcel()" style="padding: 12px 24px; font-weight: 700; font-size: 0.95rem; border-radius: 10px; box-shadow: 0 4px 12px rgba(40,167,69,0.3);">
+                            <button class="btn btn-success" onclick="exportSummaryToExcel()" style="padding: 10px 18px; font-weight: 700; font-size: 0.85rem; border-radius: 8px; box-shadow: 0 3px 10px rgba(40,167,69,0.3);">
                                  Excel
                             </button>
-                            <button class="btn btn-warning" onclick="clearAllAgentReports()" style="padding: 12px 24px; font-weight: 700; font-size: 0.95rem; border-radius: 10px; box-shadow: 0 4px 12px rgba(255,193,7,0.3);">
+                            <button class="btn btn-warning" onclick="clearAllAgentReports()" style="padding: 10px 18px; font-weight: 700; font-size: 0.85rem; border-radius: 8px; box-shadow: 0 3px 10px rgba(255,193,7,0.3);">
                                  مسح
                             </button>
                         </div>
@@ -3326,35 +3325,35 @@
                 
                 <div id="chartsSection" class="section" style="display: none; margin-bottom: 30px;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
-                        <h3 class="section-title" style="margin: 0; font-size: 1.8rem; color: var(--primary-color); font-weight: 800;">   الإحصائيات</h3>
+                        <h3 class="section-title" style="margin: 0; font-size: 1.3rem; color: var(--primary-color); font-weight: 800;">   الإحصائيات</h3>
                     </div>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 25px;">
-                        <div style="background: var(--card-bg); border-radius: 16px; padding: 25px; box-shadow: 0 6px 20px rgba(0,0,0,0.12); border: 1px solid var(--border-color); transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 25px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.12)'">
-                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
-                                <div style="font-size: 1.8rem;"></div>
-                                <h4 style="margin: 0; color: var(--primary-color); font-size: 1.3rem; font-weight: 700;">توزيع العروض</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px;">
+                        <div style="background: var(--card-bg); border-radius: 12px; padding: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid var(--border-color); transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 6px 16px rgba(0,0,0,0.12)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.1)'">
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                                <div style="font-size: 1.2rem;"></div>
+                                <h4 style="margin: 0; color: var(--primary-color); font-size: 1rem; font-weight: 700;">توزيع العروض</h4>
                             </div>
-                            <canvas id="offersChart" style="max-height: 350px;"></canvas>
+                            <canvas id="offersChart" style="max-height: 220px;"></canvas>
                         </div>
-                        <div style="background: var(--card-bg); border-radius: 16px; padding: 25px; box-shadow: 0 6px 20px rgba(0,0,0,0.12); border: 1px solid var(--border-color); transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 25px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.12)'">
-                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
-                                <div style="font-size: 1.8rem;"></div>
-                                <h4 style="margin: 0; color: var(--primary-color); font-size: 1.3rem; font-weight: 700;">أعلى الوكلاء</h4>
+                        <div style="background: var(--card-bg); border-radius: 12px; padding: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid var(--border-color); transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 6px 16px rgba(0,0,0,0.12)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.1)'">
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                                <div style="font-size: 1.2rem;"></div>
+                                <h4 style="margin: 0; color: var(--primary-color); font-size: 1rem; font-weight: 700;">أعلى الوكلاء</h4>
                             </div>
-                            <canvas id="topAgentsChart" style="max-height: 350px;"></canvas>
+                            <canvas id="topAgentsChart" style="max-height: 220px;"></canvas>
                         </div>
-                        <div style="background: var(--card-bg); border-radius: 16px; padding: 25px; box-shadow: 0 6px 20px rgba(0,0,0,0.12); border: 1px solid var(--border-color); transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 25px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.12)'">
-                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
-                                <div style="font-size: 1.8rem;"></div>
-                                <h4 style="margin: 0; color: var(--primary-color); font-size: 1.3rem; font-weight: 700;">توزيع أنواع الاشتراكات</h4>
+                        <div style="background: var(--card-bg); border-radius: 12px; padding: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid var(--border-color); transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 6px 16px rgba(0,0,0,0.12)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.1)'">
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                                <div style="font-size: 1.2rem;"></div>
+                                <h4 style="margin: 0; color: var(--primary-color); font-size: 1rem; font-weight: 700;">توزيع أنواع الاشتراكات</h4>
                             </div>
-                            <canvas id="subscriptionsChart" style="max-height: 350px;"></canvas>
+                            <canvas id="subscriptionsChart" style="max-height: 220px;"></canvas>
                         </div>
                     </div>
                 </div>
                 
                 <div id="summaryResults" class="section">
-                    <h3 class="section-title" style="font-size: 1.5rem; margin-bottom: 20px;">
+                    <h3 class="section-title" style="font-size: 1.2rem; margin-bottom: 15px;">
                         👥 ملخص الوكلاء
                     </h3>
                     <div id="summaryContent">
@@ -5721,6 +5720,16 @@ let agentReports = {};
             showSuccessMessage(`تم تحديث رقم الهاتف للوكيل: ${agentName}`);
         }
         function showPercentageSendOptions(agentName) {
+            if (!agentName) {
+                alert('خطأ: لم يتم تحديد اسم الوكيل');
+                return;
+            }
+            const modal = document.getElementById('percentageSendOptionsModal');
+            const agentNameSpan = document.getElementById('percentageSendAgentName');
+            if (!modal || !agentNameSpan) {
+                alert('خطأ: لم يتم العثور على عناصر النافذة');
+                return;
+            }
             let agent = agentsList.find(a => a.name === agentName);
             if (!agent) {
                 const percentageData = agentPercentages[agentName];
@@ -5741,20 +5750,41 @@ let agentReports = {};
                 alert('لم يتم تحديد رقم هاتف أو بريد إلكتروني للوكيل. يرجى إضافة معلومات الاتصال في تبويب "إدارة الوكلاء"');
                 return;
             }
-            document.getElementById('percentageSendAgentName').textContent = agentName;
-            document.getElementById('percentageSendOptionsModal').setAttribute('data-agent-name', agentName);
-            document.getElementById('percentageSendOptionsModal').classList.add('show');
+            agentNameSpan.textContent = agentName;
+            modal.setAttribute('data-agent-name', agentName);
+            modal.classList.add('show');
         }
         function closePercentageSendOptions() {
-            document.getElementById('percentageSendOptionsModal').classList.remove('show');
+            const modal = document.getElementById('percentageSendOptionsModal');
+            if (modal) {
+                modal.classList.remove('show');
+            }
         }
         function sendPercentageReportViaWhatsApp() {
-            const agentName = document.getElementById('percentageSendOptionsModal').getAttribute('data-agent-name');
+            const modal = document.getElementById('percentageSendOptionsModal');
+            if (!modal) {
+                alert('خطأ: لم يتم العثور على نافذة الإرسال');
+                return;
+            }
+            const agentName = modal.getAttribute('data-agent-name');
+            if (!agentName) {
+                alert('خطأ: لم يتم تحديد اسم الوكيل');
+                return;
+            }
             closePercentageSendOptions();
             sendPercentageReport(agentName, 'واتساب');
         }
         function sendPercentageReportViaEmail() {
-            const agentName = document.getElementById('percentageSendOptionsModal').getAttribute('data-agent-name');
+            const modal = document.getElementById('percentageSendOptionsModal');
+            if (!modal) {
+                alert('خطأ: لم يتم العثور على نافذة الإرسال');
+                return;
+            }
+            const agentName = modal.getAttribute('data-agent-name');
+            if (!agentName) {
+                alert('خطأ: لم يتم تحديد اسم الوكيل');
+                return;
+            }
             closePercentageSendOptions();
             sendPercentageReport(agentName, 'email');
         }
@@ -6525,115 +6555,122 @@ let agentReports = {};
                 if (existingArchive) {
                     let mergedData = { ...data };
                     if (tableName === 'analysis_archives' && existingArchive.data) {
+                        const newAnalysisType = analysis_type;
+                        const newAgentNames = data.agentReports ? Object.keys(data.agentReports) : [];
+                        const newAgentName = newAgentNames.length > 0 ? newAgentNames[0] : null;
+                        
                         if (existingArchive.data.agentReports && data.agentReports) {
                             mergedData.agentReports = { ...existingArchive.data.agentReports };
-                            const existingCount = Object.keys(mergedData.agentReports).length;
-                            let newAgentsCount = 0;
                             
                             Object.keys(data.agentReports).forEach(agentName => {
-                                const isNewAgent = !mergedData.agentReports[agentName];
-                                if (isNewAgent) {
-                                    mergedData.agentReports[agentName] = {};
-                                    newAgentsCount++;
+                                const normalizedNewAgent = normalizeAgentName(agentName);
+                                const normalizedExistingAgents = Object.keys(mergedData.agentReports).map(a => normalizeAgentName(a));
+                                
+                                let existingAgentName = null;
+                                for (const existingAgent of Object.keys(mergedData.agentReports)) {
+                                    if (normalizeAgentName(existingAgent) === normalizedNewAgent) {
+                                        existingAgentName = existingAgent;
+                                        break;
+                                    }
                                 }
                                 
-                                if (data.agentReports[agentName].basic) {
-                                    mergedData.agentReports[agentName].basic = data.agentReports[agentName].basic;
-                                }
-                                if (data.agentReports[agentName].advanced) {
-                                    mergedData.agentReports[agentName].advanced = data.agentReports[agentName].advanced;
-                                }
-                                if (data.agentReports[agentName].twoMonths) {
-                                    mergedData.agentReports[agentName].twoMonths = data.agentReports[agentName].twoMonths;
+                                if (existingAgentName) {
+                                    if (!mergedData.agentReports[existingAgentName]) {
+                                        mergedData.agentReports[existingAgentName] = {};
+                                    }
+                                    
+                                    if (data.agentReports[agentName].basic && newAnalysisType === 'basic') {
+                                        mergedData.agentReports[existingAgentName].basic = data.agentReports[agentName].basic;
+                                    }
+                                    if (data.agentReports[agentName].advanced && newAnalysisType === 'advanced') {
+                                        mergedData.agentReports[existingAgentName].advanced = data.agentReports[agentName].advanced;
+                                    }
+                                    if (data.agentReports[agentName].twoMonths && newAnalysisType === 'two_months') {
+                                        mergedData.agentReports[existingAgentName].twoMonths = data.agentReports[agentName].twoMonths;
+                                    }
+                                } else {
+                                    mergedData.agentReports[agentName] = { ...data.agentReports[agentName] };
                                 }
                             });
-                            const totalCount = Object.keys(mergedData.agentReports).length;
-                            const updatedAgentsCount = Object.keys(data.agentReports).length - newAgentsCount;
-                            if (newAgentsCount > 0 || updatedAgentsCount > 0) {
-                            } else {
-                            }
                         } else if (data.agentReports) {
                             mergedData.agentReports = data.agentReports;
                         } else if (existingArchive.data.agentReports) {
                             mergedData.agentReports = existingArchive.data.agentReports;
                         }
                         
-                        if (Array.isArray(existingArchive.data.details) && Array.isArray(data.details)) {
-                            const existingDetailsMap = new Map();
-                            const existingCount = existingArchive.data.details.length;
+                        if (Array.isArray(existingArchive.data.details) && Array.isArray(data.details) && newAgentName) {
+                            const normalizedNewAgent = normalizeAgentName(newAgentName);
                             
-                            existingArchive.data.details.forEach((detail, idx) => {
-                                const key = `${detail.username || ''}_${detail.subscription || ''}_${detail.date || detail.dateStr || detail.date1 || detail.date2 || detail.date3 || ''}_${detail.type || ''}_${idx}`;
-                                existingDetailsMap.set(key, detail);
+                            const otherAgentsDetails = existingArchive.data.details.filter(detail => {
+                                const detailAgent = detail.agent || detail.Agent || detail.agentName || detail.AgentName || detail['اسم الوكيل'] || detail['الوكيل'] || '';
+                                return normalizeAgentName(detailAgent) !== normalizedNewAgent;
                             });
                             
-                            let newDetailsCount = 0;
-                            data.details.forEach((detail, idx) => {
-                                const detailKey = `${detail.username || ''}_${detail.subscription || ''}_${detail.date || detail.dateStr || detail.date1 || detail.date2 || detail.date3 || ''}_${detail.type || ''}_${detail.agent || ''}`;
-                                
-                                let found = false;
-                                for (const [key, existingDetail] of existingDetailsMap.entries()) {
-                                    const existingKey = `${existingDetail.username || ''}_${existingDetail.subscription || ''}_${existingDetail.date || existingDetail.dateStr || existingDetail.date1 || existingDetail.date2 || existingDetail.date3 || ''}_${existingDetail.type || ''}_${existingDetail.agent || ''}`;
-                                    if (detailKey === existingKey) {
-                                        found = true;
-                                        break;
-                                    }
+                            const newDetailsMap = new Map();
+                            data.details.forEach(detail => {
+                                const detailKey = `${detail.username || ''}_${detail.subscription || ''}_${detail.date || detail.dateStr || detail.date1 || detail.date2 || detail.date3 || ''}_${detail.type || ''}`;
+                                if (!newDetailsMap.has(detailKey)) {
+                                    newDetailsMap.set(detailKey, detail);
                                 }
-                                
-                                if (!found) {
-                                    const newKey = `${detailKey}_${existingDetailsMap.size + newDetailsCount}`;
-                                    existingDetailsMap.set(newKey, detail);
-                                    newDetailsCount++;
-                            }
                             });
                             
-                            mergedData.details = Array.from(existingDetailsMap.values());
-                            const duplicateCount = data.details.length - newDetailsCount;
-                            if (newDetailsCount > 0) {
-                            }
+                            mergedData.details = [...otherAgentsDetails, ...Array.from(newDetailsMap.values())];
                         } else if (Array.isArray(data.details)) {
-                            mergedData.details = data.details;
+                            const detailsMap = new Map();
+                            data.details.forEach(detail => {
+                                const detailKey = `${detail.username || ''}_${detail.subscription || ''}_${detail.date || detail.dateStr || detail.date1 || detail.date2 || detail.date3 || ''}_${detail.type || ''}`;
+                                if (!detailsMap.has(detailKey)) {
+                                    detailsMap.set(detailKey, detail);
+                                }
+                            });
+                            mergedData.details = Array.from(detailsMap.values());
                         } else if (Array.isArray(existingArchive.data.details)) {
                             mergedData.details = existingArchive.data.details;
                         }
                         
-                        if (Array.isArray(existingArchive.data.data) && Array.isArray(data.data)) {
-                            const existingDataMap = new Map();
-                            const existingCount = existingArchive.data.data.length;
+                        if (Array.isArray(existingArchive.data.data) && Array.isArray(data.data) && newAgentName) {
+                            const normalizedNewAgent = normalizeAgentName(newAgentName);
                             
-                            existingArchive.data.data.forEach((item, idx) => {
-                                const key = `${JSON.stringify(item)}_${idx}`;
-                                existingDataMap.set(key, item);
+                            const otherAgentsData = existingArchive.data.data.filter(item => {
+                                const itemAgent = item.agent || item.Agent || item.agentName || item.AgentName || item['ColumnF'] || item[5] || item['اسم الوكيل'] || item['الوكيل'] || '';
+                                return normalizeAgentName(itemAgent) !== normalizedNewAgent;
                             });
                             
-                            let newDataCount = 0;
-                            const itemKeysSet = new Set();
-                            existingDataMap.forEach((item) => {
-                                itemKeysSet.add(JSON.stringify(item));
-                            });
-                            
-                            data.data.forEach((item, idx) => {
+                            const newDataMap = new Map();
+                            data.data.forEach(item => {
                                 const itemKey = JSON.stringify(item);
-                                if (!itemKeysSet.has(itemKey)) {
-                                    const newKey = `${itemKey}_new_${existingDataMap.size + newDataCount}`;
-                                    existingDataMap.set(newKey, item);
-                                    itemKeysSet.add(itemKey);
-                                    newDataCount++;
+                                if (!newDataMap.has(itemKey)) {
+                                    newDataMap.set(itemKey, item);
                                 }
                             });
                             
-                            mergedData.data = Array.from(existingDataMap.values());
-                            const duplicateDataCount = data.data.length - newDataCount;
-                            if (newDataCount > 0) {
-                            }
+                            mergedData.data = [...otherAgentsData, ...Array.from(newDataMap.values())];
                         } else if (Array.isArray(data.data)) {
-                            mergedData.data = data.data;
+                            const dataMap = new Map();
+                            data.data.forEach(item => {
+                                const itemKey = JSON.stringify(item);
+                                if (!dataMap.has(itemKey)) {
+                                    dataMap.set(itemKey, item);
+                                }
+                            });
+                            mergedData.data = Array.from(dataMap.values());
                         } else if (Array.isArray(existingArchive.data.data)) {
                             mergedData.data = existingArchive.data.data;
                         }
                         
                         if (data.results) {
-                            mergedData.results = data.results;
+                            if (data.results.agentName && newAgentName && normalizeAgentName(data.results.agentName) === normalizeAgentName(newAgentName)) {
+                                mergedData.results = data.results;
+                            } else if (existingArchive.data.results) {
+                                if (existingArchive.data.results.agentName && newAgentName && 
+                                    normalizeAgentName(existingArchive.data.results.agentName) === normalizeAgentName(newAgentName)) {
+                                    mergedData.results = data.results;
+                                } else {
+                                    mergedData.results = existingArchive.data.results;
+                                }
+                            } else {
+                                mergedData.results = data.results;
+                            }
                         } else if (existingArchive.data.results) {
                             mergedData.results = existingArchive.data.results;
                         }
@@ -6653,9 +6690,9 @@ let agentReports = {};
                     let timeoutDuration = 45000;
                     if (tableName === 'analysis_archives') {
                         if (analysis_type === 'advanced' || analysis_type === 'two_months') {
-                            timeoutDuration = 90000; // 90 seconds for large archives
+                            timeoutDuration = 120000; 
                         } else {
-                            timeoutDuration = 60000; // 60 seconds for basic
+                            timeoutDuration = 60000; 
                         }
                     }
                     const updateTimeout = new Promise((_, reject) => 
@@ -6663,16 +6700,33 @@ let agentReports = {};
                     );
                     try {
                         const { error: updateError } = await Promise.race([updatePromise, updateTimeout]);
-                        if (updateError) throw updateError;
+                        if (updateError) {
+                            if (updateError.message && updateError.message.includes('timeout')) {
+                                console.warn(`⚠ Update timeout for ${tableName}${analysis_type ? ' (' + analysis_type + ')' : ''} - Data will be saved in localStorage`);
+                                try {
+                                    const backupKey = `${tableName}_${monthYear}${analysis_type ? '_' + analysis_type : ''}`;
+                                    localStorage.setItem(backupKey, JSON.stringify(mergedData || data));
+                                    console.log('✓ Data saved to localStorage as backup');
+                                } catch (e) {
+                                    console.error('Failed to save backup:', e);
+                                }
+                                return false;
+                            }
+                            throw updateError;
+                        }
                     } catch (timeoutError) {
-                        console.error(`✗ Update timeout for ${tableName}${analysis_type ? ' (' + analysis_type + ')' : ''}`);
+                        if (timeoutError.message && timeoutError.message.includes('timeout')) {
+                            console.warn(`⚠ Update timeout for ${tableName}${analysis_type ? ' (' + analysis_type + ')' : ''} - Data will be saved in localStorage`);
                         try {
                             const backupKey = `${tableName}_${monthYear}${analysis_type ? '_' + analysis_type : ''}`;
-                            localStorage.setItem(backupKey, JSON.stringify(data));
+                                localStorage.setItem(backupKey, JSON.stringify(mergedData || data));
+                                console.log('✓ Data saved to localStorage as backup');
                         } catch (e) {
                             console.error('Failed to save backup:', e);
                         }
                         return false;
+                        }
+                        throw timeoutError;
                     }
                 } else {
                     const insertPromise = supabaseClient
@@ -6681,9 +6735,9 @@ let agentReports = {};
                     let timeoutDuration = 45000;
                     if (tableName === 'analysis_archives') {
                         if (analysis_type === 'advanced' || analysis_type === 'two_months') {
-                            timeoutDuration = 90000; // 90 seconds for large archives
+                            timeoutDuration = 120000; 
                         } else {
-                            timeoutDuration = 60000; // 60 seconds for basic
+                            timeoutDuration = 60000; 
                         }
                     }
                     const insertTimeout = new Promise((_, reject) => 
@@ -6691,16 +6745,33 @@ let agentReports = {};
                     );
                     try {
                         const { error: insertError } = await Promise.race([insertPromise, insertTimeout]);
-                        if (insertError) throw insertError;
-                    } catch (timeoutError) {
-                        console.error(`✗ Insert timeout for ${tableName}${analysis_type ? ' (' + analysis_type + ')' : ''}`);
-                        try {
-                            const backupKey = `${tableName}_${monthYear}${analysis_type ? '_' + analysis_type : ''}`;
-                            localStorage.setItem(backupKey, JSON.stringify(data));
-                        } catch (e) {
-                            console.error('Failed to save backup:', e);
+                        if (insertError) {
+                            if (insertError.message && insertError.message.includes('timeout')) {
+                                console.warn(`⚠ Insert timeout for ${tableName}${analysis_type ? ' (' + analysis_type + ')' : ''} - Data will be saved in localStorage`);
+                                try {
+                                    const backupKey = `${tableName}_${monthYear}${analysis_type ? '_' + analysis_type : ''}`;
+                                    localStorage.setItem(backupKey, JSON.stringify(data));
+                                    console.log('✓ Data saved to localStorage as backup');
+                                } catch (e) {
+                                    console.error('Failed to save backup:', e);
+                                }
+                                return false;
+                            }
+                            throw insertError;
                         }
-                        return false;
+                    } catch (timeoutError) {
+                        if (timeoutError.message && timeoutError.message.includes('timeout')) {
+                            console.warn(`⚠ Insert timeout for ${tableName}${analysis_type ? ' (' + analysis_type + ')' : ''} - Data will be saved in localStorage`);
+                            try {
+                                const backupKey = `${tableName}_${monthYear}${analysis_type ? '_' + analysis_type : ''}`;
+                                localStorage.setItem(backupKey, JSON.stringify(data));
+                                console.log('✓ Data saved to localStorage as backup');
+                            } catch (e) {
+                                console.error('Failed to save backup:', e);
+                            }
+                            return false;
+                        }
+                        throw timeoutError;
                     }
                 }
                 return true;
@@ -6831,7 +6902,7 @@ let agentReports = {};
                                     }
                                 }
                             }
-                            return; // Exit early since we loaded from localStorage
+                            return; 
                         }
                     } catch (e) {
                         console.error('Error parsing saved percentages from localStorage:', e);
@@ -6880,6 +6951,71 @@ let agentReports = {};
                 } else {
                     agentPercentages = {};
                 }
+                const { data: basicArchive } = await supabaseClient
+                    .from('analysis_archives')
+                    .select('data')
+                    .eq('month_year', monthYear)
+                    .eq('analysis_type', 'basic')
+                    .maybeSingle();
+                
+                const { data: advancedArchive } = await supabaseClient
+                    .from('analysis_archives')
+                    .select('data')
+                    .eq('month_year', monthYear)
+                    .eq('analysis_type', 'advanced')
+                    .maybeSingle();
+                
+                const { data: twoMonthsArchive } = await supabaseClient
+                    .from('analysis_archives')
+                    .select('data')
+                    .eq('month_year', monthYear)
+                    .eq('analysis_type', 'two_months')
+                    .maybeSingle();
+                
+                if (basicArchive && basicArchive.data && basicArchive.data.agentReports) {
+                    Object.keys(basicArchive.data.agentReports).forEach(agentName => {
+                        if (!agentReports[agentName]) {
+                            agentReports[agentName] = {};
+                        }
+                        if (basicArchive.data.agentReports[agentName].basic) {
+                            agentReports[agentName].basic = basicArchive.data.agentReports[agentName].basic;
+                        }
+                    });
+                }
+                
+                if (advancedArchive && advancedArchive.data && advancedArchive.data.agentReports) {
+                    Object.keys(advancedArchive.data.agentReports).forEach(agentName => {
+                        if (!agentReports[agentName]) {
+                            agentReports[agentName] = {};
+                        }
+                        if (advancedArchive.data.agentReports[agentName].advanced) {
+                            agentReports[agentName].advanced = advancedArchive.data.agentReports[agentName].advanced;
+                        }
+                    });
+                }
+                
+                if (twoMonthsArchive && twoMonthsArchive.data && twoMonthsArchive.data.agentReports) {
+                    Object.keys(twoMonthsArchive.data.agentReports).forEach(agentName => {
+                        if (!agentReports[agentName]) {
+                            agentReports[agentName] = {};
+                        }
+                        if (twoMonthsArchive.data.agentReports[agentName].twoMonths) {
+                            agentReports[agentName].twoMonths = twoMonthsArchive.data.agentReports[agentName].twoMonths;
+                        }
+                    });
+                }
+                
+                if (Object.keys(agentReports).length > 0) {
+                    try {
+                        const agentReportsString = JSON.stringify(agentReports);
+                        if (agentReportsString.length <= 2000000) {
+                            localStorage.setItem('agentReports', agentReportsString);
+                        }
+                    } catch (e) {
+                        console.warn('Could not save agentReports to localStorage:', e);
+                    }
+                }
+                
                 basicData = null;
                 basicDetails = [];
                 advancedData = null;
@@ -7412,7 +7548,7 @@ let agentReports = {};
                 };
                 let percentages = {};
                 const agentsListMap = {};
-                const normalizedToOriginal = {}; // Map normalized name to original name for display
+                const normalizedToOriginal = {}; 
                 if (percentagesArchive && percentagesArchive.data && typeof percentagesArchive.data === 'object' && Object.keys(percentagesArchive.data).length > 0) {
                     Object.keys(percentagesArchive.data).forEach(agentName => {
                         const normalized = normalizeAgentName(agentName);
@@ -7420,7 +7556,7 @@ let agentReports = {};
                         if (!percentages[normalized]) {
                             percentages[normalized] = {
                                 ...percentagesArchive.data[agentName],
-                                originalName: agentName // Keep original name for display
+                                originalName: agentName 
                             };
                         } else {
                             const existing = percentages[normalized];
@@ -7454,7 +7590,7 @@ let agentReports = {};
                             if (!percentages[normalized]) {
                                 percentages[normalized] = {
                                     originalName: agent.name,
-                                    percentage: agent.percentage || 15, // Use 15 as default, not 16
+                                    percentage: agent.percentage || 15, 
                                     iqT: 0,
                                     iqP: 0,
                                     iqG: 0,
@@ -8315,12 +8451,54 @@ let agentReports = {};
                 const basicArchive = basicArchiveData ? { data: basicArchiveData.data, raw: basicArchiveData } : null;
                 const advancedArchive = advancedArchiveData ? { data: advancedArchiveData.data, raw: advancedArchiveData } : null;
                 const twoMonthsArchive = twoMonthsArchiveData ? { data: twoMonthsArchiveData.data, raw: twoMonthsArchiveData } : null;
-                const agentBasicDetails = basicArchive ? filterDetailsByAgent(basicArchive.data.details, possibleNames) : [];
-                const agentAdvancedDetails = advancedArchive ? filterDetailsByAgent(advancedArchive.data.details, possibleNames) : [];
-                const agentTwoMonthsDetails = twoMonthsArchive ? filterDetailsByAgent(twoMonthsArchive.data.details, possibleNames) : [];
-                const basicResults = basicArchive ? getAgentResultsFromArchive(basicArchive, possibleNames, 'basic') : null;
-                const advancedResults = advancedArchive ? getAgentResultsFromArchive(advancedArchive, possibleNames, 'advanced') : null;
-                const twoMonthsResults = twoMonthsArchive ? getAgentResultsFromArchive(twoMonthsArchive, possibleNames, 'two_months') : null;
+                
+                const { data: agentsListArchive } = await supabaseClient
+                    .from('agents_list')
+                    .select('*')
+                    .eq('month_year', monthYear)
+                    .maybeSingle();
+                
+                let savedBasicResults = null;
+                let savedAdvancedResults = null;
+                let savedTwoMonthsResults = null;
+                let savedBasicDetails = [];
+                let savedAdvancedDetails = [];
+                let savedTwoMonthsDetails = [];
+                
+                if (agentsListArchive && agentsListArchive.data && Array.isArray(agentsListArchive.data)) {
+                    const agentFromList = agentsListArchive.data.find(a => {
+                        if (!a || !a.name) return false;
+                        return possibleNames.some(name => normalizeAgentName(a.name) === normalizeAgentName(name));
+                    });
+                    
+                    if (agentFromList) {
+                        if (agentFromList.offers && agentFromList.offers.basic) {
+                            savedBasicResults = agentFromList.offers.basic.results;
+                        }
+                        if (agentFromList.offers && agentFromList.offers.advanced) {
+                            savedAdvancedResults = agentFromList.offers.advanced.results;
+                        }
+                        if (agentFromList.offers && agentFromList.offers.two_months) {
+                            savedTwoMonthsResults = agentFromList.offers.two_months.results;
+                        }
+                        if (agentFromList.details && agentFromList.details.basic) {
+                            savedBasicDetails = agentFromList.details.basic;
+                        }
+                        if (agentFromList.details && agentFromList.details.advanced) {
+                            savedAdvancedDetails = agentFromList.details.advanced;
+                        }
+                        if (agentFromList.details && agentFromList.details.two_months) {
+                            savedTwoMonthsDetails = agentFromList.details.two_months;
+                        }
+                    }
+                }
+                
+                const agentBasicDetails = (basicArchive ? filterDetailsByAgent(basicArchive.data.details, possibleNames) : []).concat(savedBasicDetails);
+                const agentAdvancedDetails = (advancedArchive ? filterDetailsByAgent(advancedArchive.data.details, possibleNames) : []).concat(savedAdvancedDetails);
+                const agentTwoMonthsDetails = (twoMonthsArchive ? filterDetailsByAgent(twoMonthsArchive.data.details, possibleNames) : []).concat(savedTwoMonthsDetails);
+                const basicResults = savedBasicResults || (basicArchive ? getAgentResultsFromArchive(basicArchive, possibleNames, 'basic') : null);
+                const advancedResults = savedAdvancedResults || (advancedArchive ? getAgentResultsFromArchive(advancedArchive, possibleNames, 'advanced') : null);
+                const twoMonthsResults = savedTwoMonthsResults || (twoMonthsArchive ? getAgentResultsFromArchive(twoMonthsArchive, possibleNames, 'two_months') : null);
                 const displayMonth = monthYear === '0000-00' ? 'قائمة دائمة' : monthYear;
                 let html = `
                     <div style="margin-bottom: 20px;">
@@ -8418,20 +8596,66 @@ let agentReports = {};
             }
             if (agentAnalyses.length > 0) {
                 agentAnalyses.forEach(analysis => {
-                    analysesHTML += `<div style="margin-bottom: 20px; background: var(--bg-secondary); padding: 15px; border-radius: 8px; border-left: 4px solid var(--primary-color);">
-                        <h5 style="margin-bottom: 10px; color: var(--primary-color);">${analysis.name}</h5>`;
+                    const analysisType = analysis.type;
+                    const typeColors = {
+                        'basic': { bg: '#e8f5e9', border: '#4caf50', text: '#2e7d32' },
+                        'advanced': { bg: '#e3f2fd', border: '#2196f3', text: '#1565c0' },
+                        'two_months': { bg: '#fff3e0', border: '#ff9800', text: '#e65100' }
+                    };
+                    const colors = typeColors[analysisType] || typeColors['basic'];
+                    
+                    analysesHTML += `<div style="margin-bottom: 20px; background: ${colors.bg}; padding: 15px; border-radius: 8px; border-left: 4px solid ${colors.border};">
+                        <h5 style="margin-bottom: 10px; color: ${colors.text}; font-weight: 700; font-size: 1.1rem;">${analysis.name}</h5>`;
                     if (analysis.results && analysis.results.total) {
-                        analysesHTML += `<div style="background: var(--bg-primary); padding: 12px; border-radius: 6px; margin-bottom: 15px; border: 1px solid var(--border-color);">
-                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px;">
-                                <div><strong>إجمالي الاشتراكات:</strong> ${analysis.results.total.count || 0}</div>
-                                ${analysis.results.total.amount ? `<div><strong>المبلغ الإجمالي:</strong> ${formatNumber(analysis.results.total.amount)} د.ع</div>` : ''}
-                                ${analysis.results.total.promoAmount ? `<div><strong>مبلغ العرض:</strong> ${formatNumber(analysis.results.total.promoAmount)} د.ع</div>` : ''}
-                                ${analysis.results.total.officialAmount ? `<div><strong>المبلغ الرسمي:</strong> ${formatNumber(analysis.results.total.officialAmount)} د.ع</div>` : ''}
-                            </div>
-                        </div>`;
+                        const total = analysis.results.total;
+                        analysesHTML += `<div style="background: white; padding: 15px; border-radius: 6px; margin-bottom: 15px; border: 1px solid ${colors.border};">
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 15px;">
+                                <div style="background: #f5f5f5; padding: 10px; border-radius: 6px;">
+                                    <div style="font-size: 0.85rem; color: #666; margin-bottom: 5px;">إجمالي الاشتراكات</div>
+                                    <div style="font-size: 1.3rem; font-weight: 700; color: ${colors.text};">${formatNumber(total.count || 0)}</div>
+                                </div>
+                                ${total.amount ? `<div style="background: #f5f5f5; padding: 10px; border-radius: 6px;">
+                                    <div style="font-size: 0.85rem; color: #666; margin-bottom: 5px;">المبلغ الإجمالي</div>
+                                    <div style="font-size: 1.2rem; font-weight: 700; color: ${colors.text};">${formatNumber(total.amount)} د.ع</div>
+                                </div>` : ''}
+                                ${total.promoAmount ? `<div style="background: #f5f5f5; padding: 10px; border-radius: 6px;">
+                                    <div style="font-size: 0.85rem; color: #666; margin-bottom: 5px;">مبلغ العرض</div>
+                                    <div style="font-size: 1.2rem; font-weight: 700; color: ${colors.text};">${formatNumber(total.promoAmount)} د.ع</div>
+                                </div>` : ''}
+                                ${total.officialAmount ? `<div style="background: #f5f5f5; padding: 10px; border-radius: 6px;">
+                                    <div style="font-size: 0.85rem; color: #666; margin-bottom: 5px;">المبلغ الرسمي</div>
+                                    <div style="font-size: 1.2rem; font-weight: 700; color: ${colors.text};">${formatNumber(total.officialAmount)} د.ع</div>
+                                </div>` : ''}
+                                ${total.profit !== undefined ? `<div style="background: #e8f5e9; padding: 10px; border-radius: 6px; border: 2px solid #4caf50;">
+                                    <div style="font-size: 0.85rem; color: #2e7d32; margin-bottom: 5px;">الراجع للوكيل</div>
+                                    <div style="font-size: 1.3rem; font-weight: 700; color: #2e7d32;">${formatNumber(total.profit)} د.ع</div>
+                                </div>` : ''}
+                            </div>`;
+                        if (analysis.results.bronze || analysis.results.silver || analysis.results.gold || analysis.results.platinum) {
+                            analysesHTML += `<div style="margin-top: 15px; padding-top: 15px; border-top: 2px solid ${colors.border};">
+                                <div style="font-weight: 600; margin-bottom: 10px; color: ${colors.text};">التفاصيل حسب نوع الاشتراك:</div>
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">`;
+                            ['bronze', 'silver', 'gold', 'platinum'].forEach(cat => {
+                                const catData = analysis.results[cat];
+                                if (catData && (catData.count > 0 || catData.amount > 0 || catData.promoAmount > 0)) {
+                                    const catNames = { bronze: 'Bronze', silver: 'Silver', gold: 'Gold', platinum: 'Platinum' };
+                                    analysesHTML += `<div style="background: white; padding: 10px; border-radius: 6px; border: 1px solid ${colors.border};">
+                                        <div style="font-weight: 600; color: ${colors.text}; margin-bottom: 5px;">${catNames[cat]}</div>
+                                        <div style="font-size: 0.9rem;">العدد: ${formatNumber(catData.count || 0)}</div>
+                                        ${catData.amount ? `<div style="font-size: 0.9rem;">المبلغ: ${formatNumber(catData.amount)} د.ع</div>` : ''}
+                                        ${catData.promoAmount ? `<div style="font-size: 0.9rem;">عرض: ${formatNumber(catData.promoAmount)} د.ع</div>` : ''}
+                                        ${catData.officialAmount ? `<div style="font-size: 0.9rem;">رسمي: ${formatNumber(catData.officialAmount)} د.ع</div>` : ''}
+                                    </div>`;
+                                }
+                            });
+                            analysesHTML += `</div></div>`;
+                        }
+                        analysesHTML += `</div>`;
                     } else if (analysis.details && analysis.details.length > 0) {
-                        analysesHTML += `<div style="background: var(--bg-primary); padding: 12px; border-radius: 6px; margin-bottom: 15px; border: 1px solid var(--border-color);">
-                            <div><strong>عدد الاشتراكات:</strong> ${analysis.details.length}</div>
+                        analysesHTML += `<div style="background: white; padding: 12px; border-radius: 6px; margin-bottom: 15px; border: 1px solid ${colors.border};">
+                            <div style="font-size: 1.1rem; font-weight: 600; color: ${colors.text};">
+                                عدد الاشتراكات: <span style="color: ${colors.border};">${formatNumber(analysis.details.length)}</span>
+                            </div>
                         </div>`;
                     }
                     if (analysis.details && analysis.details.length > 0) {
@@ -9374,9 +9598,44 @@ let agentReports = {};
                 select.addEventListener('change', onAgentSelectedForPercentage);
                 updateAgentsListForPercentage();
             }
-            setTimeout(() => {
-                restoreSavedData();
+            setTimeout(async () => {
+                await restoreSavedData();
+                if (Object.keys(agentReports).length > 0) {
+                    updateAgentSummary();
+                }
             }, 500);
+            
+            setTimeout(() => {
+                const popup = document.getElementById('userContactPopup');
+                const sidebarUserBtn = document.getElementById('sidebarUser');
+                
+                if (popup && sidebarUserBtn) {
+                    popup.addEventListener('mouseenter', function(e) {
+                        e.stopPropagation();
+                        console.log('Mouse entered popup');
+                    });
+                    
+                    popup.addEventListener('mouseleave', function(e) {
+                        e.stopPropagation();
+                        console.log('Mouse left popup');
+                    });
+                    
+                    popup.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        console.log('Clicked on popup');
+                    });
+                    
+                    const links = popup.querySelectorAll('a');
+                    links.forEach(link => {
+                        link.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                            console.log('Link clicked:', link.href);
+                        });
+                    });
+                    
+                    console.log('Event listeners added to popup');
+                }
+            }, 1000);
         });
         window.addEventListener('beforeunload', function() {
             try {
@@ -9655,10 +9914,85 @@ let agentReports = {};
                 if (savedTwoMonthsDetails.length > 0) {
                     twoMonthsDetails = savedTwoMonthsDetails;
                 }
-                const savedAgentReports = loadDataFromStorage('agentReports', {});
-                if (savedAgentReports && Object.keys(savedAgentReports).length > 0) {
-                    agentReports = savedAgentReports;
+                if (supabaseClient) {
+                    try {
+                        const monthYear = getCurrentMonthYear();
+                        const { data: basicArchive } = await supabaseClient
+                            .from('analysis_archives')
+                            .select('data')
+                            .eq('month_year', monthYear)
+                            .eq('analysis_type', 'basic')
+                            .maybeSingle();
+                        
+                        const { data: advancedArchive } = await supabaseClient
+                            .from('analysis_archives')
+                            .select('data')
+                            .eq('month_year', monthYear)
+                            .eq('analysis_type', 'advanced')
+                            .maybeSingle();
+                        
+                        const { data: twoMonthsArchive } = await supabaseClient
+                            .from('analysis_archives')
+                            .select('data')
+                            .eq('month_year', monthYear)
+                            .eq('analysis_type', 'two_months')
+                            .maybeSingle();
+                        
+                        if (basicArchive && basicArchive.data && basicArchive.data.agentReports) {
+                            Object.keys(basicArchive.data.agentReports).forEach(agentName => {
+                                if (!agentReports[agentName]) {
+                                    agentReports[agentName] = {};
+                                }
+                                if (basicArchive.data.agentReports[agentName].basic) {
+                                    agentReports[agentName].basic = basicArchive.data.agentReports[agentName].basic;
+                                }
+                            });
+                        }
+                        
+                        if (advancedArchive && advancedArchive.data && advancedArchive.data.agentReports) {
+                            Object.keys(advancedArchive.data.agentReports).forEach(agentName => {
+                                if (!agentReports[agentName]) {
+                                    agentReports[agentName] = {};
+                                }
+                                if (advancedArchive.data.agentReports[agentName].advanced) {
+                                    agentReports[agentName].advanced = advancedArchive.data.agentReports[agentName].advanced;
+                                }
+                            });
+                        }
+                        
+                        if (twoMonthsArchive && twoMonthsArchive.data && twoMonthsArchive.data.agentReports) {
+                            Object.keys(twoMonthsArchive.data.agentReports).forEach(agentName => {
+                                if (!agentReports[agentName]) {
+                                    agentReports[agentName] = {};
+                                }
+                                if (twoMonthsArchive.data.agentReports[agentName].twoMonths) {
+                                    agentReports[agentName].twoMonths = twoMonthsArchive.data.agentReports[agentName].twoMonths;
+                                }
+                            });
+                        }
+                    } catch (e) {
+                        console.warn('Error loading agentReports from database in restoreSavedData:', e);
+                    }
                 }
+                
+                if (Object.keys(agentReports).length === 0) {
+                    const savedAgentReports = loadDataFromStorage('agentReports', {});
+                    if (savedAgentReports && Object.keys(savedAgentReports).length > 0) {
+                        agentReports = savedAgentReports;
+                    }
+                }
+                
+                if (Object.keys(agentReports).length > 0) {
+                    try {
+                        const agentReportsString = JSON.stringify(agentReports);
+                        if (agentReportsString.length <= 2000000) {
+                            localStorage.setItem('agentReports', agentReportsString);
+                        }
+                    } catch (e) {
+                        console.warn('Could not save agentReports to localStorage:', e);
+                    }
+                }
+                
                 const savedBasicResults = loadDataFromStorage('basicResults');
                 if (savedBasicResults && savedBasicResults.total && savedBasicResults.total.count > 0) {
                     await displayBasicResults(savedBasicResults);
@@ -9786,6 +10120,94 @@ let agentReports = {};
             results.total.amount = results.bronze.amount + results.silver.amount + results.gold.amount + results.platinum.amount;
             return results;
         }
+        async function saveAgentAnalysisToArchive(agentName, analysisType, analysisData) {
+            if (!supabaseClient) {
+                console.warn('Supabase غير متصل، لا يمكن حفظ التحليل في الأرشيف');
+                return;
+            }
+            try {
+                const monthYear = analysisData.monthYear || getCurrentMonthYear();
+                const normalizedAgentName = normalizeAgentName(agentName);
+                
+                try {
+                    const archiveData = {
+                        agentName: agentName,
+                        analysisType: analysisType,
+                        monthYear: monthYear,
+                        analysisDate: analysisData.analysisDate || new Date().toISOString(),
+                        results: analysisData.results,
+                        details: analysisData.details || [],
+                        data: analysisData.data || []
+                    };
+                    const existingArchives = JSON.parse(localStorage.getItem('agentAnalysesArchive') || '{}');
+                    if (!existingArchives[monthYear]) {
+                        existingArchives[monthYear] = {};
+                    }
+                    existingArchives[monthYear][agentName] = existingArchives[monthYear][agentName] || {};
+                    existingArchives[monthYear][agentName][analysisType] = archiveData;
+                    localStorage.setItem('agentAnalysesArchive', JSON.stringify(existingArchives));
+                } catch (e) {
+                    console.warn('Could not save to localStorage:', e);
+                }
+                
+                const { data: existingAgentsList } = await supabaseClient
+                    .from('agents_list')
+                    .select('*')
+                    .eq('month_year', monthYear)
+                    .maybeSingle();
+                
+                let agentsListData = existingAgentsList?.data || [];
+                if (!Array.isArray(agentsListData)) {
+                    agentsListData = [];
+                }
+                
+                let agentIndex = agentsListData.findIndex(a => normalizeAgentName(a.name) === normalizedAgentName);
+                if (agentIndex === -1) {
+                    agentsListData.push({
+                        name: agentName,
+                        percentage: 16,
+                        offers: {},
+                        details: {}
+                    });
+                    agentIndex = agentsListData.length - 1;
+                }
+                
+                if (!agentsListData[agentIndex].offers) {
+                    agentsListData[agentIndex].offers = {};
+                }
+                if (!agentsListData[agentIndex].details) {
+                    agentsListData[agentIndex].details = {};
+                }
+                
+                agentsListData[agentIndex].offers[analysisType] = {
+                    results: analysisData.results,
+                    analysisDate: analysisData.analysisDate || new Date().toISOString()
+                };
+                
+                if (analysisData.details && analysisData.details.length > 0) {
+                    const uniqueDetails = [];
+                    const detailsMap = new Map();
+                    
+                    analysisData.details.forEach(detail => {
+                        const key = `${detail.username || ''}_${detail.subscription || ''}_${detail.date || detail.dateStr || detail.date1 || detail.date2 || detail.date3 || ''}_${detail.type || ''}`;
+                        if (!detailsMap.has(key)) {
+                            detailsMap.set(key, detail);
+                            uniqueDetails.push(detail);
+                        }
+                    });
+                    
+                    agentsListData[agentIndex].details[analysisType] = uniqueDetails;
+                } else {
+                    delete agentsListData[agentIndex].details[analysisType];
+                }
+                
+                await saveToDatabase('agents_list', agentsListData, { monthYear: monthYear });
+                
+                console.log(`✓ تم حفظ/استبدال تحليل ${analysisType} للوكيل ${agentName} في الأرشيف للشهر ${monthYear}`);
+            } catch (error) {
+                console.error('Error saving agent analysis to archive:', error);
+            }
+        }
         async function displayBasicResults(results) {
             await ensureAgentExists(results.agentName);
             if (!agentReports[results.agentName]) {
@@ -9795,6 +10217,24 @@ let agentReports = {};
             const monthYear = extractMonthYearFromDetails(basicDetails) || 
                              extractMonthYearFromData(basicData) || 
                              getCurrentMonthYear();
+            
+            try {
+                const agentReportsString = JSON.stringify(agentReports);
+                if (agentReportsString.length <= 2000000) {
+                    localStorage.setItem('agentReports', agentReportsString);
+                }
+            } catch (e) {
+                console.warn('Could not save agentReports to localStorage:', e);
+            }
+            
+            await saveAgentAnalysisToArchive(results.agentName, 'basic', {
+                results: results,
+                details: basicDetails,
+                data: basicData,
+                monthYear: monthYear,
+                analysisDate: new Date().toISOString()
+            });
+            
             saveToDatabase('analysis_archives', {
                 data: basicData,
                 details: basicDetails,
@@ -10019,13 +10459,46 @@ let agentReports = {};
             const monthYear = extractMonthYearFromDetails(advancedDetails) || 
                              extractMonthYearFromData(advancedData) || 
                              getCurrentMonthYear();
+            
+            try {
+                const agentReportsString = JSON.stringify(agentReports);
+                if (agentReportsString.length <= 2000000) {
+                    localStorage.setItem('agentReports', agentReportsString);
+                }
+            } catch (e) {
+                console.warn('Could not save agentReports to localStorage:', e);
+            }
+            
+            await saveAgentAnalysisToArchive(results.agentName, 'advanced', {
+                results: results,
+                details: advancedDetails,
+                data: advancedData,
+                monthYear: monthYear,
+                analysisDate: new Date().toISOString()
+            });
+            
             saveToDatabase('analysis_archives', {
                 data: advancedData,
                 details: advancedDetails,
                 results: results,
                 agentReports: agentReports
-            }, { analysis_type: 'advanced', monthYear: monthYear }).catch(err => console.error('Error saving advanced analysis:', err));
-            saveAgentsListToDatabase(monthYear).catch(err => console.error('Error saving agents list:', err));
+            }, { analysis_type: 'advanced', monthYear: monthYear }).then(saved => {
+                if (saved) {
+                    console.log('✓ Advanced analysis saved successfully');
+                } else {
+                    console.warn('⚠ Advanced analysis save failed or timed out, data saved in localStorage');
+                }
+            }).catch(err => {
+                console.error('Error saving advanced analysis:', err);
+            });
+            
+            saveAgentsListToDatabase(monthYear).then(saved => {
+                if (saved) {
+                    console.log('✓ Agents list saved successfully');
+                }
+            }).catch(err => {
+                console.error('Error saving agents list:', err);
+            });
             const agentInfo = document.getElementById('advancedAgentInfo');
             agentInfo.innerHTML = `
                 <h3>العرض المخفض لثلاث أشهر</h3>
@@ -10262,6 +10735,24 @@ let agentReports = {};
             const monthYear = extractMonthYearFromDetails(twoMonthsDetails) || 
                              extractMonthYearFromData(twoMonthsData) || 
                              getCurrentMonthYear();
+            
+            try {
+                const agentReportsString = JSON.stringify(agentReports);
+                if (agentReportsString.length <= 2000000) {
+                    localStorage.setItem('agentReports', agentReportsString);
+                }
+            } catch (e) {
+                console.warn('Could not save agentReports to localStorage:', e);
+            }
+            
+            await saveAgentAnalysisToArchive(results.agentName, 'two_months', {
+                results: results,
+                details: twoMonthsDetails,
+                data: twoMonthsData,
+                monthYear: monthYear,
+                analysisDate: new Date().toISOString()
+            });
+            
             saveToDatabase('analysis_archives', {
                 data: twoMonthsData,
                 details: twoMonthsDetails,
@@ -10860,7 +11351,7 @@ function updateAgentSummary() {
             let totalAllAgents = 0;
             let agentsCount = 0;
             let summaryHTML = `
-                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; margin-bottom: 30px;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 15px; margin-bottom: 20px;">
             `;
             const sortedAgents = Object.entries(agentReports).sort((a, b) => {
                 let totalA = 0;
@@ -10902,25 +11393,25 @@ function updateAgentSummary() {
                 let agentOffersHTML = '';
                 if (report.basic && totalBasic > 0) {
                     agentOffersHTML += `
-                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; background: rgba(34, 197, 94, 0.1); border-radius: 8px; margin-bottom: 8px; border-right: 3px solid #22c55e;">
-                            <span style="font-weight: 600; color: var(--text-primary);">🆓 العرض المجاني</span>
-                            <span style="font-weight: 700; color: #22c55e; font-size: 1rem;">${formatNumber(totalBasic)} د.ع</span>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; background: rgba(34, 197, 94, 0.1); border-radius: 6px; margin-bottom: 6px; border-right: 2px solid #22c55e;">
+                            <span style="font-weight: 600; color: var(--text-primary); font-size: 0.85rem;">🆓 العرض المجاني</span>
+                            <span style="font-weight: 700; color: #22c55e; font-size: 0.85rem;">${formatNumber(totalBasic)} د.ع</span>
                         </div>
                     `;
                 }
                 if (report.advanced && totalAdvanced > 0) {
                     agentOffersHTML += `
-                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; background: rgba(59, 130, 246, 0.1); border-radius: 8px; margin-bottom: 8px; border-right: 3px solid #3b82f6;">
-                            <span style="font-weight: 600; color: var(--text-primary);">📉 مخفض 3 أشهر</span>
-                            <span style="font-weight: 700; color: #3b82f6; font-size: 1rem;">${formatNumber(totalAdvanced)} د.ع</span>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; background: rgba(59, 130, 246, 0.1); border-radius: 6px; margin-bottom: 6px; border-right: 2px solid #3b82f6;">
+                            <span style="font-weight: 600; color: var(--text-primary); font-size: 0.85rem;">📉 مخفض 3 أشهر</span>
+                            <span style="font-weight: 700; color: #3b82f6; font-size: 0.85rem;">${formatNumber(totalAdvanced)} د.ع</span>
                         </div>
                     `;
                 }
                 if (report.twoMonths && totalTwoMonths > 0) {
                     agentOffersHTML += `
-                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; background: rgba(168, 85, 247, 0.1); border-radius: 8px; margin-bottom: 8px; border-right: 3px solid #a855f7;">
-                            <span style="font-weight: 600; color: var(--text-primary);">📉 مخفض شهرين</span>
-                            <span style="font-weight: 700; color: #a855f7; font-size: 1rem;">${formatNumber(totalTwoMonths)} د.ع</span>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; background: rgba(168, 85, 247, 0.1); border-radius: 6px; margin-bottom: 6px; border-right: 2px solid #a855f7;">
+                            <span style="font-weight: 600; color: var(--text-primary); font-size: 0.85rem;">📉 مخفض شهرين</span>
+                            <span style="font-weight: 700; color: #a855f7; font-size: 0.85rem;">${formatNumber(totalTwoMonths)} د.ع</span>
                         </div>
                     `;
                 }
@@ -10928,21 +11419,21 @@ function updateAgentSummary() {
                 if (totalAll > 0) {
                     const agentPercentage = totalAllAgents > 0 ? ((totalAll / totalAllAgents) * 100).toFixed(1) : 0;
                     summaryHTML += `
-                        <div class="agent-summary-card" style="background: var(--card-bg); border: 2px solid var(--border-color); border-radius: 16px; padding: 24px; box-shadow: 0 4px 16px var(--shadow-sm); transition: all 0.3s ease; position: relative; overflow: hidden;">
-                            <div style="position: absolute; top: 0; right: 0; width: 60px; height: 60px; background: linear-gradient(135deg, rgba(128, 28, 50, 0.1), rgba(165, 45, 69, 0.05)); border-radius: 0 0 0 50px;"></div>
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; padding-bottom: 15px; border-bottom: 3px solid var(--border-color); position: relative; z-index: 2;">
-                                <h3 style="margin: 0; font-size: 1.3rem; font-weight: 800; color: var(--primary-color); text-shadow: 0 1px 2px rgba(0,0,0,0.1);">${agentName}</h3>
-                                <span style="background: linear-gradient(135deg, var(--primary-color), var(--primary-hover)); color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; box-shadow: 0 2px 8px rgba(128, 28, 50, 0.3);">${offersCount} عرض</span>
+                        <div class="agent-summary-card" style="background: var(--card-bg); border: 2px solid var(--border-color); border-radius: 12px; padding: 16px; box-shadow: 0 3px 12px var(--shadow-sm); transition: all 0.3s ease; position: relative; overflow: hidden;">
+                            <div style="position: absolute; top: 0; right: 0; width: 45px; height: 45px; background: linear-gradient(135deg, rgba(128, 28, 50, 0.1), rgba(165, 45, 69, 0.05)); border-radius: 0 0 0 40px;"></div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 2px solid var(--border-color); position: relative; z-index: 2;">
+                                <h3 style="margin: 0; font-size: 1rem; font-weight: 800; color: var(--primary-color); text-shadow: 0 1px 2px rgba(0,0,0,0.1);">${agentName}</h3>
+                                <span style="background: linear-gradient(135deg, var(--primary-color), var(--primary-hover)); color: #fff; padding: 4px 10px; border-radius: 16px; font-size: 0.7rem; font-weight: 700; box-shadow: 0 2px 6px rgba(128, 28, 50, 0.3);">${offersCount} عرض</span>
                             </div>
-                            <div style="margin-bottom: 18px; position: relative; z-index: 2;">
+                            <div style="margin-bottom: 12px; position: relative; z-index: 2;">
                                 ${agentOffersHTML}
                             </div>
-                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px; background: linear-gradient(135deg, rgba(128, 28, 50, 0.12), rgba(165, 45, 69, 0.08)); border-radius: 12px; border-top: 3px solid var(--primary-color); margin-top: 12px; position: relative; z-index: 2; box-shadow: 0 2px 8px rgba(128, 28, 50, 0.1);">
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: linear-gradient(135deg, rgba(128, 28, 50, 0.12), rgba(165, 45, 69, 0.08)); border-radius: 8px; border-top: 2px solid var(--primary-color); margin-top: 8px; position: relative; z-index: 2; box-shadow: 0 2px 6px rgba(128, 28, 50, 0.1);">
                                 <div>
-                                    <span style="font-weight: 700; color: var(--text-primary); font-size: 0.95rem; display: block; margin-bottom: 4px;">الإجمالي:</span>
-                                    <span style="font-size: 0.8rem; color: var(--text-secondary); font-weight: 600;">${agentPercentage}% من الإجمالي</span>
+                                    <span style="font-weight: 700; color: var(--text-primary); font-size: 0.85rem; display: block; margin-bottom: 3px;">الإجمالي:</span>
+                                    <span style="font-size: 0.7rem; color: var(--text-secondary); font-weight: 600;">${agentPercentage}% من الإجمالي</span>
                                 </div>
-                                <span style="font-weight: 900; color: var(--primary-color); font-size: 1.5rem; text-shadow: 0 2px 4px rgba(128, 28, 50, 0.2);">${formatNumber(totalAll)} د.ع</span>
+                                <span style="font-weight: 900; color: var(--primary-color); font-size: 1.2rem; text-shadow: 0 2px 4px rgba(128, 28, 50, 0.2);">${formatNumber(totalAll)} د.ع</span>
                             </div>
                         </div>
                     `;
@@ -10964,51 +11455,48 @@ function updateAgentSummary() {
             });
             
             let totalsHTML = `
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px;">
-                    <div style="background: linear-gradient(135deg, #22c55e, #16a34a); color: #fff; border-radius: 16px; padding: 28px; box-shadow: 0 8px 24px rgba(34, 197, 94, 0.4); text-align: center; border: 2px solid rgba(255, 255, 255, 0.2); position: relative; overflow: hidden;">
-                        <div style="position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; background: rgba(255, 255, 255, 0.1); border-radius: 50%;"></div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                    <div style="background: linear-gradient(135deg, #22c55e, #16a34a); color: #fff; border-radius: 12px; padding: 18px; box-shadow: 0 4px 16px rgba(34, 197, 94, 0.3); text-align: center; border: 2px solid rgba(255, 255, 255, 0.2); position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: -15px; right: -15px; width: 70px; height: 70px; background: rgba(255, 255, 255, 0.1); border-radius: 50%;"></div>
                         <div style="position: relative; z-index: 2;">
-                            <div style="font-size: 2.5rem; margin-bottom: 12px;"></div>
-                            <div style="font-size: 1.2rem; font-weight: 700; margin-bottom: 15px; opacity: 0.95;">العرض المجاني</div>
-                            <div style="font-size: 2.5rem; font-weight: 900; margin-bottom: 8px; text-shadow: 0 2px 8px rgba(0,0,0,0.2);">${formatNumber(totalBasicAll)}</div>
-                            <div style="font-size: 1rem; opacity: 0.9; margin-bottom: 12px;"></div>
-                            <div style="padding: 8px 12px; background: rgba(255, 255, 255, 0.2); border-radius: 8px; margin-top: 10px; font-size: 0.9rem; font-weight: 600;">
+                            <div style="font-size: 1.5rem; margin-bottom: 8px;"></div>
+                            <div style="font-size: 0.95rem; font-weight: 700; margin-bottom: 10px; opacity: 0.95;">العرض المجاني</div>
+                            <div style="font-size: 1.6rem; font-weight: 900; margin-bottom: 6px; text-shadow: 0 2px 6px rgba(0,0,0,0.2);">${formatNumber(totalBasicAll)}</div>
+                            <div style="padding: 6px 10px; background: rgba(255, 255, 255, 0.2); border-radius: 6px; margin-top: 8px; font-size: 0.8rem; font-weight: 600;">
                                 ${basicPercentage}% | ${basicAgentsCount} وكيل
                             </div>
                         </div>
                     </div>
-                    <div style="background: linear-gradient(135deg, #3b82f6, #2563eb); color: #fff; border-radius: 16px; padding: 28px; box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4); text-align: center; border: 2px solid rgba(255, 255, 255, 0.2); position: relative; overflow: hidden;">
-                        <div style="position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; background: rgba(255, 255, 255, 0.1); border-radius: 50%;"></div>
+                    <div style="background: linear-gradient(135deg, #3b82f6, #2563eb); color: #fff; border-radius: 12px; padding: 18px; box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3); text-align: center; border: 2px solid rgba(255, 255, 255, 0.2); position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: -15px; right: -15px; width: 70px; height: 70px; background: rgba(255, 255, 255, 0.1); border-radius: 50%;"></div>
                         <div style="position: relative; z-index: 2;">
-                            <div style="font-size: 2.5rem; margin-bottom: 12px;"></div>
-                            <div style="font-size: 1.2rem; font-weight: 700; margin-bottom: 15px; opacity: 0.95;">مخفض 3 أشهر</div>
-                            <div style="font-size: 2.5rem; font-weight: 900; margin-bottom: 8px; text-shadow: 0 2px 8px rgba(0,0,0,0.2);">${formatNumber(totalAdvancedAll)}</div>
-                            <div style="font-size: 1rem; opacity: 0.9; margin-bottom: 12px;"></div>
-                            <div style="padding: 8px 12px; background: rgba(255, 255, 255, 0.2); border-radius: 8px; margin-top: 10px; font-size: 0.9rem; font-weight: 600;">
+                            <div style="font-size: 1.5rem; margin-bottom: 8px;"></div>
+                            <div style="font-size: 0.95rem; font-weight: 700; margin-bottom: 10px; opacity: 0.95;">مخفض 3 أشهر</div>
+                            <div style="font-size: 1.6rem; font-weight: 900; margin-bottom: 6px; text-shadow: 0 2px 6px rgba(0,0,0,0.2);">${formatNumber(totalAdvancedAll)}</div>
+                            <div style="padding: 6px 10px; background: rgba(255, 255, 255, 0.2); border-radius: 6px; margin-top: 8px; font-size: 0.8rem; font-weight: 600;">
                                 ${advancedPercentage}% | ${advancedAgentsCount} وكيل
                             </div>
                         </div>
                     </div>
-                    <div style="background: linear-gradient(135deg, #a855f7, #9333ea); color: #fff; border-radius: 16px; padding: 28px; box-shadow: 0 8px 24px rgba(168, 85, 247, 0.4); text-align: center; border: 2px solid rgba(255, 255, 255, 0.2); position: relative; overflow: hidden;">
-                        <div style="position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; background: rgba(255, 255, 255, 0.1); border-radius: 50%;"></div>
+                    <div style="background: linear-gradient(135deg, #a855f7, #9333ea); color: #fff; border-radius: 12px; padding: 18px; box-shadow: 0 4px 16px rgba(168, 85, 247, 0.3); text-align: center; border: 2px solid rgba(255, 255, 255, 0.2); position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: -15px; right: -15px; width: 70px; height: 70px; background: rgba(255, 255, 255, 0.1); border-radius: 50%;"></div>
                         <div style="position: relative; z-index: 2;">
-                            <div style="font-size: 2.5rem; margin-bottom: 12px;"></div>
-                            <div style="font-size: 1.2rem; font-weight: 700; margin-bottom: 15px; opacity: 0.95;">مخفض شهرين</div>
-                            <div style="font-size: 2.5rem; font-weight: 900; margin-bottom: 8px; text-shadow: 0 2px 8px rgba(0,0,0,0.2);">${formatNumber(totalTwoMonthsAll)}</div>
-                            <div style="font-size: 1rem; opacity: 0.9; margin-bottom: 12px;"></div>
-                            <div style="padding: 8px 12px; background: rgba(255, 255, 255, 0.2); border-radius: 8px; margin-top: 10px; font-size: 0.9rem; font-weight: 600;">
+                            <div style="font-size: 1.5rem; margin-bottom: 8px;"></div>
+                            <div style="font-size: 0.95rem; font-weight: 700; margin-bottom: 10px; opacity: 0.95;">مخفض شهرين</div>
+                            <div style="font-size: 1.6rem; font-weight: 900; margin-bottom: 6px; text-shadow: 0 2px 6px rgba(0,0,0,0.2);">${formatNumber(totalTwoMonthsAll)}</div>
+                            <div style="padding: 6px 10px; background: rgba(255, 255, 255, 0.2); border-radius: 6px; margin-top: 8px; font-size: 0.8rem; font-weight: 600;">
                                 ${twoMonthsPercentage}% | ${twoMonthsAgentsCount} وكيل
                             </div>
                         </div>
                     </div>
-                    <div style="background: linear-gradient(135deg, #801c32, #a52d45); color: #fff; border-radius: 16px; padding: 28px; box-shadow: 0 10px 30px rgba(128, 28, 50, 0.5); text-align: center; border: 3px solid rgba(255, 255, 255, 0.3); position: relative; overflow: hidden;">
-                        <div style="position: absolute; top: -30px; right: -30px; width: 120px; height: 120px; background: rgba(255, 255, 255, 0.15); border-radius: 50%;"></div>
+                    <div style="background: linear-gradient(135deg, #801c32, #a52d45); color: #fff; border-radius: 12px; padding: 18px; box-shadow: 0 6px 20px rgba(128, 28, 50, 0.4); text-align: center; border: 2px solid rgba(255, 255, 255, 0.3); position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: -20px; right: -20px; width: 80px; height: 80px; background: rgba(255, 255, 255, 0.15); border-radius: 50%;"></div>
                         <div style="position: relative; z-index: 2;">
-                            <div style="font-size: 3rem; margin-bottom: 15px;"></div>
-                            <div style="font-size: 1.4rem; font-weight: 800; margin-bottom: 18px; opacity: 0.95; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">الإجمالي الكلي</div>
-                            <div style="font-size: 3rem; font-weight: 900; margin-bottom: 10px; text-shadow: 0 3px 10px rgba(0,0,0,0.3);">${formatNumber(totalAllAgents)}</div>
-                            <div style="font-size: 1.1rem; opacity: 0.95; margin-bottom: 15px; font-weight: 600;">دينار عراقي</div>
-                            <div style="padding: 10px 15px; background: rgba(255, 255, 255, 0.25); border-radius: 10px; margin-top: 12px; font-size: 1rem; font-weight: 700; border: 1px solid rgba(255, 255, 255, 0.3);">
+                            <div style="font-size: 1.8rem; margin-bottom: 10px;"></div>
+                            <div style="font-size: 1rem; font-weight: 800; margin-bottom: 12px; opacity: 0.95; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">الإجمالي الكلي</div>
+                            <div style="font-size: 1.8rem; font-weight: 900; margin-bottom: 8px; text-shadow: 0 2px 8px rgba(0,0,0,0.3);">${formatNumber(totalAllAgents)}</div>
+                            <div style="font-size: 0.85rem; opacity: 0.95; margin-bottom: 10px; font-weight: 600;">دينار عراقي</div>
+                            <div style="padding: 8px 12px; background: rgba(255, 255, 255, 0.25); border-radius: 8px; margin-top: 8px; font-size: 0.85rem; font-weight: 700; border: 1px solid rgba(255, 255, 255, 0.3);">
                                 ${agentsCount} وكيل 
                             </div>
                         </div>
@@ -11072,14 +11560,14 @@ function updateAgentSummary() {
                     },
                     options: {
                         responsive: true,
-                        maintainAspectRatio: true,
+                        maintainAspectRatio: false,
                         plugins: {
                             legend: {
                                 position: 'bottom',
                                 labels: {
-                                    padding: 20,
+                                    padding: 12,
                                     font: {
-                                        size: 13,
+                                        size: 11,
                                         family: 'Cairo',
                                         weight: '600'
                                     },
@@ -11089,14 +11577,14 @@ function updateAgentSummary() {
                             },
                             tooltip: {
                                 backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                                padding: 12,
+                                padding: 10,
                                 titleFont: {
-                                    size: 14,
+                                    size: 12,
                                     family: 'Cairo',
                                     weight: '700'
                                 },
                                 bodyFont: {
-                                    size: 13,
+                                    size: 11,
                                     family: 'Cairo'
                                 },
                                 callbacks: {
@@ -11147,7 +11635,7 @@ function updateAgentSummary() {
                     },
                     options: {
                         responsive: true,
-                        maintainAspectRatio: true,
+                        maintainAspectRatio: false,
                         indexAxis: 'y',
                         plugins: {
                             legend: {
@@ -11155,14 +11643,14 @@ function updateAgentSummary() {
                             },
                             tooltip: {
                                 backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                                padding: 12,
+                                padding: 10,
                                 titleFont: {
-                                    size: 14,
+                                    size: 12,
                                     family: 'Cairo',
                                     weight: '700'
                                 },
                                 bodyFont: {
-                                    size: 13,
+                                    size: 11,
                                     family: 'Cairo'
                                 },
                                 callbacks: {
@@ -11179,7 +11667,7 @@ function updateAgentSummary() {
                                         return formatNumber(value);
                                     },
                                     font: {
-                                        size: 11,
+                                        size: 9,
                                         family: 'Cairo'
                                     }
                                 },
@@ -11190,7 +11678,7 @@ function updateAgentSummary() {
                             y: {
                                 ticks: {
                                     font: {
-                                        size: 11,
+                                        size: 9,
                                         family: 'Cairo'
                                     }
                                 },
@@ -11208,23 +11696,41 @@ function updateAgentSummary() {
                 let totalBronze = 0, totalSilver = 0, totalGold = 0, totalPlatinum = 0;
                 if (agentsData && agentsData.length > 0) {
                     agentsData.forEach(([agentName, report]) => {
-                        if (report.basic) {
-                            totalBronze += report.basic.bronze?.count || 0;
-                            totalSilver += report.basic.silver?.count || 0;
-                            totalGold += report.basic.gold?.count || 0;
-                            totalPlatinum += report.basic.platinum?.count || 0;
+                        if (report.basic && report.basic.bronze) {
+                            totalBronze += Number(report.basic.bronze.count || 0);
                         }
-                        if (report.advanced) {
-                            totalBronze += report.advanced.bronze?.count || 0;
-                            totalSilver += report.advanced.silver?.count || 0;
-                            totalGold += report.advanced.gold?.count || 0;
-                            totalPlatinum += report.advanced.platinum?.count || 0;
+                        if (report.basic && report.basic.silver) {
+                            totalSilver += Number(report.basic.silver.count || 0);
                         }
-                        if (report.twoMonths) {
-                            totalBronze += report.twoMonths.bronze?.count || 0;
-                            totalSilver += report.twoMonths.silver?.count || 0;
-                            totalGold += report.twoMonths.gold?.count || 0;
-                            totalPlatinum += report.twoMonths.platinum?.count || 0;
+                        if (report.basic && report.basic.gold) {
+                            totalGold += Number(report.basic.gold.count || 0);
+                        }
+                        if (report.basic && report.basic.platinum) {
+                            totalPlatinum += Number(report.basic.platinum.count || 0);
+                        }
+                        if (report.advanced && report.advanced.bronze) {
+                            totalBronze += Number(report.advanced.bronze.count || 0);
+                        }
+                        if (report.advanced && report.advanced.silver) {
+                            totalSilver += Number(report.advanced.silver.count || 0);
+                        }
+                        if (report.advanced && report.advanced.gold) {
+                            totalGold += Number(report.advanced.gold.count || 0);
+                        }
+                        if (report.advanced && report.advanced.platinum) {
+                            totalPlatinum += Number(report.advanced.platinum.count || 0);
+                        }
+                        if (report.twoMonths && report.twoMonths.bronze) {
+                            totalBronze += Number(report.twoMonths.bronze.count || 0);
+                        }
+                        if (report.twoMonths && report.twoMonths.silver) {
+                            totalSilver += Number(report.twoMonths.silver.count || 0);
+                        }
+                        if (report.twoMonths && report.twoMonths.gold) {
+                            totalGold += Number(report.twoMonths.gold.count || 0);
+                        }
+                        if (report.twoMonths && report.twoMonths.platinum) {
+                            totalPlatinum += Number(report.twoMonths.platinum.count || 0);
                         }
                     });
                 }
@@ -11261,14 +11767,14 @@ function updateAgentSummary() {
                     },
                     options: {
                         responsive: true,
-                        maintainAspectRatio: true,
+                        maintainAspectRatio: false,
                         plugins: {
                             legend: {
                                 position: 'bottom',
                                 labels: {
-                                    padding: 15,
+                                    padding: 10,
                                     font: {
-                                        size: 12,
+                                        size: 10,
                                         family: 'Cairo',
                                         weight: '600'
                                     },
@@ -11294,14 +11800,14 @@ function updateAgentSummary() {
                             },
                             tooltip: {
                                 backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                                padding: 12,
+                                padding: 10,
                                 titleFont: {
-                                    size: 14,
+                                    size: 12,
                                     family: 'Cairo',
                                     weight: '700'
                                 },
                                 bodyFont: {
-                                    size: 13,
+                                    size: 11,
                                     family: 'Cairo'
                                 },
                                 callbacks: {
@@ -11331,20 +11837,91 @@ function updateAgentSummary() {
                 alert('لا توجد بيانات للتصدير. يرجى تحليل بيانات الوكلاء أولاً.');
                 return;
             }
+            
+            let analyzedOfferType = null;
+            let hasBasic = false, hasAdvanced = false, hasTwoMonths = false;
+            
+            Object.values(agentReports).forEach(report => {
+                if (report.basic && report.basic.total && report.basic.total.count > 0) {
+                    hasBasic = true;
+                }
+                if (report.advanced && report.advanced.total && report.advanced.total.count > 0) {
+                    hasAdvanced = true;
+                }
+                if (report.twoMonths && report.twoMonths.total && report.twoMonths.total.count > 0) {
+                    hasTwoMonths = true;
+                }
+            });
+            
+            if (hasBasic) {
+                analyzedOfferType = 'basic';
+            } else if (hasAdvanced) {
+                analyzedOfferType = 'advanced';
+            } else if (hasTwoMonths) {
+                analyzedOfferType = 'twoMonths';
+            }
+            
+            if (!analyzedOfferType) {
+                alert('لا توجد بيانات محللة للتصدير. يرجى تحليل بيانات الوكلاء أولاً.');
+                return;
+            }
+            
             try {
                 const ExcelJS = window.ExcelJS;
                 if (!ExcelJS) {
-                    exportSummaryToExcelXLSX();
+                    exportSummaryToExcelXLSX(analyzedOfferType);
                     return;
                 }
                 const workbook = new ExcelJS.Workbook();
-                const worksheet = workbook.addWorksheet('ملخص شامل للوكلاء');
+                let worksheetTitle = '';
+                let reportTitle = '';
+                let headers = [];
+                let totalColumns = 0;
+                
+                if (analyzedOfferType === 'basic') {
+                    worksheetTitle = 'العرض المجاني';
+                    reportTitle = 'تقرير العرض المجاني - جميع الوكلاء';
+                    headers = [
+                        'اسم الوكيل',
+                        'برونز (عدد)', 'برونز (مبلغ)',
+                        'سلفر (عدد)', 'سلفر (مبلغ)',
+                        'ذهبي (عدد)', 'ذهبي (مبلغ)',
+                        'بلاتينيوم (عدد)', 'بلاتينيوم (مبلغ)',
+                        'الإجمالي'
+                    ];
+                    totalColumns = 10;
+                } else if (analyzedOfferType === 'advanced') {
+                    worksheetTitle = 'مخفض 3 أشهر';
+                    reportTitle = 'تقرير العرض المخفض لثلاثة أشهر - جميع الوكلاء';
+                    headers = [
+                        'اسم الوكيل',
+                        'برونز (عدد)', 'برونز (عرض)', 'برونز (رسمي)', 'برونز (راجع)',
+                        'سلفر (عدد)', 'سلفر (عرض)', 'سلفر (رسمي)', 'سلفر (راجع)',
+                        'ذهبي (عدد)', 'ذهبي (عرض)', 'ذهبي (رسمي)', 'ذهبي (راجع)',
+                        'بلاتينيوم (عدد)', 'بلاتينيوم (عرض)', 'بلاتينيوم (رسمي)', 'بلاتينيوم (راجع)',
+                        'الإجمالي'
+                    ];
+                    totalColumns = 18;
+                } else if (analyzedOfferType === 'twoMonths') {
+                    worksheetTitle = 'مخفض شهرين';
+                    reportTitle = 'تقرير العرض المخفض لشهرين - جميع الوكلاء';
+                    headers = [
+                        'اسم الوكيل',
+                        'برونز (عدد)', 'برونز (عرض)', 'برونز (رسمي)', 'برونز (راجع)',
+                        'سلفر (عدد)', 'سلفر (عرض)', 'سلفر (رسمي)', 'سلفر (راجع)',
+                        'ذهبي (عدد)', 'ذهبي (عرض)', 'ذهبي (رسمي)', 'ذهبي (راجع)',
+                        'بلاتينيوم (عدد)', 'بلاتينيوم (عرض)', 'بلاتينيوم (رسمي)', 'بلاتينيوم (راجع)',
+                        'الإجمالي'
+                    ];
+                    totalColumns = 18;
+                }
+                
+                const worksheet = workbook.addWorksheet(worksheetTitle);
                 
                 const titleRow = worksheet.getRow(1);
-                titleRow.getCell(1).value = 'تقرير شامل لجميع الوكلاء - تفاصيل كاملة';
+                titleRow.getCell(1).value = reportTitle;
                 titleRow.getCell(1).font = { bold: true, size: 18, color: { argb: 'FF801C32' } };
                 titleRow.getCell(1).alignment = { horizontal: 'center', vertical: 'middle' };
-                const totalColumns = 45;
                 worksheet.mergeCells(1, 1, 1, totalColumns);
                 titleRow.height = 35;
                 
@@ -11358,25 +11935,6 @@ function updateAgentSummary() {
                 dateRow.height = 25;
                 
                 let currentRow = 4;
-                const headers = [
-                    'اسم الوكيل',
-                    'العرض المجاني - برونز (عدد)', 'العرض المجاني - برونز (مبلغ)',
-                    'العرض المجاني - سلفر (عدد)', 'العرض المجاني - سلفر (مبلغ)',
-                    'العرض المجاني - ذهبي (عدد)', 'العرض المجاني - ذهبي (مبلغ)',
-                    'العرض المجاني - بلاتينيوم (عدد)', 'العرض المجاني - بلاتينيوم (مبلغ)',
-                    'العرض المجاني - الإجمالي',
-                    'مخفض 3 أشهر - برونز (عدد)', 'مخفض 3 أشهر - برونز (عرض)', 'مخفض 3 أشهر - برونز (رسمي)', 'مخفض 3 أشهر - برونز (راجع)',
-                    'مخفض 3 أشهر - سلفر (عدد)', 'مخفض 3 أشهر - سلفر (عرض)', 'مخفض 3 أشهر - سلفر (رسمي)', 'مخفض 3 أشهر - سلفر (راجع)',
-                    'مخفض 3 أشهر - ذهبي (عدد)', 'مخفض 3 أشهر - ذهبي (عرض)', 'مخفض 3 أشهر - ذهبي (رسمي)', 'مخفض 3 أشهر - ذهبي (راجع)',
-                    'مخفض 3 أشهر - بلاتينيوم (عدد)', 'مخفض 3 أشهر - بلاتينيوم (عرض)', 'مخفض 3 أشهر - بلاتينيوم (رسمي)', 'مخفض 3 أشهر - بلاتينيوم (راجع)',
-                    'مخفض 3 أشهر - الإجمالي',
-                    'مخفض شهرين - برونز (عدد)', 'مخفض شهرين - برونز (عرض)', 'مخفض شهرين - برونز (رسمي)', 'مخفض شهرين - برونز (راجع)',
-                    'مخفض شهرين - سلفر (عدد)', 'مخفض شهرين - سلفر (عرض)', 'مخفض شهرين - سلفر (رسمي)', 'مخفض شهرين - سلفر (راجع)',
-                    'مخفض شهرين - ذهبي (عدد)', 'مخفض شهرين - ذهبي (عرض)', 'مخفض شهرين - ذهبي (رسمي)', 'مخفض شهرين - ذهبي (راجع)',
-                    'مخفض شهرين - بلاتينيوم (عدد)', 'مخفض شهرين - بلاتينيوم (عرض)', 'مخفض شهرين - بلاتينيوم (رسمي)', 'مخفض شهرين - بلاتينيوم (راجع)',
-                    'مخفض شهرين - الإجمالي',
-                    'الإجمالي الكلي للوكيل'
-                ];
                 
                 const headerRow = worksheet.getRow(currentRow);
                 headers.forEach((header, idx) => {
@@ -11400,24 +11958,42 @@ function updateAgentSummary() {
                 
                 const sortedAgents = Object.entries(agentReports).sort((a, b) => {
                     let totalA = 0, totalB = 0;
-                    if (a[1].basic && a[1].basic.total && a[1].basic.total.amount > 0) totalA += a[1].basic.total.amount;
-                    if (a[1].advanced && a[1].advanced.total && a[1].advanced.total.profit > 0) totalA += a[1].advanced.total.profit;
-                    if (a[1].twoMonths && a[1].twoMonths.total && a[1].twoMonths.total.profit > 0) totalA += a[1].twoMonths.total.profit;
-                    if (b[1].basic && b[1].basic.total && b[1].basic.total.amount > 0) totalB += b[1].basic.total.amount;
-                    if (b[1].advanced && b[1].advanced.total && b[1].advanced.total.profit > 0) totalB += b[1].advanced.total.profit;
-                    if (b[1].twoMonths && b[1].twoMonths.total && b[1].twoMonths.total.profit > 0) totalB += b[1].twoMonths.total.profit;
+                    if (analyzedOfferType === 'basic') {
+                        totalA = (a[1].basic?.total?.amount || 0);
+                        totalB = (b[1].basic?.total?.amount || 0);
+                    } else if (analyzedOfferType === 'advanced') {
+                        totalA = (a[1].advanced?.total?.profit || 0);
+                        totalB = (b[1].advanced?.total?.profit || 0);
+                    } else if (analyzedOfferType === 'twoMonths') {
+                        totalA = (a[1].twoMonths?.total?.profit || 0);
+                        totalB = (b[1].twoMonths?.total?.profit || 0);
+                    }
                     return totalB - totalA;
                 });
                 
-                let grandTotalBasic = 0, grandTotalAdvanced = 0, grandTotalTwoMonths = 0, grandTotalAll = 0;
+                let grandTotal = 0;
+                let grandTotalBronzeCount = 0, grandTotalSilverCount = 0, grandTotalGoldCount = 0, grandTotalPlatinumCount = 0;
+                let grandTotalBronzeAmount = 0, grandTotalSilverAmount = 0, grandTotalGoldAmount = 0, grandTotalPlatinumAmount = 0;
                 
                 sortedAgents.forEach(([agentName, report], index) => {
+                    let hasData = false;
+                    if (analyzedOfferType === 'basic' && report.basic && report.basic.total && report.basic.total.count > 0) {
+                        hasData = true;
+                    } else if (analyzedOfferType === 'advanced' && report.advanced && report.advanced.total && report.advanced.total.count > 0) {
+                        hasData = true;
+                    } else if (analyzedOfferType === 'twoMonths' && report.twoMonths && report.twoMonths.total && report.twoMonths.total.count > 0) {
+                        hasData = true;
+                    }
+                    
+                    if (!hasData) return;
+                    
                     currentRow++;
                     const dataRow = worksheet.getRow(currentRow);
                     let col = 1;
                     
                     dataRow.getCell(col++).value = agentName;
                     
+                    if (analyzedOfferType === 'basic') {
                     const basic = report.basic || {};
                     const basicBronze = basic.bronze || { count: 0, amount: 0 };
                     const basicSilver = basic.silver || { count: 0, amount: 0 };
@@ -11434,8 +12010,17 @@ function updateAgentSummary() {
                     dataRow.getCell(col++).value = basicPlatinum.count || 0;
                     dataRow.getCell(col++).value = basicPlatinum.amount || 0;
                     dataRow.getCell(col++).value = basicTotal.amount || 0;
-                    grandTotalBasic += basicTotal.amount || 0;
-                    
+                        
+                        grandTotal += basicTotal.amount || 0;
+                        grandTotalBronzeCount += basicBronze.count || 0;
+                        grandTotalSilverCount += basicSilver.count || 0;
+                        grandTotalGoldCount += basicGold.count || 0;
+                        grandTotalPlatinumCount += basicPlatinum.count || 0;
+                        grandTotalBronzeAmount += basicBronze.amount || 0;
+                        grandTotalSilverAmount += basicSilver.amount || 0;
+                        grandTotalGoldAmount += basicGold.amount || 0;
+                        grandTotalPlatinumAmount += basicPlatinum.amount || 0;
+                    } else if (analyzedOfferType === 'advanced') {
                     const advanced = report.advanced || {};
                     const advBronze = advanced.bronze || { count: 0, promoAmount: 0, officialAmount: 0 };
                     const advSilver = advanced.silver || { count: 0, promoAmount: 0, officialAmount: 0 };
@@ -11460,8 +12045,13 @@ function updateAgentSummary() {
                     dataRow.getCell(col++).value = advPlatinum.officialAmount || 0;
                     dataRow.getCell(col++).value = (advPlatinum.officialAmount || 0) - (advPlatinum.promoAmount || 0);
                     dataRow.getCell(col++).value = advTotal.profit || 0;
-                    grandTotalAdvanced += advTotal.profit || 0;
-                    
+                        
+                        grandTotal += advTotal.profit || 0;
+                        grandTotalBronzeCount += advBronze.count || 0;
+                        grandTotalSilverCount += advSilver.count || 0;
+                        grandTotalGoldCount += advGold.count || 0;
+                        grandTotalPlatinumCount += advPlatinum.count || 0;
+                    } else if (analyzedOfferType === 'twoMonths') {
                     const twoMonths = report.twoMonths || {};
                     const tmBronze = twoMonths.bronze || { count: 0, promoAmount: 0, officialAmount: 0 };
                     const tmSilver = twoMonths.silver || { count: 0, promoAmount: 0, officialAmount: 0 };
@@ -11486,11 +12076,13 @@ function updateAgentSummary() {
                     dataRow.getCell(col++).value = tmPlatinum.officialAmount || 0;
                     dataRow.getCell(col++).value = (tmPlatinum.officialAmount || 0) - (tmPlatinum.promoAmount || 0);
                     dataRow.getCell(col++).value = tmTotal.profit || 0;
-                    grandTotalTwoMonths += tmTotal.profit || 0;
-                    
-                    const agentTotal = (basicTotal.amount || 0) + (advTotal.profit || 0) + (tmTotal.profit || 0);
-                    dataRow.getCell(col++).value = agentTotal;
-                    grandTotalAll += agentTotal;
+                        
+                        grandTotal += tmTotal.profit || 0;
+                        grandTotalBronzeCount += tmBronze.count || 0;
+                        grandTotalSilverCount += tmSilver.count || 0;
+                        grandTotalGoldCount += tmGold.count || 0;
+                        grandTotalPlatinumCount += tmPlatinum.count || 0;
+                    }
                     
                     const isEven = index % 2 === 0;
                     const bgColor = isEven ? 'FFFFFFFF' : 'FFF8F9FA';
@@ -11520,10 +12112,36 @@ function updateAgentSummary() {
                 const totalRow = worksheet.getRow(currentRow);
                 totalRow.getCell(1).value = 'الإجمالي الكلي';
                 totalRow.getCell(1).font = { bold: true, size: 12, color: { argb: 'FF801C32' } };
-                totalRow.getCell(10).value = grandTotalBasic;
-                totalRow.getCell(27).value = grandTotalAdvanced;
-                totalRow.getCell(44).value = grandTotalTwoMonths;
-                totalRow.getCell(45).value = grandTotalAll;
+                
+                if (analyzedOfferType === 'basic') {
+                    totalRow.getCell(2).value = grandTotalBronzeCount;
+                    totalRow.getCell(3).value = grandTotalBronzeAmount;
+                    totalRow.getCell(4).value = grandTotalSilverCount;
+                    totalRow.getCell(5).value = grandTotalSilverAmount;
+                    totalRow.getCell(6).value = grandTotalGoldCount;
+                    totalRow.getCell(7).value = grandTotalGoldAmount;
+                    totalRow.getCell(8).value = grandTotalPlatinumCount;
+                    totalRow.getCell(9).value = grandTotalPlatinumAmount;
+                    totalRow.getCell(10).value = grandTotal;
+                } else if (analyzedOfferType === 'advanced' || analyzedOfferType === 'twoMonths') {
+                    totalRow.getCell(2).value = grandTotalBronzeCount;
+                    totalRow.getCell(3).value = 0; 
+                    totalRow.getCell(4).value = 0; 
+                    totalRow.getCell(5).value = 0; 
+                    totalRow.getCell(6).value = grandTotalSilverCount;
+                    totalRow.getCell(7).value = 0;
+                    totalRow.getCell(8).value = 0;
+                    totalRow.getCell(9).value = 0;
+                    totalRow.getCell(10).value = grandTotalGoldCount;
+                    totalRow.getCell(11).value = 0;
+                    totalRow.getCell(12).value = 0;
+                    totalRow.getCell(13).value = 0;
+                    totalRow.getCell(14).value = grandTotalPlatinumCount;
+                    totalRow.getCell(15).value = 0;
+                    totalRow.getCell(16).value = 0;
+                    totalRow.getCell(17).value = 0;
+                    totalRow.getCell(18).value = grandTotal;
+                }
                 
                 for (let c = 1; c <= headers.length; c++) {
                     const cell = totalRow.getCell(c);
@@ -11559,92 +12177,141 @@ function updateAgentSummary() {
                     const url = URL.createObjectURL(blob);
                     const link = document.createElement('a');
                     link.href = url;
-                    link.download = `ملخص_شامل_الوكلاء_${formatDateForFilename(new Date())}.xlsx`;
+                    const offerName = analyzedOfferType === 'basic' ? 'العرض_المجاني' : 
+                                     analyzedOfferType === 'advanced' ? 'مخفض_3_أشهر' : 'مخفض_شهرين';
+                    link.download = `تقرير_${offerName}_${formatDateForFilename(new Date())}.xlsx`;
                     link.click();
                     URL.revokeObjectURL(url);
-                    showSuccessMessage(`تم تصدير تقرير شامل لـ ${sortedAgents.length} وكيل بنجاح!`);
+                    const offerNameAr = analyzedOfferType === 'basic' ? 'العرض المجاني' : 
+                                       analyzedOfferType === 'advanced' ? 'مخفض 3 أشهر' : 'مخفض شهرين';
+                    showSuccessMessage(`تم تصدير تقرير ${offerNameAr} لـ ${sortedAgents.filter(([_, r]) => {
+                        if (analyzedOfferType === 'basic') return r.basic?.total?.count > 0;
+                        if (analyzedOfferType === 'advanced') return r.advanced?.total?.count > 0;
+                        return r.twoMonths?.total?.count > 0;
+                    }).length} وكيل بنجاح!`);
                 });
             } catch (error) {
                 console.error('Error exporting with ExcelJS, trying XLSX:', error);
-                exportSummaryToExcelXLSX();
+                exportSummaryToExcelXLSX(analyzedOfferType);
             }
         }
         
-        function exportSummaryToExcelXLSX() {
+        function exportSummaryToExcelXLSX(analyzedOfferType = null) {
+            if (!analyzedOfferType) {
+                let hasBasic = false, hasAdvanced = false, hasTwoMonths = false;
+                Object.values(agentReports).forEach(report => {
+                    if (report.basic && report.basic.total && report.basic.total.count > 0) hasBasic = true;
+                    if (report.advanced && report.advanced.total && report.advanced.total.count > 0) hasAdvanced = true;
+                    if (report.twoMonths && report.twoMonths.total && report.twoMonths.total.count > 0) hasTwoMonths = true;
+                });
+                if (hasBasic) analyzedOfferType = 'basic';
+                else if (hasAdvanced) analyzedOfferType = 'advanced';
+                else if (hasTwoMonths) analyzedOfferType = 'twoMonths';
+                else {
+                    alert('لا توجد بيانات محللة للتصدير.');
+                    return;
+                }
+            }
+            
             try {
                 const wb = XLSX.utils.book_new();
                 const agentData = [];
                 const sortedAgents = Object.entries(agentReports).sort((a, b) => {
                     let totalA = 0, totalB = 0;
-                    if (a[1].basic && a[1].basic.total && a[1].basic.total.amount > 0) totalA += a[1].basic.total.amount;
-                    if (a[1].advanced && a[1].advanced.total && a[1].advanced.total.profit > 0) totalA += a[1].advanced.total.profit;
-                    if (a[1].twoMonths && a[1].twoMonths.total && a[1].twoMonths.total.profit > 0) totalA += a[1].twoMonths.total.profit;
-                    if (b[1].basic && b[1].basic.total && b[1].basic.total.amount > 0) totalB += b[1].basic.total.amount;
-                    if (b[1].advanced && b[1].advanced.total && b[1].advanced.total.profit > 0) totalB += b[1].advanced.total.profit;
-                    if (b[1].twoMonths && b[1].twoMonths.total && b[1].twoMonths.total.profit > 0) totalB += b[1].twoMonths.total.profit;
+                    if (analyzedOfferType === 'basic') {
+                        totalA = (a[1].basic?.total?.amount || 0);
+                        totalB = (b[1].basic?.total?.amount || 0);
+                    } else if (analyzedOfferType === 'advanced') {
+                        totalA = (a[1].advanced?.total?.profit || 0);
+                        totalB = (b[1].advanced?.total?.profit || 0);
+                    } else if (analyzedOfferType === 'twoMonths') {
+                        totalA = (a[1].twoMonths?.total?.profit || 0);
+                        totalB = (b[1].twoMonths?.total?.profit || 0);
+                    }
                     return totalB - totalA;
                 });
                 
                 sortedAgents.forEach(([agentName, report]) => {
-                    const basic = report.basic || {};
-                    const advanced = report.advanced || {};
-                    const twoMonths = report.twoMonths || {};
+                    let rowData = { 'اسم الوكيل': agentName };
                     
-                    agentData.push({
-                        'اسم الوكيل': agentName,
-                        'ع.م - برونز (عدد)': basic.bronze?.count || 0,
-                        'ع.م - برونز (مبلغ)': basic.bronze?.amount || 0,
-                        'ع.م - سلفر (عدد)': basic.silver?.count || 0,
-                        'ع.م - سلفر (مبلغ)': basic.silver?.amount || 0,
-                        'ع.م - ذهبي (عدد)': basic.gold?.count || 0,
-                        'ع.م - ذهبي (مبلغ)': basic.gold?.amount || 0,
-                        'ع.م - بلاتينيوم (عدد)': basic.platinum?.count || 0,
-                        'ع.م - بلاتينيوم (مبلغ)': basic.platinum?.amount || 0,
-                        'ع.م - الإجمالي': basic.total?.amount || 0,
-                        '3أ - برونز (عدد)': advanced.bronze?.count || 0,
-                        '3أ - برونز (عرض)': advanced.bronze?.promoAmount || 0,
-                        '3أ - برونز (رسمي)': advanced.bronze?.officialAmount || 0,
-                        '3أ - برونز (راجع)': (advanced.bronze?.officialAmount || 0) - (advanced.bronze?.promoAmount || 0),
-                        '3أ - سلفر (عدد)': advanced.silver?.count || 0,
-                        '3أ - سلفر (عرض)': advanced.silver?.promoAmount || 0,
-                        '3أ - سلفر (رسمي)': advanced.silver?.officialAmount || 0,
-                        '3أ - سلفر (راجع)': (advanced.silver?.officialAmount || 0) - (advanced.silver?.promoAmount || 0),
-                        '3أ - ذهبي (عدد)': advanced.gold?.count || 0,
-                        '3أ - ذهبي (عرض)': advanced.gold?.promoAmount || 0,
-                        '3أ - ذهبي (رسمي)': advanced.gold?.officialAmount || 0,
-                        '3أ - ذهبي (راجع)': (advanced.gold?.officialAmount || 0) - (advanced.gold?.promoAmount || 0),
-                        '3أ - بلاتينيوم (عدد)': advanced.platinum?.count || 0,
-                        '3أ - بلاتينيوم (عرض)': advanced.platinum?.promoAmount || 0,
-                        '3أ - بلاتينيوم (رسمي)': advanced.platinum?.officialAmount || 0,
-                        '3أ - بلاتينيوم (راجع)': (advanced.platinum?.officialAmount || 0) - (advanced.platinum?.promoAmount || 0),
-                        '3أ - الإجمالي': advanced.total?.profit || 0,
-                        'ش2 - برونز (عدد)': twoMonths.bronze?.count || 0,
-                        'ش2 - برونز (عرض)': twoMonths.bronze?.promoAmount || 0,
-                        'ش2 - برونز (رسمي)': twoMonths.bronze?.officialAmount || 0,
-                        'ش2 - برونز (راجع)': (twoMonths.bronze?.officialAmount || 0) - (twoMonths.bronze?.promoAmount || 0),
-                        'ش2 - سلفر (عدد)': twoMonths.silver?.count || 0,
-                        'ش2 - سلفر (عرض)': twoMonths.silver?.promoAmount || 0,
-                        'ش2 - سلفر (رسمي)': twoMonths.silver?.officialAmount || 0,
-                        'ش2 - سلفر (راجع)': (twoMonths.silver?.officialAmount || 0) - (twoMonths.silver?.promoAmount || 0),
-                        'ش2 - ذهبي (عدد)': twoMonths.gold?.count || 0,
-                        'ش2 - ذهبي (عرض)': twoMonths.gold?.promoAmount || 0,
-                        'ش2 - ذهبي (رسمي)': twoMonths.gold?.officialAmount || 0,
-                        'ش2 - ذهبي (راجع)': (twoMonths.gold?.officialAmount || 0) - (twoMonths.gold?.promoAmount || 0),
-                        'ش2 - بلاتينيوم (عدد)': twoMonths.platinum?.count || 0,
-                        'ش2 - بلاتينيوم (عرض)': twoMonths.platinum?.promoAmount || 0,
-                        'ش2 - بلاتينيوم (رسمي)': twoMonths.platinum?.officialAmount || 0,
-                        'ش2 - بلاتينيوم (راجع)': (twoMonths.platinum?.officialAmount || 0) - (twoMonths.platinum?.promoAmount || 0),
-                        'ش2 - الإجمالي': twoMonths.total?.profit || 0,
-                        'الإجمالي الكلي': ((basic.total?.amount || 0) + (advanced.total?.profit || 0) + (twoMonths.total?.profit || 0))
-                    });
+                    if (analyzedOfferType === 'basic') {
+                    const basic = report.basic || {};
+                        rowData['برونز (عدد)'] = basic.bronze?.count || 0;
+                        rowData['برونز (مبلغ)'] = basic.bronze?.amount || 0;
+                        rowData['سلفر (عدد)'] = basic.silver?.count || 0;
+                        rowData['سلفر (مبلغ)'] = basic.silver?.amount || 0;
+                        rowData['ذهبي (عدد)'] = basic.gold?.count || 0;
+                        rowData['ذهبي (مبلغ)'] = basic.gold?.amount || 0;
+                        rowData['بلاتينيوم (عدد)'] = basic.platinum?.count || 0;
+                        rowData['بلاتينيوم (مبلغ)'] = basic.platinum?.amount || 0;
+                        rowData['الإجمالي'] = basic.total?.amount || 0;
+                        if ((basic.total?.count || 0) > 0) agentData.push(rowData);
+                    } else if (analyzedOfferType === 'advanced') {
+                    const advanced = report.advanced || {};
+                        rowData['برونز (عدد)'] = advanced.bronze?.count || 0;
+                        rowData['برونز (عرض)'] = advanced.bronze?.promoAmount || 0;
+                        rowData['برونز (رسمي)'] = advanced.bronze?.officialAmount || 0;
+                        rowData['برونز (راجع)'] = (advanced.bronze?.officialAmount || 0) - (advanced.bronze?.promoAmount || 0);
+                        rowData['سلفر (عدد)'] = advanced.silver?.count || 0;
+                        rowData['سلفر (عرض)'] = advanced.silver?.promoAmount || 0;
+                        rowData['سلفر (رسمي)'] = advanced.silver?.officialAmount || 0;
+                        rowData['سلفر (راجع)'] = (advanced.silver?.officialAmount || 0) - (advanced.silver?.promoAmount || 0);
+                        rowData['ذهبي (عدد)'] = advanced.gold?.count || 0;
+                        rowData['ذهبي (عرض)'] = advanced.gold?.promoAmount || 0;
+                        rowData['ذهبي (رسمي)'] = advanced.gold?.officialAmount || 0;
+                        rowData['ذهبي (راجع)'] = (advanced.gold?.officialAmount || 0) - (advanced.gold?.promoAmount || 0);
+                        rowData['بلاتينيوم (عدد)'] = advanced.platinum?.count || 0;
+                        rowData['بلاتينيوم (عرض)'] = advanced.platinum?.promoAmount || 0;
+                        rowData['بلاتينيوم (رسمي)'] = advanced.platinum?.officialAmount || 0;
+                        rowData['بلاتينيوم (راجع)'] = (advanced.platinum?.officialAmount || 0) - (advanced.platinum?.promoAmount || 0);
+                        rowData['الإجمالي'] = advanced.total?.profit || 0;
+                        if ((advanced.total?.count || 0) > 0) agentData.push(rowData);
+                    } else if (analyzedOfferType === 'twoMonths') {
+                    const twoMonths = report.twoMonths || {};
+                        rowData['برونز (عدد)'] = twoMonths.bronze?.count || 0;
+                        rowData['برونز (عرض)'] = twoMonths.bronze?.promoAmount || 0;
+                        rowData['برونز (رسمي)'] = twoMonths.bronze?.officialAmount || 0;
+                        rowData['برونز (راجع)'] = (twoMonths.bronze?.officialAmount || 0) - (twoMonths.bronze?.promoAmount || 0);
+                        rowData['سلفر (عدد)'] = twoMonths.silver?.count || 0;
+                        rowData['سلفر (عرض)'] = twoMonths.silver?.promoAmount || 0;
+                        rowData['سلفر (رسمي)'] = twoMonths.silver?.officialAmount || 0;
+                        rowData['سلفر (راجع)'] = (twoMonths.silver?.officialAmount || 0) - (twoMonths.silver?.promoAmount || 0);
+                        rowData['ذهبي (عدد)'] = twoMonths.gold?.count || 0;
+                        rowData['ذهبي (عرض)'] = twoMonths.gold?.promoAmount || 0;
+                        rowData['ذهبي (رسمي)'] = twoMonths.gold?.officialAmount || 0;
+                        rowData['ذهبي (راجع)'] = (twoMonths.gold?.officialAmount || 0) - (twoMonths.gold?.promoAmount || 0);
+                        rowData['بلاتينيوم (عدد)'] = twoMonths.platinum?.count || 0;
+                        rowData['بلاتينيوم (عرض)'] = twoMonths.platinum?.promoAmount || 0;
+                        rowData['بلاتينيوم (رسمي)'] = twoMonths.platinum?.officialAmount || 0;
+                        rowData['بلاتينيوم (راجع)'] = (twoMonths.platinum?.officialAmount || 0) - (twoMonths.platinum?.promoAmount || 0);
+                        rowData['الإجمالي'] = twoMonths.total?.profit || 0;
+                        if ((twoMonths.total?.count || 0) > 0) agentData.push(rowData);
+                    }
                 });
                 
+                if (agentData.length === 0) {
+                    alert('لا توجد بيانات للتصدير.');
+                    return;
+                }
+                
                 const ws = XLSX.utils.json_to_sheet(agentData);
-                ws['!cols'] = Array(agentData[0] ? Object.keys(agentData[0]).length : 0).fill({ wch: 12 });
-                XLSX.utils.book_append_sheet(wb, ws, 'ملخص شامل');
-                const filename = `ملخص_شامل_الوكلاء_${formatDateForFilename(new Date())}.xlsx`;
+                const colWidths = [{ wch: 25 }];
+                if (analyzedOfferType === 'basic') {
+                    for (let i = 0; i < 9; i++) colWidths.push({ wch: 15 });
+                } else {
+                    for (let i = 0; i < 17; i++) colWidths.push({ wch: 15 });
+                }
+                ws['!cols'] = colWidths;
+                const sheetName = analyzedOfferType === 'basic' ? 'العرض المجاني' : 
+                                 analyzedOfferType === 'advanced' ? 'مخفض 3 أشهر' : 'مخفض شهرين';
+                XLSX.utils.book_append_sheet(wb, ws, sheetName);
+                const offerName = analyzedOfferType === 'basic' ? 'العرض_المجاني' : 
+                                 analyzedOfferType === 'advanced' ? 'مخفض_3_أشهر' : 'مخفض_شهرين';
+                const filename = `تقرير_${offerName}_${formatDateForFilename(new Date())}.xlsx`;
                 XLSX.writeFile(wb, filename);
-                showSuccessMessage(`تم تصدير تقرير شامل لـ ${sortedAgents.length} وكيل بنجاح!`);
+                const offerNameAr = analyzedOfferType === 'basic' ? 'العرض المجاني' : 
+                                   analyzedOfferType === 'advanced' ? 'مخفض 3 أشهر' : 'مخفض شهرين';
+                showSuccessMessage(`تم تصدير تقرير ${offerNameAr} لـ ${agentData.length} وكيل بنجاح!`);
             } catch (error) {
                 alert('حدث خطأ أثناء التصدير: ' + error.message);
                 console.error('Export error:', error);
@@ -12085,7 +12752,7 @@ function updateAgentSummary() {
                         const { error: analysisError } = await supabaseClient
                             .from('analysis_archives')
                             .delete()
-                            .gte('id', 0); // حذف جميع السجلات
+                            .gte('id', 0); 
                         if (analysisError) {
                             console.error('Error deleting analysis archives:', analysisError);
                         } else {
@@ -12099,7 +12766,7 @@ function updateAgentSummary() {
                         const { error: percentagesError } = await supabaseClient
                             .from('agent_percentages')
                             .delete()
-                            .gte('id', 0); // حذف جميع السجلات
+                            .gte('id', 0); 
                         if (percentagesError) {
                             console.error('Error deleting agent percentages:', percentagesError);
                         } else {
@@ -12113,7 +12780,7 @@ function updateAgentSummary() {
                         const { error: activityError } = await supabaseClient
                             .from('activity_logs')
                             .delete()
-                            .gte('id', 0); // حذف جميع السجلات
+                            .gte('id', 0); 
                         if (activityError) {
                             console.error('Error deleting activity logs:', activityError);
                         } else {
@@ -13704,16 +14371,21 @@ function updateAgentSummary() {
             }
         }
         function toggleUserContactPopup(event) {
+            console.log('toggleUserContactPopup called', event);
             if (event) {
                 event.stopPropagation();
             }
             const popup = document.getElementById('userContactPopup');
             const sidebarUser = document.getElementById('sidebarUser');
+            console.log('popup:', popup, 'sidebarUser:', sidebarUser);
             if (!popup || !sidebarUser) {
+                console.error('Popup or sidebarUser not found', { popup, sidebarUser });
                 return false;
             }
             
             const isShowing = popup.classList.contains('show');
+            console.log('isShowing:', isShowing);
+            
             if (isShowing) {
                 popup.style.animation = 'popupFadeOut 0.15s ease-out forwards';
                 setTimeout(() => {
@@ -13723,7 +14395,6 @@ function updateAgentSummary() {
                     popup.style.visibility = 'hidden';
                     popup.style.pointerEvents = 'none';
                     popup.style.animation = '';
-                    popup.style.transform = '';
                     if (sidebarUser) {
                         sidebarUser.style.transform = 'scale(1)';
                         sidebarUser.style.boxShadow = '0 4px 12px rgba(128, 28, 50, 0.4)';
@@ -13738,7 +14409,6 @@ function updateAgentSummary() {
                     p.style.visibility = 'hidden';
                     p.style.pointerEvents = 'none';
                     p.style.animation = '';
-                    p.style.transform = '';
                 });
                 
                 const rect = sidebarUser.getBoundingClientRect();
@@ -13747,8 +14417,8 @@ function updateAgentSummary() {
                 
                 const sidebar = document.getElementById('sidebar');
                 const sidebarRect = sidebar ? sidebar.getBoundingClientRect() : null;
-                const left = sidebarRect ? sidebarRect.left - popupWidth - 10 : rect.left - popupWidth - 10;
-                const top = rect.top;
+                let left = sidebarRect ? sidebarRect.left - popupWidth - 10 : rect.left - popupWidth - 10;
+                let top = rect.top;
                 
                 const windowWidth = window.innerWidth;
                 const windowHeight = window.innerHeight;
@@ -13770,58 +14440,26 @@ function updateAgentSummary() {
                 
                 popup.style.left = finalLeft + 'px';
                 popup.style.top = finalTop + 'px';
-                popup.style.transform = 'translateY(0)';
+                popup.style.zIndex = '10001';
+                
+                popup.style.removeProperty('opacity');
                 
                 popup.style.display = 'block';
                 popup.style.visibility = 'visible';
                 popup.style.pointerEvents = 'auto';
                 popup.style.transform = 'translateY(0)';
                 
+                console.log('Showing popup at:', finalLeft, finalTop);
+                
                 setTimeout(() => {
                     popup.classList.add('show');
+                    console.log('Popup class show added');
                 }, 10);
-                
-                let isPopupOpen = true;
-                const preventRecalculation = () => {
-                    if (isPopupOpen && popup.classList.contains('show')) {
-                        const currentLeft = popup.style.left;
-                        const currentTop = popup.style.top;
-                        requestAnimationFrame(() => {
-                            if (popup.classList.contains('show')) {
-                                popup.style.left = currentLeft;
-                                popup.style.top = currentTop;
-                            }
-                        });
-                    }
-                };
-                
-                popup.addEventListener('mouseenter', preventRecalculation);
-                popup.addEventListener('mousemove', preventRecalculation);
             }
             return false;
         }
         
-        document.addEventListener('click', function(event) {
-            const popup = document.getElementById('userContactPopup');
-            const sidebarUser = document.getElementById('sidebarUser');
-            if (popup && sidebarUser && popup.classList.contains('show')) {
-                const clickedInsidePopup = popup.contains(event.target);
-                const clickedInsideSidebarUser = sidebarUser.contains(event.target);
-                
-                if (!clickedInsideSidebarUser && !clickedInsidePopup) {
-                    popup.style.animation = 'popupFadeOut 0.15s ease-out forwards';
-                    setTimeout(() => {
-                        popup.classList.remove('show');
-                        popup.style.display = 'none';
-                        popup.style.opacity = '0';
-                        popup.style.visibility = 'hidden';
-                        popup.style.pointerEvents = 'none';
-                        popup.style.animation = '';
-                        popup.style.transform = '';
-                    }, 150);
-                }
-            }
-        });
+        window.toggleUserContactPopup = toggleUserContactPopup;
         
         function switchUser() {
             if (confirm('هل تريد تبديل المستخدم؟ سيتم تسجيل الخروج من الحساب الحالي.')) {
