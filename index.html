@@ -4668,12 +4668,14 @@ let agentReports = {};
             if (!select) return;
             const currentValue = select.value;
             select.innerHTML = '<option value="">-- اختر وكيل --</option>';
-            agentsList.forEach(agent => {
-                const option = document.createElement('option');
-                option.value = agent.name;
-                option.textContent = agent.name;
-                select.appendChild(option);
-            });
+            if (Array.isArray(agentsList)) {
+                agentsList.forEach(agent => {
+                    const option = document.createElement('option');
+                    option.value = agent.name;
+                    option.textContent = agent.name;
+                    select.appendChild(option);
+                });
+            }
             if (currentValue) {
                 select.value = currentValue;
             }
@@ -5202,6 +5204,11 @@ let agentReports = {};
                 };
             }
             tbody.innerHTML = '';
+            if (!agentPercentages || typeof agentPercentages !== 'object') {
+                tbody.innerHTML = '<tr><td colspan="19" style="text-align: center; padding: 15px; color: #999; font-size: 0.85rem;">لا توجد بيانات للعرض</td></tr>';
+                isRenderingTable = false;
+                return;
+            }
             const agents = Object.keys(agentPercentages);
             if (agents.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="19" style="text-align: center; padding: 15px; color: #999; font-size: 0.85rem;">لا توجد بيانات للعرض</td></tr>';
@@ -5213,7 +5220,7 @@ let agentReports = {};
             let totalCountP = 0, totalCountG = 0, totalCountS = 0, totalCountB = 0;
             let totalAgentPercentage = 0;
             agents.forEach(agentName => {
-                const data = agentPercentages[agentName];
+                const data = agentPercentages[agentName] || {};
                 const row = document.createElement('tr');
                 row.style.borderBottom = '1px solid #ddd';
                 const percentage = data.percentage || 15;
@@ -5290,11 +5297,13 @@ let agentReports = {};
             
             let totalDeductions = 0;
             let totalPenalties = 0;
-            agents.forEach(agentName => {
-                const data = agentPercentages[agentName];
-                totalDeductions += data.deductions || 0;
-                totalPenalties += data.penalties || 0;
-            });
+            if (Array.isArray(agents) && agentPercentages) {
+                agents.forEach(agentName => {
+                    const data = agentPercentages[agentName] || {};
+                    totalDeductions += data.deductions || 0;
+                    totalPenalties += data.penalties || 0;
+                });
+            }
             const netTotalAgentPercentage = totalAgentPercentageSum - totalDeductions - totalPenalties;
             
             totalRow.innerHTML = `
@@ -8323,7 +8332,7 @@ let agentReports = {};
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                ${analysis.details.map((detail, idx) => {
+                                                ${(Array.isArray(analysis.details) ? analysis.details : []).map((detail, idx) => {
                                                     const date1 = detail.date1 || '';
                                                     const date2 = detail.date2 || '';
                                                     const date3 = detail.date3 || '';
