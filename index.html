@@ -3749,9 +3749,12 @@ let agentReports = {};
         }
         
         async function handleLogin() {
-            const username = document.getElementById('loginUsername').value.trim();
-            const password = document.getElementById('loginPassword').value.trim();
+            const usernameInput = document.getElementById('loginUsername');
+            const passwordInput = document.getElementById('loginPassword');
             const alertDiv = document.getElementById('loginAlert');
+            if (!usernameInput || !passwordInput) return;
+            const username = usernameInput.value.trim();
+            const password = passwordInput.value.trim();
 
             if (!username || !password) {
                 showAlert(alertDiv, 'يرجى تعبئة جميع الحقول.', 'error');
@@ -9961,7 +9964,7 @@ let agentReports = {};
                         if (dataString.length <= 2000000) {
                             localStorage.setItem(key, dataString);
                         }
-                } catch (e) {
+                    } catch (e) {
                         console.warn(`⚠ Could not free up space for ${key}, data is saved in database only`);
                     }
                 } else {
