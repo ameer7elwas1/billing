@@ -4178,17 +4178,30 @@ let agentReports = {};
                 modal.classList.add('show');
                 modal.style.display = 'flex';
             }
-            document.getElementById('addUserModalTitle').textContent = 'تعديل مستخدم';
-            document.getElementById('editUserId').value = userId;
-            document.getElementById('userUsername').value = username;
-            document.getElementById('userUsername').disabled = true;
-            document.getElementById('userFullName').value = fullName;
-            document.getElementById('userPassword').value = '';
-            document.getElementById('userPassword').required = false;
-            document.getElementById('passwordRequired').style.display = 'none';
-            document.getElementById('passwordHint').style.display = 'block';
-            document.getElementById('userRole').value = role;
-            document.getElementById('addUserAlert').innerHTML = '';
+            const modalTitleEl = document.getElementById('addUserModalTitle');
+            const editUserIdEl = document.getElementById('editUserId');
+            const userUsernameEl = document.getElementById('userUsername');
+            const userFullNameEl = document.getElementById('userFullName');
+            const userPasswordEl = document.getElementById('userPassword');
+            const passwordRequiredEl = document.getElementById('passwordRequired');
+            const passwordHintEl = document.getElementById('passwordHint');
+            const userRoleEl = document.getElementById('userRole');
+            const addUserAlertEl = document.getElementById('addUserAlert');
+            if (modalTitleEl) modalTitleEl.textContent = 'تعديل مستخدم';
+            if (editUserIdEl) editUserIdEl.value = userId;
+            if (userUsernameEl) {
+                userUsernameEl.value = username;
+                userUsernameEl.disabled = true;
+            }
+            if (userFullNameEl) userFullNameEl.value = fullName;
+            if (userPasswordEl) {
+                userPasswordEl.value = '';
+                userPasswordEl.required = false;
+            }
+            if (passwordRequiredEl) passwordRequiredEl.style.display = 'none';
+            if (passwordHintEl) passwordHintEl.style.display = 'block';
+            if (userRoleEl) userRoleEl.value = role;
+            if (addUserAlertEl) addUserAlertEl.innerHTML = '';
         }
         
         function closeAddUserModal() {
@@ -4651,24 +4664,31 @@ let agentReports = {};
             reader.readAsArrayBuffer(file);
         }
         function onAgentSelectedForPercentage() {
-            const selectedAgent = document.getElementById('selectedAgentForPercentage').value;
+            const selectedAgentEl = document.getElementById('selectedAgentForPercentage');
+            if (!selectedAgentEl) return;
+            const selectedAgent = selectedAgentEl.value;
+            const agentFileUploadSectionEl = document.getElementById('agentFileUploadSection');
+            const percentageFileInputEl = document.getElementById('percentageFileInput');
+            const percentageFileNameEl = document.getElementById('percentageFileName');
+            const percentageRateSelectEl = document.getElementById('percentageRateSelect');
+            const percentageRateInfoEl = document.getElementById('percentageRateInfo');
             if (selectedAgent) {
-                document.getElementById('agentFileUploadSection').style.display = 'block';
-                document.getElementById('percentageFileInput').value = '';
-                document.getElementById('percentageFileName').classList.add('hidden');
+                if (agentFileUploadSectionEl) agentFileUploadSectionEl.style.display = 'block';
+                if (percentageFileInputEl) percentageFileInputEl.value = '';
+                if (percentageFileNameEl) percentageFileNameEl.classList.add('hidden');
                 percentageData = null;
                 const agent = agentsList.find(a => a.name === selectedAgent);
                 if (agent && agent.percentage) {
-                    document.getElementById('percentageRateSelect').value = agent.percentage;
-                    document.getElementById('percentageRateInfo').textContent = 
+                    if (percentageRateSelectEl) percentageRateSelectEl.value = agent.percentage;
+                    if (percentageRateInfoEl) percentageRateInfoEl.textContent = 
                         `النسبة المحفوظة للوكيل: ${agent.percentage}%`;
                 } else {
-                    document.getElementById('percentageRateSelect').value = 16;
-                    document.getElementById('percentageRateInfo').textContent = 
+                    if (percentageRateSelectEl) percentageRateSelectEl.value = 16;
+                    if (percentageRateInfoEl) percentageRateInfoEl.textContent = 
                         'سيتم استخدام النسبة الافتراضية: 16%';
                 }
             } else {
-                document.getElementById('agentFileUploadSection').style.display = 'none';
+                if (agentFileUploadSectionEl) agentFileUploadSectionEl.style.display = 'none';
             }
         }
         function updatePercentageRate() {
@@ -6903,6 +6923,8 @@ let agentReports = {};
         }
         async function loadDataFromDatabase() {
             if (!supabaseClient) {
+                console.error('✗ Supabase not initialized! Cannot load data.');
+                alert('خطأ: قاعدة البيانات غير متصلة. يرجى تحديث الصفحة.');
                 return;
             }
             try {
