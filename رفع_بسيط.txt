@@ -1,0 +1,17 @@
+🚀 رفع على GitHub - خطوات بسيطة
+
+1. أنشئ مستودع جديد على github.com
+   اسمه: billing-accounts-system
+
+2. في PowerShell:
+   git init
+   git add .
+   git commit -m "Initial commit"
+   git remote add origin https://github.com/YOUR_USERNAME/billing-accounts-system.git
+   git push -u origin main
+
+3. إذا طلب كلمة مرور:
+   استخدم Personal Access Token (ليس كلمة المرور العادية)
+
+✅ انتهى!
+

@@ -1,0 +1,33 @@
+# المفاتيح السرية والإعدادات
+js/config.js
+
+# ملفات النظام
+.DS_Store
+Thumbs.db
+*.log
+*.swp
+*.swo
+*~
+
+# ملفات التطوير
+.vscode/
+.idea/
+*.code-workspace
+
+# ملفات النسخ الاحتياطي
+*.backup
+*.bak
+*.old
+
+# ملفات Excel المؤقتة
+*.xlsx.tmp
+*.xls.tmp
+
+# ملفات Node (إذا استخدمت npm لاحقاً)
+node_modules/
+package-lock.json
+
+# ملفات البيئة
+.env
+.env.local
+
