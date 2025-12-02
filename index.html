@@ -12,6 +12,8 @@
     <script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <!-- ⚠️ ملف config.js محلي فقط - لا يُرفع على GitHub (موجود في .gitignore) -->
+    <script src="js/config.js"></script>
     <style>
         :root {
             --bg-primary: #ffffff;
@@ -3663,8 +3665,11 @@ let agentReports = {};
         let basicDetails = [];
         let percentageData = null;
         let agentPercentages = JSON.parse(localStorage.getItem('agentPercentages') || '{}');
-        const SUPABASE_URL = 'https://qcbcjyhqgxwuqutzkxrh.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFjYmNqeWhxZ3h3dXF1dHpreHJoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTEyMDE3NjQsImV4cCI6MjA2Njc3Nzc2NH0.y-hQVa6nzBpCMpXL7XbcWPMGafATvnMez3lAmFvb2zY';
+        // المفاتيح السرية موجودة في js/config.js (لا ترفع config.js على GitHub!)
+        // إذا لم يتم تحميل config.js، استخدم قيم افتراضية فارغة
+        if (typeof SUPABASE_URL === 'undefined') {
+            console.error('⚠️ ملف js/config.js غير موجود! يرجى إنشاؤه من js/config.example.js');
+        }
         const SYSTEM_NAME = 'billing_accounts';
         let supabaseClient = null;
         let loggedInUser = '';
