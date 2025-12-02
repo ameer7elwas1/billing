@@ -8284,7 +8284,7 @@ let agentReports = {};
                                     </div>`;
                                 }
                                 html += `</div>`;
-                            } else if (analysis.details && analysis.details.length > 0) {
+                            } else if (analysis.details && Array.isArray(analysis.details) && analysis.details.length > 0) {
                                 const totalCount = analysis.details.length;
                                 let totalAmount = 0;
                                 let totalPromoAmount = 0;
