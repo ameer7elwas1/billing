@@ -6903,8 +6903,6 @@ let agentReports = {};
         }
         async function loadDataFromDatabase() {
             if (!supabaseClient) {
-                console.error('✗ Supabase not initialized! Cannot load data.');
-                alert('خطأ: قاعدة البيانات غير متصلة. يرجى تحديث الصفحة.');
                 return;
             }
             try {
