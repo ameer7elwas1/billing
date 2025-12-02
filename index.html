@@ -4142,17 +4142,30 @@ let agentReports = {};
                 modal.classList.add('show');
                 modal.style.display = 'flex';
             }
-            document.getElementById('addUserModalTitle').textContent = 'إضافة مستخدم جديد';
-            document.getElementById('editUserId').value = '';
-            document.getElementById('userUsername').value = '';
-            document.getElementById('userUsername').disabled = false;
-            document.getElementById('userFullName').value = '';
-            document.getElementById('userPassword').value = '';
-            document.getElementById('userPassword').required = true;
-            document.getElementById('passwordRequired').style.display = 'inline';
-            document.getElementById('passwordHint').style.display = 'none';
-            document.getElementById('userRole').value = 'employee';
-            document.getElementById('addUserAlert').innerHTML = '';
+            const modalTitle = document.getElementById('addUserModalTitle');
+            const editUserIdEl = document.getElementById('editUserId');
+            const userUsernameEl = document.getElementById('userUsername');
+            const userFullNameEl = document.getElementById('userFullName');
+            const userPasswordEl = document.getElementById('userPassword');
+            const passwordRequiredEl = document.getElementById('passwordRequired');
+            const passwordHintEl = document.getElementById('passwordHint');
+            const userRoleEl = document.getElementById('userRole');
+            const addUserAlertEl = document.getElementById('addUserAlert');
+            if (modalTitle) modalTitle.textContent = 'إضافة مستخدم جديد';
+            if (editUserIdEl) editUserIdEl.value = '';
+            if (userUsernameEl) {
+                userUsernameEl.value = '';
+                userUsernameEl.disabled = false;
+            }
+            if (userFullNameEl) userFullNameEl.value = '';
+            if (userPasswordEl) {
+                userPasswordEl.value = '';
+                userPasswordEl.required = true;
+            }
+            if (passwordRequiredEl) passwordRequiredEl.style.display = 'inline';
+            if (passwordHintEl) passwordHintEl.style.display = 'none';
+            if (userRoleEl) userRoleEl.value = 'employee';
+            if (addUserAlertEl) addUserAlertEl.innerHTML = '';
         }
         
         function openEditUserModal(userId, username, fullName, role, isActive) {
@@ -4192,12 +4205,18 @@ let agentReports = {};
                 return;
             }
             
-            const editUserId = document.getElementById('editUserId').value;
-            const username = document.getElementById('userUsername').value.trim();
-            const fullName = document.getElementById('userFullName').value.trim();
-            const password = document.getElementById('userPassword').value.trim();
-            const role = document.getElementById('userRole').value;
+            const editUserIdEl = document.getElementById('editUserId');
+            const userUsernameEl = document.getElementById('userUsername');
+            const userFullNameEl = document.getElementById('userFullName');
+            const userPasswordEl = document.getElementById('userPassword');
+            const userRoleEl = document.getElementById('userRole');
             const alertDiv = document.getElementById('addUserAlert');
+            if (!editUserIdEl || !userUsernameEl || !userFullNameEl || !userRoleEl) return;
+            const editUserId = editUserIdEl.value;
+            const username = userUsernameEl.value.trim();
+            const fullName = userFullNameEl.value.trim();
+            const password = userPasswordEl ? userPasswordEl.value.trim() : '';
+            const role = userRoleEl.value;
             
             if (!username || !fullName) {
                 showAlert(alertDiv, 'يرجى تعبئة جميع الحقول المطلوبة.', 'error');
@@ -4602,14 +4621,20 @@ let agentReports = {};
         }
         function handlePercentageFileUpload(file) {
             const fileName = file.name;
-            const selectedAgent = document.getElementById('selectedAgentForPercentage').value;
+            const selectedAgentEl = document.getElementById('selectedAgentForPercentage');
+            if (!selectedAgentEl) return;
+            const selectedAgent = selectedAgentEl.value;
             if (!selectedAgent) {
                 alert('يرجى اختيار وكيل أولاً');
-                document.getElementById('percentageFileInput').value = '';
+                const percentageFileInputEl = document.getElementById('percentageFileInput');
+                if (percentageFileInputEl) percentageFileInputEl.value = '';
                 return;
             }
-            document.getElementById('percentageFileName').textContent = `تم تحميل الملف: ${fileName}`;
-            document.getElementById('percentageFileName').classList.remove('hidden');
+            const percentageFileNameEl = document.getElementById('percentageFileName');
+            if (percentageFileNameEl) {
+                percentageFileNameEl.textContent = `تم تحميل الملف: ${fileName}`;
+                percentageFileNameEl.classList.remove('hidden');
+            }
             const reader = new FileReader();
             reader.onload = function(e) {
                 const data = new Uint8Array(e.target.result);
