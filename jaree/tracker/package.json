@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "@awesome-cordova-plugins/background-geolocation": "^8.0.2",
-    "@supabase/supabase-js": "^2.52.0",
-    "cordova-plugin-background-geolocation": "^1.0.6"
-  }
-}
