@@ -1,0 +1,20 @@
+{
+  "name": "employee-tracker",
+  "version": "1.0.0",
+  "description": "Ionic Angular app for employee tracking with Supabase integration.",
+  "scripts": {
+    "start": "ionic serve",
+    "build": "ionic build",
+    "android": "ionic cap open android"
+  },
+  "dependencies": {
+    "@angular/common": "^16.0.0",
+    "@angular/core": "^16.0.0",
+    "@ionic/angular": "^7.0.0",
+    "@supabase/supabase-js": "^2.39.7",
+    "@awesome-cordova-plugins/background-geolocation": "^6.7.0"
+  },
+  "devDependencies": {
+    "@ionic/cli": "^7.1.0"
+  }
+} 

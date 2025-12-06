@@ -1,0 +1,115 @@
+<div class="container" *ngIf="!loggedIn">
+  <div class="logo">🔐</div>
+  <input type="tel" [(ngModel)]="phone" placeholder="رقم الهاتف" maxlength="15" />
+  <input type="password" [(ngModel)]="password" placeholder="كلمة المرور" (keyup.enter)="login()" />
+  <button [disabled]="loading" (click)="login()">
+    {{ loading ? 'جاري التحقق...' : 'تسجيل الدخول' }}
+    <span *ngIf="loading" class="loading"></span>
+  </button>
+  <div *ngIf="errorMsg" class="error-message">{{ errorMsg }}</div>
+</div>
+
+<div class="container" *ngIf="loggedIn">
+  <div class="success-message">✅تم تسجيل الدخول يرجى ابقاء التطبيق مفتوحًا أو بالخلفية</div>
+  <button (click)="logout()" [disabled]="loading" style="background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%); margin-top: 20px;">
+    تسجيل خروج
+  </button>
+</div>
+
+<style>
+body, :host {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.container {
+  width: 100%;
+  max-width: 350px;
+  padding: 40px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  text-align: center;
+}
+.logo {
+  font-size: 2.5em;
+  margin-bottom: 30px;
+  color: #667eea;
+  font-weight: bold;
+}
+input {
+  width: 100%;
+  padding: 15px 20px;
+  margin: 10px 0;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  font-size: 16px;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+button {
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+}
+button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+}
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+.success-message {
+  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+  color: white;
+  padding: 20px;
+  border-radius: 15px;
+  font-size: 20px;
+  font-weight: bold;
+  animation: fadeIn 0.5s ease-in;
+}
+.error-message {
+  color: #d32f2f;
+  margin-top: 15px;
+  font-weight: bold;
+}
+.loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid #ffffff;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: spin 1s ease-in-out infinite;
+  margin-left: 10px;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style> 

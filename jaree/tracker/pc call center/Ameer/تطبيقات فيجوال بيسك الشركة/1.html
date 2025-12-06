@@ -1,0 +1,50 @@
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7/dist/umd/supabase.min.js"></script>
+<script>
+    const { createClient } = supabase;
+    const supabase = createClient('https://vpvvjascwgivdjyyhzwp.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZwdnZqYXNjd2dpdmRqeXloendwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4MDYxMjYsImV4cCI6MjA2NTM4MjEyNn0.6AR2-MG4x9ugNTXe9jUqx-IwGEtj1m6MCYwQkTsSbUQ');
+
+    function updateCurrentDate() {
+        const now = new Date();
+        const arabicMonths = [
+            'كانون الثاني', 'شباط', 'آذار', 'نيسان', 'أيار', 'حزيران',
+            'تموز', 'آب', 'أيلول', 'تشرين الأول', 'تشرين الثاني', 'كانون الأول'
+        ];
+        const day = now.getDate();
+        const month = arabicMonths[now.getMonth()];
+        const year = now.getFullYear();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+        const dateStr = `${day} ${month} ${year}`;
+        const timeStr = `${hours}:${minutes}:${seconds}`;
+        document.getElementById('currentDateTime').textContent = `${dateStr} - ${timeStr}`;
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        updateCurrentDate();
+        setInterval(updateCurrentDate, 1000);
+    });
+</script> 
+
+<!-- شريط التاريخ والوقت في أعلى الصفحة -->
+<div class="date-time-bar">
+    <span id="currentDateTime"></span>
+</div>
+
+<style>
+.date-time-bar {
+    width: 100%;
+    text-align: center;
+    margin: 18px 0 10px 0;
+}
+#currentDateTime {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fff;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    padding: 10px 30px;
+    border-radius: 14px;
+    display: inline-block;
+    letter-spacing: 1px;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.10);
+}
+</style> 

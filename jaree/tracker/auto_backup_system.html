@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام النسخ الاحتياطي التلقائي - نظام الحضور والانصراف</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .backup-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 2px solid #e9ecef;
+        }
+
+        .backup-section h2 {
+            color: #495057;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .backup-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .control-group {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #dee2e6;
+        }
+
+        .control-group h3 {
+            color: #495057;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #dc3545 0%, #e83e8c 100%);
+        }
+
+        .btn-info {
+            background: linear-gradient(135deg, #17a2b8 0%, #6f42c1 100%);
+        }
+
+        .status-display {
+            background: #e9ecef;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .status-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .status-warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        .backup-list {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+        }
+
+        .backup-item {
+            padding: 15px;
+            border-bottom: 1px solid #dee2e6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .backup-item:last-child {
+            border-bottom: none;
+        }
+
+        .backup-info {
+            flex: 1;
+        }
+
+        .backup-info h4 {
+            color: #495057;
+            margin-bottom: 5px;
+        }
+
+        .backup-info p {
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+
+        .backup-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .settings-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .setting-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+        }
+
+        .setting-item label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #495057;
+        }
+
+        .setting-item input, .setting-item select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: #6c757d;
+            font-size: 1.1em;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .backup-controls {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔄 نظام النسخ الاحتياطي التلقائي</h1>
+            <p>حفظ وإدارة بيانات نظام الحضور والانصراف</p>
+        </div>
+
+        <div class="content">
+            <!-- إحصائيات النظام -->
+            <div class="backup-section">
+                <h2>📊 إحصائيات النظام</h2>
+                <div class="stats-grid" id="statsGrid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalBackups">0</div>
+                        <div class="stat-label">إجمالي النسخ الاحتياطية</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="lastBackup">--</div>
+                        <div class="stat-label">آخر نسخة احتياطية</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="storageUsed">0 MB</div>
+                        <div class="stat-label">المساحة المستخدمة</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="autoBackupStatus">غير مفعل</div>
+                        <div class="stat-label">النسخ التلقائي</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- إعدادات النسخ الاحتياطي -->
+            <div class="backup-section">
+                <h2>⚙️ إعدادات النسخ الاحتياطي</h2>
+                <div class="settings-group">
+                    <div class="setting-item">
+                        <label>فترة النسخ التلقائي:</label>
+                        <select id="backupInterval">
+                            <option value="0">معطل</option>
+                            <option value="1">كل ساعة</option>
+                            <option value="6">كل 6 ساعات</option>
+                            <option value="12">كل 12 ساعة</option>
+                            <option value="24">يومياً</option>
+                            <option value="168">أسبوعياً</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label>عدد النسخ المحفوظة:</label>
+                        <input type="number" id="maxBackups" value="10" min="1" max="50">
+                    </div>
+                    <div class="setting-item">
+                        <label>ضغط الملفات:</label>
+                        <select id="compressionLevel">
+                            <option value="0">بدون ضغط</option>
+                            <option value="1">ضغط خفيف</option>
+                            <option value="2">ضغط متوسط</option>
+                            <option value="3">ضغط عالي</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label>تشفير النسخ:</label>
+                        <select id="encryptionEnabled">
+                            <option value="false">غير مشفرة</option>
+                            <option value="true">مشفرة</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="btn btn-success" onclick="saveSettings()">💾 حفظ الإعدادات</button>
+            </div>
+
+            <!-- النسخ الاحتياطي اليدوي -->
+            <div class="backup-section">
+                <h2>🔄 النسخ الاحتياطي اليدوي</h2>
+                <div class="backup-controls">
+                    <div class="control-group">
+                        <h3>📥 إنشاء نسخة احتياطية</h3>
+                        <button class="btn btn-success" onclick="createBackup()">🔄 إنشاء نسخة احتياطية</button>
+                        <button class="btn btn-info" onclick="createFullBackup()">📦 نسخة احتياطية كاملة</button>
+                        <button class="btn btn-warning" onclick="createIncrementalBackup()">📈 نسخة احتياطية تدريجية</button>
+                    </div>
+                    <div class="control-group">
+                        <h3>📤 استعادة البيانات</h3>
+                        <button class="btn btn-warning" onclick="restoreFromBackup()">🔄 استعادة من نسخة احتياطية</button>
+                        <button class="btn btn-info" onclick="selectBackupFile()">📁 اختيار ملف نسخة احتياطية</button>
+                    </div>
+                    <div class="control-group">
+                        <h3>🗑️ إدارة النسخ</h3>
+                        <button class="btn btn-danger" onclick="cleanOldBackups()">🧹 تنظيف النسخ القديمة</button>
+                        <button class="btn btn-info" onclick="exportBackupList()">📋 تصدير قائمة النسخ</button>
+                    </div>
+                    <div class="control-group">
+                        <h3>🌐 النسخ السحابية</h3>
+                        <button class="btn btn-success" onclick="uploadToCloud()">☁️ رفع للسحابة</button>
+                        <button class="btn btn-info" onclick="downloadFromCloud()">⬇️ تحميل من السحابة</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- شريط التقدم -->
+            <div class="backup-section">
+                <h2>📊 حالة العملية</h2>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="status-display" id="statusDisplay">
+                    جاهز للعمل... ✅
+                </div>
+            </div>
+
+            <!-- قائمة النسخ الاحتياطية -->
+            <div class="backup-section">
+                <h2>📋 النسخ الاحتياطية المتاحة</h2>
+                <div class="backup-list" id="backupList">
+                    <div class="backup-item">
+                        <div class="backup-info">
+                            <h4>جاري التحميل...</h4>
+                            <p>يرجى الانتظار...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // إعدادات النسخ الاحتياطي
+        let backupSettings = {
+            interval: 24, // ساعات
+            maxBackups: 10,
+            compressionLevel: 2,
+            encryptionEnabled: true,
+            autoBackupEnabled: false
+        };
+
+        // حالة النظام
+        let systemStatus = {
+            isRunning: false,
+            currentOperation: null,
+            progress: 0
+        };
+
+        // قائمة النسخ الاحتياطية
+        let backupList = [];
+
+        // تهيئة النظام
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSettings();
+            loadBackupList();
+            updateStats();
+            startAutoBackup();
+        });
+
+        // تحميل الإعدادات
+        function loadSettings() {
+            const saved = localStorage.getItem('backupSettings');
+            if (saved) {
+                backupSettings = JSON.parse(saved);
+                document.getElementById('backupInterval').value = backupSettings.interval;
+                document.getElementById('maxBackups').value = backupSettings.maxBackups;
+                document.getElementById('compressionLevel').value = backupSettings.compressionLevel;
+                document.getElementById('encryptionEnabled').value = backupSettings.encryptionEnabled;
+            }
+        }
+
+        // حفظ الإعدادات
+        function saveSettings() {
+            backupSettings.interval = parseInt(document.getElementById('backupInterval').value);
+            backupSettings.maxBackups = parseInt(document.getElementById('maxBackups').value);
+            backupSettings.compressionLevel = parseInt(document.getElementById('compressionLevel').value);
+            backupSettings.encryptionEnabled = document.getElementById('encryptionEnabled').value === 'true';
+            
+            localStorage.setItem('backupSettings', JSON.stringify(backupSettings));
+            showStatus('تم حفظ الإعدادات بنجاح! ✅', 'success');
+            
+            if (backupSettings.interval > 0) {
+                backupSettings.autoBackupEnabled = true;
+                startAutoBackup();
+            } else {
+                backupSettings.autoBackupEnabled = false;
+                stopAutoBackup();
+            }
+        }
+
+        // إنشاء نسخة احتياطية
+        async function createBackup() {
+            if (systemStatus.isRunning) {
+                showStatus('عملية أخرى قيد التشغيل... ⏳', 'warning');
+                return;
+            }
+
+            systemStatus.isRunning = true;
+            systemStatus.currentOperation = 'إنشاء نسخة احتياطية';
+            updateProgress(0);
+
+            try {
+                showStatus('بدء إنشاء النسخة الاحتياطية... 🔄', 'info');
+                updateProgress(10);
+
+                // جمع البيانات من النظام
+                const data = await collectSystemData();
+                updateProgress(30);
+
+                // ضغط البيانات
+                const compressedData = await compressData(data);
+                updateProgress(50);
+
+                // تشفير البيانات
+                const encryptedData = await encryptData(compressedData);
+                updateProgress(70);
+
+                // حفظ النسخة الاحتياطية
+                const backupId = await saveBackup(encryptedData);
+                updateProgress(90);
+
+                // تحديث القائمة
+                await loadBackupList();
+                updateProgress(100);
+
+                showStatus(`تم إنشاء النسخة الاحتياطية بنجاح! 🎉 (ID: ${backupId})`, 'success');
+                
+            } catch (error) {
+                showStatus(`خطأ في إنشاء النسخة الاحتياطية: ${error.message} ❌`, 'error');
+            } finally {
+                systemStatus.isRunning = false;
+                systemStatus.currentOperation = null;
+                setTimeout(() => updateProgress(0), 2000);
+            }
+        }
+
+        // جمع بيانات النظام
+        async function collectSystemData() {
+            const data = {
+                timestamp: new Date().toISOString(),
+                version: '1.0.0',
+                users: [],
+                centers: [],
+                employees: [],
+                logs: [],
+                settings: backupSettings
+            };
+
+            // محاكاة جمع البيانات (في التطبيق الحقيقي، ستجمع من Supabase)
+            data.users = [
+                { id: 1, username: 'admin', full_name: 'مدير النظام', role: 'admin' },
+                { id: 2, username: 'user1', full_name: 'مستخدم 1', role: 'user' }
+            ];
+
+            data.centers = [
+                { id: 1, name: 'المركز الرئيسي', latitude: 32.6155, longitude: 44.0240 }
+            ];
+
+            data.employees = [
+                { id: 1, name: 'موظف 1', phone: '07701234567', center_id: 1 }
+            ];
+
+            return data;
+        }
+
+        // ضغط البيانات
+        async function compressData(data) {
+            const jsonString = JSON.stringify(data);
+            
+            if (backupSettings.compressionLevel === 0) {
+                return jsonString;
+            }
+
+            // محاكاة الضغط (في التطبيق الحقيقي، استخدم مكتبة ضغط)
+            return btoa(jsonString);
+        }
+
+        // تشفير البيانات
+        async function encryptData(data) {
+            if (!backupSettings.encryptionEnabled) {
+                return data;
+            }
+
+            // محاكاة التشفير (في التطبيق الحقيقي، استخدم مكتبة تشفير)
+            return btoa(data);
+        }
+
+        // حفظ النسخة الاحتياطية
+        async function saveBackup(data) {
+            const backupId = 'backup_' + Date.now();
+            const backup = {
+                id: backupId,
+                timestamp: new Date().toISOString(),
+                size: new Blob([data]).size,
+                type: 'manual',
+                data: data
+            };
+
+            // حفظ في localStorage (في التطبيق الحقيقي، احفظ في ملف أو سحابة)
+            const backups = JSON.parse(localStorage.getItem('backups') || '[]');
+            backups.push(backup);
+            localStorage.setItem('backups', JSON.stringify(backups));
+
+            return backupId;
+        }
+
+        // تحميل قائمة النسخ الاحتياطية
+        async function loadBackupList() {
+            const backups = JSON.parse(localStorage.getItem('backups') || '[]');
+            backupList = backups;
+            
+            const listContainer = document.getElementById('backupList');
+            listContainer.innerHTML = '';
+
+            if (backups.length === 0) {
+                listContainer.innerHTML = '<div class="backup-item"><div class="backup-info"><h4>لا توجد نسخ احتياطية</h4><p>أنشئ نسخة احتياطية أولاً</p></div></div>';
+                return;
+            }
+
+            backups.reverse().forEach(backup => {
+                const item = document.createElement('div');
+                item.className = 'backup-item';
+                item.innerHTML = `
+                    <div class="backup-info">
+                        <h4>${backup.id}</h4>
+                        <p>تاريخ: ${new Date(backup.timestamp).toLocaleString('ar-SA')} | الحجم: ${formatFileSize(backup.size)} | النوع: ${backup.type}</p>
+                    </div>
+                    <div class="backup-actions">
+                        <button class="btn btn-info" onclick="downloadBackup('${backup.id}')">⬇️ تحميل</button>
+                        <button class="btn btn-warning" onclick="restoreBackup('${backup.id}')">🔄 استعادة</button>
+                        <button class="btn btn-danger" onclick="deleteBackup('${backup.id}')">🗑️ حذف</button>
+                    </div>
+                `;
+                listContainer.appendChild(item);
+            });
+        }
+
+        // تحديث الإحصائيات
+        function updateStats() {
+            const backups = JSON.parse(localStorage.getItem('backups') || '[]');
+            
+            document.getElementById('totalBackups').textContent = backups.length;
+            
+            if (backups.length > 0) {
+                const lastBackup = backups[backups.length - 1];
+                document.getElementById('lastBackup').textContent = new Date(lastBackup.timestamp).toLocaleDateString('ar-SA');
+                
+                const totalSize = backups.reduce((sum, backup) => sum + backup.size, 0);
+                document.getElementById('storageUsed').textContent = formatFileSize(totalSize);
+            } else {
+                document.getElementById('lastBackup').textContent = '--';
+                document.getElementById('storageUsed').textContent = '0 MB';
+            }
+            
+            document.getElementById('autoBackupStatus').textContent = backupSettings.autoBackupEnabled ? 'مفعل' : 'غير مفعل';
+        }
+
+        // النسخ الاحتياطي التلقائي
+        let autoBackupInterval;
+
+        function startAutoBackup() {
+            if (autoBackupInterval) {
+                clearInterval(autoBackupInterval);
+            }
+
+            if (backupSettings.autoBackupEnabled && backupSettings.interval > 0) {
+                const intervalMs = backupSettings.interval * 60 * 60 * 1000; // تحويل الساعات إلى ميلي ثانية
+                
+                autoBackupInterval = setInterval(() => {
+                    showStatus('بدء النسخ الاحتياطي التلقائي... 🤖', 'info');
+                    createBackup();
+                }, intervalMs);
+
+                showStatus(`تم تفعيل النسخ الاحتياطي التلقائي كل ${backupSettings.interval} ساعة ✅`, 'success');
+            }
+        }
+
+        function stopAutoBackup() {
+            if (autoBackupInterval) {
+                clearInterval(autoBackupInterval);
+                autoBackupInterval = null;
+            }
+            showStatus('تم إيقاف النسخ الاحتياطي التلقائي ⏹️', 'warning');
+        }
+
+        // تحديث شريط التقدم
+        function updateProgress(percent) {
+            document.getElementById('progressFill').style.width = percent + '%';
+        }
+
+        // عرض حالة العملية
+        function showStatus(message, type = 'info') {
+            const statusDisplay = document.getElementById('statusDisplay');
+            statusDisplay.textContent = message;
+            statusDisplay.className = `status-display status-${type}`;
+            
+            // تحديث الإحصائيات
+            updateStats();
+        }
+
+        // تنسيق حجم الملف
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        // وظائف إضافية
+        function createFullBackup() {
+            showStatus('إنشاء نسخة احتياطية كاملة... 📦', 'info');
+            createBackup();
+        }
+
+        function createIncrementalBackup() {
+            showStatus('إنشاء نسخة احتياطية تدريجية... 📈', 'info');
+            createBackup();
+        }
+
+        function restoreFromBackup() {
+            showStatus('اختر نسخة احتياطية للاستعادة... 🔄', 'info');
+            // تنفيذ منطق الاستعادة
+        }
+
+        function selectBackupFile() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json,.backup';
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    showStatus(`تم اختيار الملف: ${file.name} 📁`, 'success');
+                    // تنفيذ منطق تحميل الملف
+                }
+            };
+            input.click();
+        }
+
+        function cleanOldBackups() {
+            const backups = JSON.parse(localStorage.getItem('backups') || '[]');
+            if (backups.length > backupSettings.maxBackups) {
+                const toDelete = backups.length - backupSettings.maxBackups;
+                backups.splice(0, toDelete);
+                localStorage.setItem('backups', JSON.stringify(backups));
+                showStatus(`تم حذف ${toDelete} نسخة احتياطية قديمة 🧹`, 'success');
+                loadBackupList();
+            } else {
+                showStatus('لا توجد نسخ احتياطية قديمة للحذف ✅', 'info');
+            }
+        }
+
+        function exportBackupList() {
+            const backups = JSON.parse(localStorage.getItem('backups') || '[]');
+            const exportData = {
+                exportDate: new Date().toISOString(),
+                totalBackups: backups.length,
+                backups: backups.map(b => ({
+                    id: b.id,
+                    timestamp: b.timestamp,
+                    size: b.size,
+                    type: b.type
+                }))
+            };
+
+            const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `backup_list_${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+
+            showStatus('تم تصدير قائمة النسخ الاحتياطية 📋', 'success');
+        }
+
+        function uploadToCloud() {
+            showStatus('رفع النسخ الاحتياطية للسحابة... ☁️', 'info');
+            // تنفيذ منطق الرفع للسحابة
+        }
+
+        function downloadFromCloud() {
+            showStatus('تحميل النسخ الاحتياطية من السحابة... ⬇️', 'info');
+            // تنفيذ منطق التحميل من السحابة
+        }
+
+        function downloadBackup(backupId) {
+            const backup = backupList.find(b => b.id === backupId);
+            if (backup) {
+                const blob = new Blob([backup.data], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${backupId}.backup`;
+                a.click();
+                URL.revokeObjectURL(url);
+                showStatus(`تم تحميل النسخة الاحتياطية: ${backupId} ⬇️`, 'success');
+            }
+        }
+
+        function restoreBackup(backupId) {
+            if (confirm(`هل أنت متأكد من استعادة النسخة الاحتياطية: ${backupId}؟\nسيتم استبدال جميع البيانات الحالية!`)) {
+                showStatus(`استعادة النسخة الاحتياطية: ${backupId}... 🔄`, 'warning');
+                // تنفيذ منطق الاستعادة
+            }
+        }
+
+        function deleteBackup(backupId) {
+            if (confirm(`هل أنت متأكد من حذف النسخة الاحتياطية: ${backupId}؟`)) {
+                const backups = JSON.parse(localStorage.getItem('backups') || '[]');
+                const filteredBackups = backups.filter(b => b.id !== backupId);
+                localStorage.setItem('backups', JSON.stringify(filteredBackups));
+                showStatus(`تم حذف النسخة الاحتياطية: ${backupId} 🗑️`, 'success');
+                loadBackupList();
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+{
+  "name": "jaree-employee-tracker",
+  "displayName": "Jaree Employee Tracker",
+  "version": "1.0.0",
+  "description": "تطبيق تتبع الموظفين - جاري",
+  "main": "index.html",
+  "scripts": {
+    "build": "cordova build android",
+    "run": "cordova run android",
+    "prepare": "cordova prepare android",
+    "serve": "cordova serve",
+    "clean": "cordova clean android"
+  },
+  "keywords": [
+    "employee",
+    "tracking",
+    "location",
+    "android",
+    "cordova"
+  ],
+  "author": "Jaree Team",
+  "license": "MIT",
+  "devDependencies": {
+    "cordova": "^12.0.0",
+    "cordova-android": "^12.0.0"
+  },
+  "cordova": {
+    "platforms": [
+      "android"
+    ],
+    "plugins": {
+      "cordova-plugin-geolocation": {},
+      "cordova-plugin-network-information": {},
+      "cordova-plugin-device": {},
+      "cordova-plugin-statusbar": {},
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-file": {}
+    }
+  }
+}

@@ -1,0 +1,27 @@
+name: employee_tracker
+
+description: تطبيق تتبع الموظفين باستخدام Flutter وSupabase وMapbox
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  supabase_flutter: ^1.2.0
+  geolocator: ^10.1.0
+  mapbox_gl: ^0.16.0
+  cupertino_icons: ^1.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/marker-15.png
