@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم | Dashboard</title>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-gradient-light: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --bg-gradient-dark: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+
+            --glass-bg-light: rgba(255, 255, 255, 0.7);
+            --glass-bg-dark: rgba(30, 30, 30, 0.6);
+            --glass-border-light: rgba(255, 255, 255, 0.5);
+            --glass-border-dark: rgba(255, 255, 255, 0.1);
+            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+
+            --text-primary-light: #2c3e50;
+            --text-primary-dark: #ecf0f1;
+            --text-secondary-light: #5a6c7d;
+            --text-secondary-dark: #bdc3c7;
+
+            --primary-color: #801c32;
+            --primary-hover: #9d2338;
+            --accent-color: #3498db;
+
+            --card-hover-transform: translateY(-5px) scale(1.02);
+            --transition-speed: 0.3s;
+        }
+
+        [data-theme="light"] {
+            --bg-body: var(--bg-gradient-light);
+            --bg-glass: var(--glass-bg-light);
+            --border-glass: var(--glass-border-light);
+            --text-main: var(--text-primary-light);
+            --text-sub: var(--text-secondary-light);
+            --shadow-glass: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+        }
+
+        [data-theme="dark"] {
+            --bg-body: var(--bg-gradient-dark);
+            --bg-glass: var(--glass-bg-dark);
+            --border-glass: var(--glass-border-dark);
+            --text-main: var(--text-primary-dark);
+            --text-sub: var(--text-secondary-dark);
+            --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background: var(--bg-body);
+            color: var(--text-main);
+            min-height: 100vh;
+            transition: background 0.5s ease, color 0.3s ease;
+            overflow-x: hidden;
+            background-attachment: fixed;
+        }
+
+        /* Glassmorphism Utilities */
+        .glass {
+            background: var(--bg-glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-glass);
+            box-shadow: var(--shadow-glass);
+        }
+
+        .header {
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+            margin: 20px auto;
+            width: 95%;
+            max-width: 1400px;
+            border-radius: 20px;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-weight: 800;
+            font-size: 24px;
+            color: var(--primary-color);
+        }
+
+        .logo i {
+            font-size: 32px;
+            background: linear-gradient(45deg, var(--primary-color), #c0392b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .search-bar {
+            flex: 1;
+            max-width: 400px;
+            margin: 0 20px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 20px 12px 45px;
+            border-radius: 50px;
+            border: 1px solid var(--border-glass);
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-main);
+            font-size: 16px;
+            transition: all var(--transition-speed);
+        }
+
+        .search-input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 15px rgba(128, 28, 50, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-sub);
+            pointer-events: none;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .action-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all var(--transition-speed);
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-main);
+            border: 1px solid var(--border-glass);
+        }
+
+        .action-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: rotate(15deg);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .welcome-title {
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--text-main) 0%, var(--primary-color) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .welcome-subtitle {
+            font-size: 18px;
+            color: var(--text-sub);
+        }
+
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            padding-bottom: 40px;
+        }
+
+        .app-card {
+            border-radius: 24px;
+            padding: 30px;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+            animation: fadeInUp 0.6s ease both;
+        }
+
+        .app-card:hover {
+            transform: var(--card-hover-transform);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary-color);
+        }
+
+        .app-card-actions {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            display: flex;
+            gap: 8px;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all var(--transition-speed);
+        }
+
+        .app-card:hover .app-card-actions {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: white;
+            font-size: 12px;
+            transition: transform 0.2s;
+        }
+
+        .card-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .edit-btn {
+            background: #3498db;
+        }
+
+        .delete-btn {
+            background: #e74c3c;
+        }
+
+        .app-icon-wrapper {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: white;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            transition: transform 0.4s ease;
+            background: linear-gradient(135deg, var(--app-color), #2c3e50);
+        }
+
+        .app-card:hover .app-icon-wrapper {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .app-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .app-desc {
+            font-size: 14px;
+            color: var(--text-sub);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .app-link-indicator {
+            margin-top: auto;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            opacity: 0.8;
+            transition: gap 0.3s;
+        }
+
+        .app-card:hover .app-link-indicator {
+            gap: 10px;
+            opacity: 1;
+        }
+
+        .add-card {
+            border: 2px dashed var(--border-glass);
+            background: rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 280px;
+            transition: all var(--transition-speed);
+        }
+
+        .add-card:hover {
+            border-color: var(--primary-color);
+            background: rgba(128, 28, 50, 0.05);
+            transform: translateY(-5px);
+        }
+
+        .add-icon {
+            font-size: 40px;
+            color: var(--text-sub);
+            margin-bottom: 15px;
+            transition: all var(--transition-speed);
+        }
+
+        .add-card:hover .add-icon {
+            color: var(--primary-color);
+            transform: rotate(90deg);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            width: 90%;
+            max-width: 600px;
+            border-radius: 24px;
+            padding: 40px;
+            transform: scale(0.9);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .modal.active .modal-content {
+            transform: scale(1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 12px;
+            border: 1px solid var(--border-glass);
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-main);
+            font-size: 16px;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .grid-picker {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+            gap: 10px;
+        }
+
+        .picker-item {
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-main);
+        }
+
+        .picker-item:hover,
+        .picker-item.selected {
+            transform: scale(1.1);
+            border-color: var(--primary-color);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .picker-item.selected {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border-radius: 12px;
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 16px;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+            box-shadow: 0 4px 15px rgba(128, 28, 50, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(128, 28, 50, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--text-sub);
+            color: var(--text-main);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-sub);
+            font-size: 14px;
+            margin-top: auto;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Drag & Drop Styles */
+        .app-card.dragging {
+            opacity: 0.5;
+            border: 2px dashed var(--primary-color);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header glass">
+        <div class="logo">
+            <i class="fas fa-th-large"></i>
+            <span>لوحة التحكم</span>
+        </div>
+
+        <div class="search-bar">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" class="search-input" placeholder="بحث عن منصة..." id="searchInput"
+                oninput="filterApps()">
+        </div>
+
+        <div class="header-actions">
+            <div class="color-actions" style="display: flex; gap: 5px; align-items: center; margin-left: 10px;">
+                <button class="action-btn" onclick="setGlobalColor('#3498db')"
+                    style="background-color: #3498db; width: 25px; height: 25px; border: 2px solid white;"></button>
+                <button class="action-btn" onclick="setGlobalColor('#2ecc71')"
+                    style="background-color: #2ecc71; width: 25px; height: 25px; border: 2px solid white;"></button>
+                <button class="action-btn" onclick="setGlobalColor('#9b59b6')"
+                    style="background-color: #9b59b6; width: 25px; height: 25px; border: 2px solid white;"></button>
+                <button class="action-btn" onclick="setGlobalColor('#e74c3c')"
+                    style="background-color: #e74c3c; width: 25px; height: 25px; border: 2px solid white;"></button>
+                <button class="action-btn" onclick="setGlobalColor('#f1c40f')"
+                    style="background-color: #f1c40f; width: 25px; height: 25px; border: 2px solid white;"></button>
+                <input type="color" id="customColorPicker" onchange="setGlobalColor(this.value)"
+                    style="width: 30px; height: 30px; padding: 0; border: none; border-radius: 50%; cursor: pointer;"
+                    title="اختر لوناً مخصصاً">
+            </div>
+            <div style="width: 1px; height: 30px; background: var(--border-glass); margin: 0 10px;"></div>
+            <button class="action-btn" onclick="exportData()" title="تصدير البيانات">
+                <i class="fas fa-file-export"></i>
+            </button>
+            <button class="action-btn" onclick="importData()" title="استيراد البيانات">
+                <i class="fas fa-file-import"></i>
+            </button>
+            <button class="action-btn" onclick="toggleTheme()" title="تغيير المظهر">
+                <i class="fas fa-moon" id="themeIcon"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="welcome-section">
+            <h1 class="welcome-title">مرحباً بك، أمير</h1>
+            <p class="welcome-subtitle">إدارة جميع منصاتك من مكان واحد</p>
+        </div>
+
+        <div class="apps-grid" id="appsGrid">
+            <!-- Apps will be generated here -->
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2025 جميع الحقوق محفوظة | Ameer Helwas</p>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="appModal">
+        <div class="modal-content glass">
+            <h2 style="margin-bottom: 25px; color: var(--text-main);" id="modalTitle">إضافة منصة جديدة</h2>
+            <form id="appForm" onsubmit="saveApp(event)">
+                <input type="hidden" id="appId">
+
+                <div class="form-group">
+                    <label class="form-label">اسم المنصة</label>
+                    <input type="text" class="form-input" id="appName" required placeholder="مثال: قسم الحسابات">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">الوصف</label>
+                    <input type="text" class="form-input" id="appDescription" required placeholder="وصف قصير للمنصة">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">الرابط</label>
+                    <input type="text" class="form-input" id="appUrl" required placeholder="https://example.com">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">الأيقونة</label>
+                    <div class="grid-picker" id="iconPicker">
+                        <!-- Icons generated by JS -->
+                    </div>
+                    <input type="hidden" id="selectedIcon" value="fa-cube">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">اللون</label>
+                    <div class="grid-picker" id="colorPicker">
+                        <!-- Colors generated by JS -->
+                    </div>
+                    <input type="hidden" id="selectedColor" value="#801c32">
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 30px;">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">إلغاء</button>
+                    <button type="submit" class="btn btn-primary">حفظ التغييرات</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <input type="file" id="importFile" style="display: none;" accept=".json" onchange="handleFileImport(this)">
+
+    <script>
+        // Default Data
+        const defaultApps = [
+            { id: '1', name: 'قسم الحسابات', description: 'نظام إدارة الحسابات والمالية', url: '#', icon: 'fa-calculator', color: '#801c32' },
+            { id: '2', name: 'خدمة الزبائن', description: 'مركز دعم العملاء والمكالمات', url: '#', icon: 'fa-headset', color: '#17a2b8' },
+            { id: '3', name: 'نمو الوكلاء', description: 'إحصائيات وتقارير الأداء', url: '#', icon: 'fa-chart-line', color: '#28a745' },
+            { id: '4', name: 'منصة البث', description: 'إدارة المحتوى والبث المباشر', url: '#', icon: 'fa-tv', color: '#4361ee' },
+            { id: '5', name: 'TV HUB', description: 'بوابة المستخدمين للبث', url: '#', icon: 'fa-user-tie', color: '#f72585' }
+        ];
+
+        const icons = ['fa-calculator', 'fa-headset', 'fa-chart-line', 'fa-tv', 'fa-user-tie', 'fa-database', 'fa-shopping-cart', 'fa-users', 'fa-chart-bar', 'fa-file-invoice', 'fa-cog', 'fa-globe', 'fa-mobile-alt', 'fa-laptop', 'fa-server', 'fa-cloud'];
+        const colors = ['#801c32', '#17a2b8', '#28a745', '#4361ee', '#f72585', '#ff6b6b', '#4ecdc4', '#ffc107', '#6c5ce7', '#00b894', '#e17055', '#0984e3'];
+
+        // State Management
+        let apps = JSON.parse(localStorage.getItem('dashboardApps')) || defaultApps;
+        let currentTheme = localStorage.getItem('theme') || 'light';
+        let globalColor = localStorage.getItem('globalColor') || '#801c32';
+
+        // Initialization
+        document.addEventListener('DOMContentLoaded', () => {
+            setTheme(currentTheme);
+            setGlobalColor(globalColor, false); // Don't save on init, just apply
+            renderApps();
+            initPickers();
+            setupDragAndDrop();
+        });
+
+        function setGlobalColor(color, save = true) {
+            document.documentElement.style.setProperty('--primary-color', color);
+            // Update hover color (simple darkening)
+            document.documentElement.style.setProperty('--primary-hover', adjustColorBrightness(color, -20));
+
+            if (save) {
+                localStorage.setItem('globalColor', color);
+                globalColor = color;
+            }
+        }
+
+        function adjustColorBrightness(hex, percent) {
+            let num = parseInt(hex.replace("#", ""), 16),
+                amt = Math.round(2.55 * percent),
+                R = (num >> 16) + amt,
+                B = (num >> 8 & 0x00FF) + amt,
+                G = (num & 0x0000FF) + amt;
+            return "#" + (0x1000000 + (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 + (B < 255 ? B < 1 ? 0 : B : 255) * 0x100 + (G < 255 ? G < 1 ? 0 : G : 255)).toString(16).slice(1);
+        }
+        // Rendering
+        function renderApps(filterText = '') {
+            const grid = document.getElementById('appsGrid');
+            grid.innerHTML = '';
+
+            const filteredApps = apps.filter(app => app.name.toLowerCase().includes(filterText.toLowerCase()));
+
+            filteredApps.forEach((app, index) => {
+                const card = document.createElement('div');
+                card.className = 'app-card glass';
+                card.draggable = true;
+                card.dataset.id = app.id;
+                card.style.setProperty('--app-color', app.color);
+                card.style.animationDelay = `${index * 0.1}s`;
+
+                card.innerHTML = `
+                    <div class="app-card-actions">
+                        <button class="card-btn edit-btn" onclick="openEditModal('${app.id}')"><i class="fas fa-pen"></i></button>
+                        <button class="card-btn delete-btn" onclick="deleteApp('${app.id}')"><i class="fas fa-trash"></i></button>
+                    </div>
+                    <div class="app-icon-wrapper">
+                        <i class="fas ${app.icon}"></i>
+                    </div>
+                    <h3 class="app-title">${app.name}</h3>
+                    <p class="app-desc">${app.description}</p>
+                    <a href="${app.url}" class="app-link-indicator">
+                        فتح المنصة <i class="fas fa-arrow-left"></i>
+                    </a>
+                `;
+
+                // Drag Events
+                card.addEventListener('dragstart', handleDragStart);
+                card.addEventListener('dragend', handleDragEnd);
+                card.addEventListener('dragover', handleDragOver);
+                card.addEventListener('drop', handleDrop);
+                card.addEventListener('click', (e) => {
+                    if (!e.target.closest('.card-btn')) window.location.href = app.url;
+                });
+
+                grid.appendChild(card);
+            });
+
+            // Add "New App" Card
+            const addCard = document.createElement('div');
+            addCard.className = 'app-card add-card';
+            addCard.onclick = openAddModal;
+            addCard.innerHTML = `
+                <i class="fas fa-plus add-icon"></i>
+                <h3 class="app-title" style="color: var(--text-sub)">إضافة منصة</h3>
+            `;
+            grid.appendChild(addCard);
+        }
+
+        // Theme Handling
+        function toggleTheme() {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+            setTheme(currentTheme);
+        }
+
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            const icon = document.getElementById('themeIcon');
+            icon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+        }
+
+        // Modal & Form Handling
+        function initPickers() {
+            const iconContainer = document.getElementById('iconPicker');
+            icons.forEach(icon => {
+                const div = document.createElement('div');
+                div.className = 'picker-item';
+                div.innerHTML = `<i class="fas ${icon}"></i>`;
+                div.onclick = () => selectOption('icon', icon, div);
+                iconContainer.appendChild(div);
+            });
+
+            const colorContainer = document.getElementById('colorPicker');
+            colors.forEach(color => {
+                const div = document.createElement('div');
+                div.className = 'picker-item';
+                div.style.backgroundColor = color;
+                div.onclick = () => selectOption('color', color, div);
+                colorContainer.appendChild(div);
+            });
+        }
+
+        function selectOption(type, value, element) {
+            document.getElementById(`selected${type.charAt(0).toUpperCase() + type.slice(1)}`).value = value;
+            element.parentElement.querySelectorAll('.picker-item').forEach(el => el.classList.remove('selected'));
+            element.classList.add('selected');
+        }
+
+        function openAddModal() {
+            document.getElementById('modalTitle').innerText = 'إضافة منصة جديدة';
+            document.getElementById('appForm').reset();
+            document.getElementById('appId').value = '';
+            document.getElementById('appModal').classList.add('active');
+        }
+
+        function openEditModal(id) {
+            const app = apps.find(a => a.id === id);
+            if (!app) return;
+
+            document.getElementById('modalTitle').innerText = 'تعديل المنصة';
+            document.getElementById('appId').value = app.id;
+            document.getElementById('appName').value = app.name;
+            document.getElementById('appDescription').value = app.description;
+            document.getElementById('appUrl').value = app.url;
+            document.getElementById('selectedIcon').value = app.icon;
+            document.getElementById('selectedColor').value = app.color;
+
+            // Highlight selected options (simplified for brevity)
+            document.getElementById('appModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('appModal').classList.remove('active');
+        }
+
+        function saveApp(e) {
+            e.preventDefault();
+            const id = document.getElementById('appId').value;
+            const newApp = {
+                id: id || Date.now().toString(),
+                name: document.getElementById('appName').value,
+                description: document.getElementById('appDescription').value,
+                url: document.getElementById('appUrl').value,
+                icon: document.getElementById('selectedIcon').value,
+                color: document.getElementById('selectedColor').value
+            };
+
+            if (id) {
+                const index = apps.findIndex(a => a.id === id);
+                apps[index] = newApp;
+            } else {
+                apps.push(newApp);
+            }
+
+            saveAndRender();
+            closeModal();
+        }
+
+        function deleteApp(id) {
+            if (confirm('هل أنت متأكد من الحذف؟')) {
+                apps = apps.filter(a => a.id !== id);
+                saveAndRender();
+            }
+        }
+
+        function saveAndRender() {
+            localStorage.setItem('dashboardApps', JSON.stringify(apps));
+            renderApps(document.getElementById('searchInput').value);
+        }
+
+        function filterApps() {
+            renderApps(document.getElementById('searchInput').value);
+        }
+
+        // Drag & Drop Logic
+        let draggedItem = null;
+
+        function setupDragAndDrop() {
+            // Event listeners attached in renderApps
+        }
+
+        function handleDragStart(e) {
+            draggedItem = this;
+            this.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+        }
+
+        function handleDragEnd(e) {
+            this.classList.remove('dragging');
+            draggedItem = null;
+
+            // Save new order
+            const newOrder = [];
+            document.querySelectorAll('.app-card[data-id]').forEach(card => {
+                const app = apps.find(a => a.id === card.dataset.id);
+                if (app) newOrder.push(app);
+            });
+            apps = newOrder;
+            localStorage.setItem('dashboardApps', JSON.stringify(apps));
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            return false;
+        }
+
+        function handleDrop(e) {
+            e.stopPropagation();
+            if (draggedItem !== this) {
+                // Simple swap logic for grid
+                const grid = document.getElementById('appsGrid');
+                const allCards = [...grid.querySelectorAll('.app-card:not(.add-card)')];
+                const draggedIdx = allCards.indexOf(draggedItem);
+                const droppedIdx = allCards.indexOf(this);
+
+                if (draggedIdx < droppedIdx) {
+                    this.after(draggedItem);
+                } else {
+                    this.before(draggedItem);
+                }
+            }
+            return false;
+        }
+
+        // Export / Import
+        function exportData() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(apps));
+            const downloadAnchorNode = document.createElement('a');
+            downloadAnchorNode.setAttribute("href", dataStr);
+            downloadAnchorNode.setAttribute("download", "dashboard_backup.json");
+            document.body.appendChild(downloadAnchorNode);
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+        }
+
+        function importData() {
+            document.getElementById('importFile').click();
+        }
+
+        function handleFileImport(input) {
+            const file = input.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                try {
+                    const importedApps = JSON.parse(e.target.result);
+                    if (Array.isArray(importedApps)) {
+                        apps = importedApps;
+                        saveAndRender();
+                        alert('تم استيراد البيانات بنجاح!');
+                    } else {
+                        alert('ملف غير صالح');
+                    }
+                } catch (err) {
+                    alert('حدث خطأ أثناء قراءة الملف');
+                }
+            };
+            reader.readAsText(file);
+            input.value = ''; // Reset
+        }
+    </script>
+</body>
+
+</html>

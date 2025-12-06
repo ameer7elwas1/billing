@@ -1,0 +1,8 @@
+تعطيل GitHub Pages:
+
+1. اذهب إلى: https://github.com/ameer7elwas1/billing-accounts-system/settings/pages
+2. في قسم "Source" اختر: None
+3. اضغط Save
+
+بعدها لن يظهر أي شيء على الرابط.
+
